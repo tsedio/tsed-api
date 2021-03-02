@@ -1,4 +1,4 @@
-import { loaderReducer } from "@project/shared";
+import { loaderReducer } from "@tsed/shared";
 import { defaultFormioReducer, formsReducer } from "@tsed/react-formio";
 import { combine } from "@tsed/redux-utils";
 import { connectRouter } from "connected-react-router";

@@ -1,5 +1,5 @@
 import React from "react";
-import { COLORS, COLORS_LIST } from "@project/tailwind/colors";
+import { COLORS, COLORS_LIST } from "@tsed/tailwind/colors";
 import { BxIcon } from "./bxIcon.component.js";
 import { ICONS } from "./icons";
 

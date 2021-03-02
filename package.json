@@ -1,5 +1,5 @@
 {
-  "name": "@project/root",
+  "name": "@tsed/root",
   "version": "1.0.0",
   "description": "",
   "author": "Romain Lenzotti",
@@ -7,20 +7,21 @@
   "scripts": {
     "test": "lerna run test --stream",
     "test:e2e": "lerna run test:e2e",
-    "test:backoffice": "lerna run test --scope=@project/backoffice",
-    "test:server": "lerna run test --scope=@project/server",
+    "test:backoffice": "lerna run test --scope=@tsed/backoffice",
+    "test:server": "lerna run test --scope=@tsed/server",
     "lint": "lerna run lint",
     "lint:fix": "lerna run lint:fix",
     "prettier": "lerna run prettier:fix",
     "build": "lerna run build --stream",
-    "build:backoffice": "lerna run build --scope=@project/backoffice --stream",
-    "build:server": "lerna run build --scope=@project/server --stream",
+    "build:backoffice": "lerna run build --scope=@tsed/backoffice --stream",
+    "build:server": "lerna run build --scope=@tsed/server --stream",
     "start": "lerna run start --stream --parallel",
-    "start:backoffice": "lerna run start --scope=@project/backoffice --stream",
-    "start:server": "lerna run start --scope=@project/server --stream",
-    "start:storybook": "lerna run start:storybook --scope=@project/storybook --stream",
+    "start:backoffice": "lerna run start --scope=@tsed/backoffice --stream",
+    "start:server": "lerna run start --scope=@tsed/server --stream",
+    "start:storybook": "lerna run start:storybook --scope=@tsed/storybook --stream",
     "start:prod": "pm2-docker --raw processes.config.js --no-deamon",
-    "docker:build": "yarn build && docker-compose build"
+    "docker:build": "yarn build && docker-compose build",
+    "release": "semantic-release"
   },
   "dependencies": {
     "@tsed/react-formio": "^1.8.6",
@@ -47,13 +48,12 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "@tsed/monorepo-utils": "1.17.0",
     "@craco/craco": "6.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/classnames": "2.2.11",
-    "@types/ejs": "3.0.5",
-    "@types/enzyme": "3.10.8",
     "@types/file-saver": "^2.0.1",
     "@types/jest": "26.0.20",
     "@types/lodash": "4.14.168",
@@ -80,6 +80,7 @@
     "husky": "5.0.9",
     "lint-staged": "10.5.3",
     "prettier": "2.2.1",
+    "semantic-release": "17.3.9",
     "react-scripts": "4.0.1",
     "webpack": "4.44.2"
   },
@@ -112,5 +113,11 @@
       "cd packages/server && yarn lint:fix && yarn prettier:fix",
       "git add"
     ]
+  },
+  "monorepo": {
+    "productionBranch": "master",
+    "developBranch": "master",
+    "npmAccess": "public",
+    "skipNpmPublish": true
   }
 }

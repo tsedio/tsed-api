@@ -1,5 +1,5 @@
 {
-  "name": "@project/tailwind",
+  "name": "@tsed/tailwind",
   "version": "1.0.0",
   "main": "./tailwind.config.js",
   "description": "Tailwind configuration",

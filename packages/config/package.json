@@ -1,5 +1,5 @@
 {
-  "name": "@project/config",
+  "name": "@tsed/config",
   "version": "1.0.0",
   "main": "src/index.js",
   "main:src": "src/index.js",
@@ -10,8 +10,8 @@
   "dependencies": {
   },
   "devDependencies": {
-    "@project/tailwind": "1.0.0",
-    "@tsed/yarn-workspaces": "1.15.1",
+    "@tsed/tailwind": "1.0.0",
+    "@tsed/yarn-workspaces": "1.17.0",
     "postcss-nested": "4.2.3"
   },
   "peerDependencies": {}

@@ -1,4 +1,4 @@
-import { hideLoader, oneOfIsActive, showLoader } from "@project/shared";
+import { hideLoader, oneOfIsActive, showLoader } from "@tsed/shared";
 import { Submission } from "@tsed/react-formio";
 import { useDispatch, useSelector } from "react-redux";
 import { toastr } from "../../toastr/toastr.util";

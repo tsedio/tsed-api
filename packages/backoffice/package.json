@@ -1,5 +1,5 @@
 {
-  "name": "@project/backoffice",
+  "name": "@tsed/backoffice",
   "version": "1.0.0",
   "private": true,
   "author": "Romain Lenzotti",
@@ -7,8 +7,8 @@
     "cross-env": "^7.0.3"
   },
   "devDependencies": {
-    "@project/config": "1.0.0",
-    "@project/shared": "1.0.0"
+    "@tsed/config": "1.0.0",
+    "@tsed/shared": "1.0.0"
   },
   "scripts": {
     "start": "yarn craco start",

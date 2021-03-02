@@ -37,20 +37,12 @@ npm install -g yarn
 yarn install
 ```
 
-## Starting a new project
-
-Replace all reference `@project` by your project name. `@project` key are referenced in these files:
-
-- `package.json`,
-- `**/package.json`
-
-Open Server.ts and modify the Mongoose Settings, if you are using some other detabase then please change the driver details and database details in the mongoose section.
-
 ## Run
 
 ```bash
 docker-compose up -d mongo
-yarn start
+yarn start:server
+yarn start:backoffice
 ```
 
 ## Start App test

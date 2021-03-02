@@ -1,5 +1,5 @@
 module.exports = {
-  ...require("@project/config/craco.config"),
+  ...require("@tsed/config/craco.config"),
   devServer: {
     proxy: {
       "/rest": "http://localhost:8083",

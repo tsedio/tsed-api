@@ -1,4 +1,4 @@
-import "@project/shared";
+import "@tsed/shared";
 import { Formio, initAuth, logout, Templates } from "@tsed/react-formio";
 import tailwind from "@tsed/tailwind-formio";
 import { ConnectedRouter } from "connected-react-router";

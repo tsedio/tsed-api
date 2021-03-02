@@ -1,4 +1,4 @@
-import { ArianeLinks, BxIcon, withIf } from "@project/shared";
+import { ArianeLinks, BxIcon, withIf } from "@tsed/shared";
 import { AuthState, useTooltip } from "@tsed/react-formio";
 import noop from "lodash/noop";
 import React from "react";

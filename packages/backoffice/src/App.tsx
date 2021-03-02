@@ -1,4 +1,4 @@
-import { IfSidebar, Loader, oneOfIsActive, useSidebar } from "@project/shared";
+import { IfSidebar, Loader, oneOfIsActive, useSidebar } from "@tsed/shared";
 import { AuthState, logout, selectRoot } from "@tsed/react-formio";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";

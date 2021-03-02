@@ -1,4 +1,4 @@
-import '@project/shared'
+import '@tsed/shared'
 import { Formio, Templates } from '@tsed/react-formio'
 import tailwind from '@tsed/tailwind-formio'
 import '@tsed/tailwind-formio/styles/index.css'

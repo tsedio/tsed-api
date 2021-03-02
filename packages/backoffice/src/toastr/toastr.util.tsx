@@ -1,4 +1,4 @@
-import { BxIcon } from "@project/shared";
+import { BxIcon } from "@tsed/shared";
 import React, { PropsWithChildren } from "react";
 import {
   toast,

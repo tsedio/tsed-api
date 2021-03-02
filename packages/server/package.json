@@ -1,5 +1,5 @@
 {
-  "name": "@project/server",
+  "name": "@tsed/server",
   "version": "1.0.0",
   "description": "Server based on Ts.ED framework",
   "author": "Romain Lenzotti",

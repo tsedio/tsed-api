@@ -1,4 +1,4 @@
-import { BxIcon } from "@project/shared";
+import { BxIcon } from "@tsed/shared";
 import { resetForm, resetSubmission } from "@tsed/react-formio";
 import { push } from "connected-react-router";
 import React from "react";

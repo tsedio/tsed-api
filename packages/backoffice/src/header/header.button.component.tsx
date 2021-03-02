@@ -1,4 +1,4 @@
-import { withOptionalIf } from "@project/shared";
+import { withOptionalIf } from "@tsed/shared";
 import React, { forwardRef, PropsWithChildren } from "react";
 
 // eslint-disable-next-line react/display-name

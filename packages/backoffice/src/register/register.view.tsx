@@ -1,4 +1,4 @@
-import { BxIcon } from "@project/shared";
+import { BxIcon } from "@tsed/shared";
 import { Form } from "@tsed/react-formio";
 import classnames from "classnames";
 import React from "react";

@@ -1,4 +1,4 @@
-import { BxIcon } from "@project/shared";
+import { BxIcon } from "@tsed/shared";
 import startCase from "lodash/startCase";
 import toLower from "lodash/toLower";
 import React from "react";

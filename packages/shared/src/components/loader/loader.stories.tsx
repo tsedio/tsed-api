@@ -1,5 +1,5 @@
 import React from "react";
-import { COLORS_LIST } from "@project/tailwind/colors";
+import { COLORS_LIST } from "@tsed/tailwind/colors";
 import { ICONS } from "../icon/icons";
 import { Loader } from "./loader.component";
 

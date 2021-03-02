@@ -1,9 +1,9 @@
 const { dirname, join, resolve } = require('path')
-const { plugins } = require('@project/config/postcss.config')
+const { plugins } = require('@tsed/config/postcss.config')
 
 const rootDir = join(__dirname, '..', 'src')
 
-const sharedDir = dirname(require.resolve('@project/shared'))
+const sharedDir = dirname(require.resolve('@tsed/shared'))
 const componentsDir = resolve(sharedDir, 'components')
 const pathToInlineSvg = resolve(sharedDir, 'statics/svg')
 const pathToFonts = resolve(sharedDir, 'styles/fonts')

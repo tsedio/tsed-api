@@ -1,1 +1,1 @@
-module.exports = require('@project/shared/jest.config')
+module.exports = require('@tsed/shared/jest.config')

@@ -4795,19 +4795,10 @@
     mongodb-memory-server "^6.3.3"
     tslib "2.0.1"
 
-"@tsed/yarn-workspaces@1.14.0":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@tsed/yarn-workspaces/-/yarn-workspaces-1.14.0.tgz#9e2fbdcd321404c4ed6aca3da397e5a0cf712d24"
-  integrity sha512-nEA6hmsb3BVO6OicvJ3Z6UNNxlH4X9uXIA52OksWIxHy0OlsMJGhxxCHdiIgfVeAbTL87XSfk9JEQkSd1hAiKw==
-  dependencies:
-    find-up "5.0.0"
-    fs-extra "9.1.0"
-    glob "7.1.6"
-
-"@tsed/yarn-workspaces@1.15.1":
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/@tsed/yarn-workspaces/-/yarn-workspaces-1.15.1.tgz#64a3f87ade30239c3c9f928725d53e6415e69530"
-  integrity sha512-XoSDiRL3MIED4698sXOCJWBrGmXnwWtLTx3TcEDMSgrY8TD5jTxHa74OTPU9NlUut6VQD3DEHe8JZjwQ4jM0Sw==
+"@tsed/yarn-workspaces@1.17.0":
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/@tsed/yarn-workspaces/-/yarn-workspaces-1.17.0.tgz#d945a4572d8e4fe61d69be72f79ec522da761490"
+  integrity sha512-k7Rmljt0k+CKMzCMMMH0tDs9QnsGoRGIuuADGVZkoRG8lISbfYZyvt9WRpWeDZGISsB7++4hkjpigVQf/ru9Ug==
   dependencies:
     find-up "5.0.0"
     fs-extra "9.1.0"

@@ -27,7 +27,7 @@
     "@storybook/addons": "6.1.11",
     "@storybook/react": "6.1.11",
     "@svgr/webpack": "5.5.0",
-    "@tsed/yarn-workspaces": "1.14.0",
+    "@tsed/yarn-workspaces": "1.17.0",
     "babel-loader": "8.2.2",
     "cross-env": "7.0.3",
     "react-svg": "10.0.23",

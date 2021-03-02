@@ -1,0 +1,32 @@
+version: '3.3'
+services:
+  mongo:
+    image: 'mongo:4.1'
+    restart: always
+    volumes:
+      - mdb-data:/data/db
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME:
+      MONGO_INITDB_ROOT_PASSWORD:
+  server:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
+    image: server:latest
+    ports:
+      - "8083:8083"
+    stdin_open: true  # -i
+    tty: true         # -t
+    environment:
+      - NODE_ENV=development
+      - MONGOOSE_URL= mongodb://mongo:27017/tsed-formio-example
+    depends_on:
+      - mongo
+volumes:
+  mdb-data:

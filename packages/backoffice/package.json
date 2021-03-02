@@ -1,0 +1,33 @@
+{
+  "name": "@project/backoffice",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Romain Lenzotti",
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "@project/config": "1.0.0",
+    "@project/shared": "1.0.0"
+  },
+  "scripts": {
+    "start": "yarn craco start",
+    "build": "yarn craco build",
+    "test": "cross-env CI=1 yarn craco test --coverage",
+    "lint:fix": "yarn lint --fix",
+    "lint": "yarn eslint --config .eslintrc --cache --quiet \"./src/**/*.{ts,tsx}\"",
+    "prettier:fix": "yarn prettier \"{src,test}/**/*.{ts,tsx}\" --write"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

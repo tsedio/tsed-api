@@ -1,0 +1,7 @@
+@import "./tailwind.css";
+@import "./fonts/source-sans-pro/index.css";
+@import "./fonts/inconsolata/index.css";
+@import "./fonts/bxicons/index.css";
+@import "./animations.css";
+@import "./typography.css";
+@import "~@tsed/tailwind-formio/styles/index.css";

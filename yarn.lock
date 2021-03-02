@@ -4726,9 +4726,9 @@
     multer "^1.4.2"
 
 "@tsed/react-formio-container@^1.8.6":
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/@tsed/react-formio-container/-/react-formio-container-1.8.6.tgz#1b3ba5b69ccabcabfab78269281a3a0f28e0f33a"
-  integrity sha512-3nV3voIWFWs5MmzsyIdfHc8C1TzGGVBLKuJTEpNeMKxTgJPRyAfMKcB4cSkVbjvKwCfljjp4QNQDVmIEElDHUg==
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@tsed/react-formio-container/-/react-formio-container-1.8.7.tgz#8024d4e64e695f84fd560a424c26b9d44924817e"
+  integrity sha512-0myc5v1K4euhaO6mhpJS81aPKH4zkuYNrrIO5sGhGoMhm0WSEOJHQPsBmSmeLBPaDScFYT8H2NaVCZAMwFdw7g==
 
 "@tsed/react-formio@^1.1.0":
   version "1.1.0"

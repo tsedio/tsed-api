@@ -11,13 +11,6 @@
     "build:storybook": "build-storybook -s ../tailwind/build -c .storybook -o dist"
   },
   "devDependencies": {
-    "@tsed/react-formio": "^1.1.0",
-    "@tsed/redux-utils": "^1.1.0",
-    "@tsed/tailwind-formio": "^1.1.0",
-    "@tsed/config": "1.0.0",
-    "@tsed/backoffice": "^1.0.0",
-    "@tsed/shared": "^1.0.0",
-    "@tsed/tailwind": "1.0.0",
     "@babel/core": "^7.10.2",
     "@sambego/storybook-state": "2.0.1",
     "@storybook/addon-actions": "6.1.20",
@@ -27,14 +20,19 @@
     "@storybook/addons": "6.1.11",
     "@storybook/react": "6.1.11",
     "@svgr/webpack": "5.5.0",
+    "@tsed/backoffice": "1.0.0",
+    "@tsed/config": "1.0.0",
+    "@tsed/react-formio": "1.8.7",
+    "@tsed/redux-utils": "1.8.7",
+    "@tsed/shared": "1.0.0",
+    "@tsed/tailwind": "1.0.0",
+    "@tsed/tailwind-formio": "1.8.7",
     "@tsed/yarn-workspaces": "1.14.0",
     "babel-loader": "8.2.2",
     "cross-env": "7.0.3",
     "react-svg": "10.0.23",
     "url-loader": "2.2.0"
   },
-  "dependencies": {},
-  "peerDependencies": {},
   "browserslist": {
     "production": [
       ">0.2%",
@@ -46,5 +44,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "dependencies": {},
+  "peerDependencies": {}
 }

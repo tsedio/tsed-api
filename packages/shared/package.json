@@ -15,13 +15,11 @@
     "prettier:fix": "yarn prettier \"{src,test}/**/*.{ts,tsx}\" --write"
   },
   "dependencies": {
-    "@tsed/tailwind": "1.0.0",
-    "@tsed/config": "1.0.0"
+    "@tsed/config": "1.0.0",
+    "@tsed/tailwind": "1.0.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"
   },
-  "peerDependencies": {
-
-  }
+  "peerDependencies": {}
 }

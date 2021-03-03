@@ -8,12 +8,11 @@
   "license": "MIT",
   "private": true,
   "scripts": {},
-  "dependencies": {
-  },
   "devDependencies": {
     "@tsed/tailwind": "1.0.0",
     "@tsed/yarn-workspaces": "1.17.0",
     "postcss-nested": "4.2.3"
   },
+  "dependencies": {},
   "peerDependencies": {}
 }

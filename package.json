@@ -7,6 +7,7 @@
   "scripts": {
     "test": "lerna run test --stream",
     "test:e2e": "lerna run test:e2e",
+    "test:front": "lerna run test --scope=@tsed/backoffice --scope=@tsed/shared",
     "test:backoffice": "lerna run test --scope=@tsed/backoffice",
     "test:server": "lerna run test --scope=@tsed/server",
     "lint": "lerna run lint",

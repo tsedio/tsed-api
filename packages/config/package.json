@@ -6,6 +6,7 @@
   "description": "Shared configuration",
   "author": "Romain Lenzotti",
   "license": "MIT",
+  "private": true,
   "scripts": {},
   "dependencies": {
   },

@@ -4931,7 +4931,7 @@
     express "^4.17.1"
     multer "^1.4.2"
 
-"@tsed/react-formio-container@^1.8.6":
+"@tsed/react-formio-container@^1.8.7":
   version "1.8.7"
   resolved "https://registry.yarnpkg.com/@tsed/react-formio-container/-/react-formio-container-1.8.7.tgz#8024d4e64e695f84fd560a424c26b9d44924817e"
   integrity sha512-0myc5v1K4euhaO6mhpJS81aPKH4zkuYNrrIO5sGhGoMhm0WSEOJHQPsBmSmeLBPaDScFYT8H2NaVCZAMwFdw7g==
@@ -4945,12 +4945,12 @@
     eventemitter2 "^6.4.3"
     prop-types "^15.7.2"
 
-"@tsed/react-formio@^1.8.6":
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/@tsed/react-formio/-/react-formio-1.8.6.tgz#8c6abe616eddcfe6de6610c96773d8661cffed3a"
-  integrity sha512-oMx7/rIjRjlSEyW4cEDig7itbLY7Hs8py7nunEO5umGcS3GMetrYj/Na7N1LnDt3w56v9uiyK5ATJZj2UrZx6w==
+"@tsed/react-formio@^1.8.7":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@tsed/react-formio/-/react-formio-1.8.7.tgz#c9f6f398ba9ca492f4376a7ea92615ab4a3c28d6"
+  integrity sha512-0dvCE61ECp3abHyw0IdNhbIqqtnTdTqup268q/gBS7VHuHCAn8LWHv4GHCdIQWFPfPtpxOlYb3MU9itemgCNRg==
   dependencies:
-    "@tsed/redux-utils" "1.8.6"
+    "@tsed/redux-utils" "1.8.7"
     eventemitter2 "^6.4.3"
     prop-types "^15.7.2"
 
@@ -4959,10 +4959,10 @@
   resolved "https://registry.yarnpkg.com/@tsed/redux-utils/-/redux-utils-1.1.0.tgz#750f66d6d9556c44d97e2f82b7b9b53459c831ea"
   integrity sha512-B+pb69HTLDSdyqgK1ZX4q5BVXAYtDcY5hpWmvYHO3AUz2hGXaodmr1QaEATh901X77avwi1/URANCk0eV0nRmQ==
 
-"@tsed/redux-utils@1.8.6", "@tsed/redux-utils@^1.8.6":
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/@tsed/redux-utils/-/redux-utils-1.8.6.tgz#55c8aa794ffb0e62fe70b8d9855f089f74cfae28"
-  integrity sha512-SwYihXb2ATtu4jOE2DZUkX9fhVpJJChpACK/Q+mjpo/iwsoXiJ0VIcLtIEQiFcZwpmfsqTHwI84eXgXWDm9FHQ==
+"@tsed/redux-utils@1.8.7", "@tsed/redux-utils@^1.8.7":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@tsed/redux-utils/-/redux-utils-1.8.7.tgz#ee4111c08d40ea8570b6e27e21c910eb7e2ef63f"
+  integrity sha512-foEJG5+b1hM10MX1MFOhqyW5i0BE0N6pfWk/zC8DpHMC2oZ9SSf5P2hRKIJmSUn3LZkj3vFTdsqMdyGux7FDPg==
 
 "@tsed/schema@6.26.4":
   version "6.26.4"
@@ -4988,10 +4988,10 @@
   resolved "https://registry.yarnpkg.com/@tsed/tailwind-formio/-/tailwind-formio-1.1.0.tgz#50e2f785ea76e16a25e75d865597d7b89e02357f"
   integrity sha512-82K9ZyNU4sjSSzk7HXlV8AofU6pUS2/DtoQITu+1EeGI2lyVlpvqq76IsOH+gXF2kcGXktBafTtJdAZpkeB+SQ==
 
-"@tsed/tailwind-formio@^1.8.6":
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/@tsed/tailwind-formio/-/tailwind-formio-1.8.6.tgz#bf3334685de0b244fa3774b9fcf9fc4eaa95faa1"
-  integrity sha512-9huq1HEgBl6aanWTkm08hopkdkPlG0PKWT1xuONJFQmqK/qLyl9fLPQe2H6+ls//Gt+5MiUWPh9aDiqvezuQOA==
+"@tsed/tailwind-formio@^1.8.7":
+  version "1.8.7"
+  resolved "https://registry.yarnpkg.com/@tsed/tailwind-formio/-/tailwind-formio-1.8.7.tgz#e34b4bed1cfff300baac51c335e1404fe2165841"
+  integrity sha512-epe4kAkUqEM0oYaNETFeIRNqlqnK9PdxpPWkYrWdFJTmcd1Qw+dOfVIfXHY6QaR5wm9MQH7M2WpQKfE49P/o1w==
 
 "@tsed/testing-mongoose@6.26.4":
   version "6.26.4"

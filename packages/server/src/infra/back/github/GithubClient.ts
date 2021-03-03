@@ -45,7 +45,7 @@ export class GithubClient extends BaseLogClient {
     });
   }
 
-  get repos() {
+  get repos(): any {
     return this.octokit.repos;
   }
 

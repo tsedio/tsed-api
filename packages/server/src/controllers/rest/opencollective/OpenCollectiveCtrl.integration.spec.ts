@@ -19,7 +19,7 @@ describe("OpenCollectiveCtrl", () => {
   beforeAll(() => {
     request = SuperTest(PlatformTest.callback());
   });
-  afterAll(() => PlatformTest.reset());
+  afterAll(() => TestMongooseContext.reset());
 
   describe("get()", () => {
     it("should get project information", async () => {

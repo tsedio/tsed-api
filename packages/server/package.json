@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Server based on Ts.ED framework",
   "author": "Romain Lenzotti",
+  "private": true,
   "scripts": {
     "build": "yarn tsc",
     "tsc": "tsc --project tsconfig.compile.json",
@@ -10,7 +11,7 @@
     "start": "tsnd --inspect --ignore-watch node_modules --respawn --transpile-only -r tsconfig-paths/register src/index.ts",
     "start:prod": "cross-env NODE_ENV=production node dist/index.js",
     "test": "yarn test:lint && yarn test:coverage",
-    "test:unit": "cross-env NODE_ENV=test CI=1 jest",
+    "test:unit": "cross-env NODE_ENV=test CI=1 jest --detectOpenHandles --coverage",
     "test:coverage": "yarn test:unit",
     "test:lint": "yarn eslint src --ext .ts",
     "test:lint:fix": "yarn eslint src --ext .ts --fix",

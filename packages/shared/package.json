@@ -7,6 +7,7 @@
   "description": "Shared components",
   "author": "Romain Lenzotti",
   "license": "MIT",
+  "private": true,
   "scripts": {
     "test": "cross-env CI=1 yarn craco test --coverage",
     "lint:fix": "yarn lint --fix",

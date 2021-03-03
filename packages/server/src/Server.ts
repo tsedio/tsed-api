@@ -1,6 +1,7 @@
 import "@tsed/ajv";
 import {$log, PlatformApplication, Res} from "@tsed/common";
 import {Configuration, Inject} from "@tsed/di";
+import "@tsed/async-hook-context";
 import "@tsed/formio";
 import "@tsed/mongoose";
 import "@tsed/platform-express"; // /!\ keep this import
@@ -78,6 +79,10 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
         setHeaders: setCustomCacheControl
       }
     ]
+  },
+  github: {
+    accessToken: process.env.GH_TOKEN,
+    whitelist: (process.env.REPOS_WHITE_LIST || "tsed").split(";")
   }
 })
 export class Server {

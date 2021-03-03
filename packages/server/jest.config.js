@@ -22,12 +22,12 @@ module.exports = {
 
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
-    global: {
-      'branches': 70,
-      'functions': 70,
-      'lines': 70,
-      'statements': 70
-    }
+    // global: {
+    //   'branches': 70,
+    //   'functions': 70,
+    //   'lines': 70,
+    //   'statements': 70
+    // }
   },
 
   // An array of file extensions your modules use

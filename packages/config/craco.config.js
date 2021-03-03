@@ -1,10 +1,12 @@
-const { ESLINT_MODES } = require('@craco/craco')
-const {configure, ensureReact} = require('@tsed/yarn-workspaces')
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { ESLINT_MODES } = require("@craco/craco");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const { configure, ensureReact } = require("@tsed/yarn-workspaces");
 
 module.exports = {
   style: {
     postcss: {
-      plugins: require('./postcss.config').plugins
+      plugins: require("./postcss.config").plugins
     }
   },
   eslint: {
@@ -13,17 +15,13 @@ module.exports = {
   jest: {
     configure: {
       globals: {
-        'CONFIG': true
-      },
-      setupFiles: [
-        // 'react-app-polyfill/jsdom',
-        require.resolve('./jest/setupTests.js')
-      ]
+        CONFIG: true
+      }
     }
   },
   webpack: {
     configure: (webpackConfig, { env, paths }) => {
-      return ensureReact(configure(webpackConfig, { env, paths }))
+      return ensureReact(configure(webpackConfig, { env, paths }));
     }
   }
-}
+};

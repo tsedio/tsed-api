@@ -97,7 +97,7 @@ jobs:
 
   deploy-staging:
     runs-on: ubuntu-latest
-    needs: [release]
+    needs: [lint, test-front, test-server]
     if: ${{ github.event_name != 'pull_request' && contains(github.ref, 'develop')}}
 
     strategy:
@@ -111,10 +111,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
-      - uses: actions/download-artifact@v2
-        with:
-          name: packages
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile --network-timeout 500000

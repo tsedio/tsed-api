@@ -107,7 +107,7 @@ export class Server {
   }
 
   $afterRoutesInit() {
-    this.app.get("/*", (req: any, res: Res) => {
+    this.app.get("/backoffice/*", (req: any, res: Res) => {
       res.sendFile(join(backofficeDir, "index.html"));
     });
   }

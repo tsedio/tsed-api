@@ -1,0 +1,18 @@
+{
+  "flow": "gflow",
+  "remote": "origin",
+  "develop": "master",
+  "production": "master",
+  "ignores": [],
+  "syncAfterFinish": false,
+  "postFinish": "",
+  "skipTest": false,
+  "charReplacement": "-",
+  "branchTypes": {
+    "feat": "feat",
+    "fix": "fix",
+    "chore": "chore",
+    "docs": "docs",
+    "release": "release"
+  }
+}

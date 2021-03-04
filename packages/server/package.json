@@ -1,6 +1,6 @@
 {
   "name": "@tsed/server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Server based on Ts.ED framework",
   "author": "Romain Lenzotti",
   "private": true,
@@ -27,12 +27,12 @@
     "@tsed/exceptions": "6.27.0",
     "@tsed/formio": "6.27.0",
     "@tsed/json-mapper": "6.27.0",
+    "@tsed/logger-logentries": "5.6.0",
     "@tsed/mongoose": "6.27.0",
     "@tsed/passport": "6.27.0",
     "@tsed/platform-express": "6.27.0",
     "@tsed/schema": "6.27.0",
     "@tsed/swagger": "6.27.0",
-    "@tsed/logger-logentries": "5.6.0",
     "ajv": "^7.0.4",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
@@ -42,13 +42,13 @@
     "dotenv": "8.2.0",
     "express": "^4.17.1",
     "formio": "2.0.0-rc.42",
+    "globby": "11.0.2",
+    "le_node": "^1.8.0",
     "method-override": "^3.0.0",
     "moment": "2.29.1",
     "mongoose": "^5.11.14",
-    "le_node": "^1.8.0",
     "passport": "^0.4.1",
-    "url-parse": "1.4.7",
-    "globby": "11.0.2"
+    "url-parse": "1.4.7"
   },
   "devDependencies": {
     "@tsed/cli-plugin-eslint": "2.8.1",

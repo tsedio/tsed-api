@@ -1,7 +1,7 @@
 import "@tsed/ajv";
-import {$log, PlatformApplication, Res} from "@tsed/common";
-import {Configuration, Inject} from "@tsed/di";
 import "@tsed/async-hook-context";
+import {PlatformApplication, Res} from "@tsed/common";
+import {Configuration, Inject} from "@tsed/di";
 import "@tsed/formio";
 import "@tsed/mongoose";
 import "@tsed/platform-express"; // /!\ keep this import
@@ -17,31 +17,13 @@ import {isProduction} from "./config/env";
 import formioConfig from "./config/formio";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
+import "./config/logger";
 import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
 
 const send = require("send");
 
 export const rootDir = __dirname;
 const backofficeDir = join(rootDir, "../../backoffice/build");
-
-// istanbul ignore next
-if (isProduction) {
-  $log.appenders.set("stdout", {
-    type: "stdout",
-    levels: ["info", "debug"],
-    layout: {
-      type: "json"
-    }
-  });
-
-  $log.appenders.set("stderr", {
-    levels: ["trace", "fatal", "error", "warn"],
-    type: "stderr",
-    layout: {
-      type: "json"
-    }
-  });
-}
 
 function setCustomCacheControl(res: ServerResponse, path: string) {
   if (send.mime.lookup(path) === "text/html") {

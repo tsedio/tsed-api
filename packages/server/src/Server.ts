@@ -19,6 +19,8 @@ import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
 import "./config/logger";
 import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
+import {Env} from "@tsed/core";
+import {EnsureHttpsMiddleware} from "./infra/middlewares/EnsureHttpsMiddleware";
 
 const send = require("send");
 
@@ -65,7 +67,18 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
   github: {
     accessToken: process.env.GH_TOKEN,
     whitelist: (process.env.REPOS_WHITE_LIST || "tsed").split(";")
-  }
+  },
+  middlewares: [
+    {env: Env.PROD, use: EnsureHttpsMiddleware},
+    cors(),
+    cookieParser(),
+    compress({}),
+    methodOverride(),
+    bodyParser.json(),
+    bodyParser.urlencoded({
+      extended: true
+    })
+  ]
 })
 export class Server {
   @Inject()
@@ -73,20 +86,6 @@ export class Server {
 
   @Configuration()
   settings: Configuration;
-
-  $beforeRoutesInit(): void {
-    this.app
-      .use(cors())
-      .use(cookieParser())
-      .use(compress({}))
-      .use(methodOverride())
-      .use(bodyParser.json())
-      .use(
-        bodyParser.urlencoded({
-          extended: true
-        })
-      );
-  }
 
   $afterRoutesInit() {
     this.app.get("/backoffice/*", (req: any, res: Res) => {

@@ -8,7 +8,7 @@ module.exports = {
   'apps': [
     {
       'script': 'packages/server/dist/index.js',
-      'instances': 1,
+      'instances': process.env.PM2_NB_INSTANCE || 1,
       'exec_mode': 'cluster',
       'out_file': defaultLogFile,
       'error_file': defaultLogFile,

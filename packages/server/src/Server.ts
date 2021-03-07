@@ -1,27 +1,29 @@
 import "@tsed/ajv";
 import "@tsed/async-hook-context";
 import {PlatformApplication, Res} from "@tsed/common";
+import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
 import "@tsed/formio";
 import "@tsed/mongoose";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/swagger";
 import bodyParser from "body-parser";
-import compress from "compression";
+import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import {ServerResponse} from "http";
 import methodOverride from "method-override";
+import mongoose from "mongoose";
 import {join} from "path";
 import {isProduction} from "./config/env";
 import formioConfig from "./config/formio";
+import "./config/logger";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
-import "./config/logger";
 import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
-import {Env} from "@tsed/core";
-import {EnsureHttpsMiddleware} from "./infra/middlewares/EnsureHttpsMiddleware";
+import {EnsureHttpsMiddleware} from "./infra/middlewares/https/EnsureHttpsMiddleware";
 
+const mongooseStore = require("cache-manager-mongoose");
 const send = require("send");
 
 export const rootDir = __dirname;
@@ -72,13 +74,23 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
     {env: Env.PROD, use: EnsureHttpsMiddleware},
     cors(),
     cookieParser(),
-    compress({}),
+    compression({}),
     methodOverride(),
     bodyParser.json(),
     bodyParser.urlencoded({
       extended: true
     })
-  ]
+  ],
+  cache: {
+    ttl: 300,
+    store: mongooseStore,
+    mongoose,
+    modelName: "caches",
+    modelOptions: {
+      collection: "caches",
+      versionKey: false
+    }
+  }
 })
 export class Server {
   @Inject()

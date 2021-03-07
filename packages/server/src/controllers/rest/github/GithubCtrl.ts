@@ -1,5 +1,5 @@
 import {InjectContext} from "@tsed/async-hook-context";
-import {Controller, Get, Inject, PathParams, PlatformContext} from "@tsed/common";
+import {Controller, Get, Inject, PathParams, PlatformContext, UseCache} from "@tsed/common";
 import {array, boolean, number, object, Returns, string} from "@tsed/schema";
 import {GithubClient} from "../../../infra/back/github/GithubClient";
 
@@ -66,15 +66,16 @@ export class GithubCtrl {
   @Inject()
   protected client: GithubClient;
 
-  handleResponse({data, headers}: any) {
-    this.$ctx?.response.setHeader("etag", headers.etag);
-    this.$ctx?.response.setHeader("date", headers.date);
+  handleResponse({data}: any) {
     return data;
   }
 
   @Get()
   @(Returns(200).ContentType("application/json").Schema(GithubRepo))
   @(Returns(401).Description("Repository unauthorized"))
+  @UseCache({
+    ttl: 600
+  })
   async get(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
     const data = await this.handleResponse(await this.client.repos.get({owner, repo}));
 
@@ -90,6 +91,9 @@ export class GithubCtrl {
   @Get("/contributors")
   @(Returns(200).ContentType("application/json").Schema(GithubContributors))
   @(Returns(401).Description("Repository unauthorized"))
+  @UseCache({
+    ttl: 3600
+  })
   async getContributors(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
     return this.handleResponse(await this.client.repos.listContributors({owner, repo}));
   }
@@ -97,6 +101,9 @@ export class GithubCtrl {
   @Get("/releases")
   @(Returns(200).ContentType("application/json").Schema(GithubReleases))
   @(Returns(401).Description("Repository unauthorized"))
+  @UseCache({
+    ttl: 3600
+  })
   async getReleases(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
     return this.handleResponse(await this.client.repos.listReleases({owner, repo}));
   }

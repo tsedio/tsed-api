@@ -11,6 +11,7 @@ describe("OpenCollectiveCtrl", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;
   beforeAll(
     TestMongooseContext.bootstrap(Server, {
+      cache: false,
       mount: {
         "/rest": [OpenCollectiveCtrl]
       }

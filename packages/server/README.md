@@ -19,3 +19,13 @@ $ yarn start
 $ yarn build
 $ yarn start:prod
 ```
+
+## Env template
+
+```dotenv
+LOG_ENTRIES_KEY=
+LOG_NAME=API
+MONGOOSE_URL=
+REPOS_WHITE_LIST=tsed;tsed-cli;logger
+ENFORCE_HTTPS=false
+```

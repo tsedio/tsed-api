@@ -1,6 +1,6 @@
 import {InjectContext} from "@tsed/async-hook-context";
-import {Controller, Get, Inject, PathParams, PlatformContext, UseCache} from "@tsed/common";
-import {array, boolean, number, object, Returns, string} from "@tsed/schema";
+import {Controller, Get, Inject, PathParams, PlatformContext, QueryParams, UseCache} from "@tsed/common";
+import {array, boolean, Default, Max, Min, number, object, Returns, string} from "@tsed/schema";
 import {GithubClient} from "../../../infra/back/github/GithubClient";
 
 const GithubRepo = object({
@@ -95,7 +95,7 @@ export class GithubCtrl {
     ttl: 3600
   })
   async getContributors(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
-    return this.handleResponse(await this.client.repos.listContributors({owner, repo}));
+    return this.handleResponse(await this.client.repos.listContributors({owner, repo, page: 0, per_page: 100}));
   }
 
   @Get("/releases")
@@ -104,7 +104,12 @@ export class GithubCtrl {
   @UseCache({
     ttl: 3600
   })
-  async getReleases(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
-    return this.handleResponse(await this.client.repos.listReleases({owner, repo}));
+  async getReleases(
+    @PathParams("owner") owner: string,
+    @PathParams("repo") repo: string,
+    @QueryParams("page", Number) @Min(1) @Default(1) page = 1,
+    @QueryParams("per_page", Number) @Max(100) @Default(30) per_page = 30
+  ) {
+    return this.handleResponse(await this.client.repos.listReleases({owner, repo, page, per_page}));
   }
 }

@@ -1,5 +1,5 @@
-import { IfSidebar, Loader, oneOfIsActive, useSidebar } from "@tsed/shared";
 import { AuthState, logout, selectRoot } from "@tsed/react-formio";
+import { IfSidebar, Loader, oneOfIsActive, useSidebar } from "@tsed/shared";
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route as DefaultRoute, Switch } from "react-router";
@@ -9,10 +9,15 @@ import { SiderbarHeader } from "./header/sidebarHeader.component";
 import { useNav } from "./nav/useNav.hook";
 import { routes } from "./routes";
 
+function LoaderContainer() {
+  const isActive = useSelector(oneOfIsActive("loader"));
+  return <Loader isActive={isActive} />;
+}
+
 function App() {
   const { headerHeight } = Config;
   const dispatch = useDispatch();
-  const isActive = useSelector(oneOfIsActive("auth", "loader"));
+  const isActive = useSelector(oneOfIsActive("auth"));
   const auth = useSelector(selectRoot<AuthState>("auth"));
   const nav = useNav();
   const onLogout = useCallback(() => {
@@ -22,6 +27,10 @@ function App() {
   const { sidebarOpen, toggleSidebar } = useSidebar();
   const size = sidebarOpen ? "64" : "14";
   const isAuth = auth.user && auth.user.data;
+
+  if (isActive) {
+    return <Loader isActive={isActive} />;
+  }
 
   return (
     <div className='App'>
@@ -73,7 +82,7 @@ function App() {
         auth={auth}
       />
 
-      <Loader isActive={isActive} />
+      <LoaderContainer />
     </div>
   );
 }

@@ -27,7 +27,7 @@
     "@tsed/exceptions": "6.34.0",
     "@tsed/formio": "6.34.0",
     "@tsed/json-mapper": "6.34.0",
-    "@tsed/logger-logentries": "5.8.0",
+    "@tsed/logger-logentries": "5.12.0",
     "@tsed/mongoose": "6.34.0",
     "@tsed/passport": "6.34.0",
     "@tsed/platform-express": "6.34.0",

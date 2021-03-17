@@ -4873,23 +4873,12 @@
     "@tsed/core" "6.34.0"
     tslib "2.0.1"
 
-"@tsed/logger-logentries@5.8.0":
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/@tsed/logger-logentries/-/logger-logentries-5.8.0.tgz#67f9ff6e11d0e3c936dd93bb16d666826770450c"
-  integrity sha512-jxj0ygbl9584G3B9Q+VziCZ+DdMC05xm/WHtqpMWJ378vmG0IlAxECPnhHU/YHJ4Eux2flab9eWUrB0LuP93/w==
+"@tsed/logger-logentries@5.12.0":
+  version "5.12.0"
+  resolved "https://registry.yarnpkg.com/@tsed/logger-logentries/-/logger-logentries-5.12.0.tgz#ec37b7dd40e60b695ee154880c7515c2666cd735"
+  integrity sha512-4OmFhLybXg4aq/Cmvyu956VCoEd0WqUe4L5d2Qw4Uu3uFeTgHnfaESVnalFwBBh2r/elzn9i7SIKG5nS+++E6A==
   dependencies:
-    "@tsed/logger" "5.8.0"
-
-"@tsed/logger@5.8.0":
-  version "5.8.0"
-  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-5.8.0.tgz#87763fa43fa18896590176e3edf90f9d0998d0b7"
-  integrity sha512-t3202o//vzSyhmxiPs9bw4KWDlmuafT+lFBhgcQk0P20+pdiEv825wThGayGF+0Uqx+LfG0WxnMyuwefxSI0qw==
-  dependencies:
-    colors "^1.3.3"
-    date-format "^3.0.0"
-    semver "^7.3.2"
-    streamroller "^1.0.3"
-    tslib "2.0.3"
+    le_node "^1.8.0"
 
 "@tsed/logger@^5.12.0":
   version "5.12.0"

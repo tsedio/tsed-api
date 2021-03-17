@@ -1,6 +1,7 @@
 import "@tsed/ajv";
 import "@tsed/async-hook-context";
 import {PlatformApplication, Res} from "@tsed/common";
+import {PlatformMiddlewareLoadingOptions} from "@tsed/common/lib/config/interfaces";
 import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
 import "@tsed/formio";
@@ -71,7 +72,7 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
     whitelist: (process.env.REPOS_WHITE_LIST || "tsed").split(";")
   },
   middlewares: [
-    {env: Env.PROD, use: EnsureHttpsMiddleware},
+    process.env.ENFORCE_HTTPS && {env: Env.PROD, use: EnsureHttpsMiddleware},
     cors(),
     cookieParser(),
     compression({}),
@@ -80,7 +81,7 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
     bodyParser.urlencoded({
       extended: true
     })
-  ],
+  ].filter(Boolean) as PlatformMiddlewareLoadingOptions[],
   cache: {
     ttl: 300,
     store: mongooseStore,

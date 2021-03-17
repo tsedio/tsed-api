@@ -28,6 +28,7 @@ describe("GithubCtrl", () => {
         headers: {etag: "etag", date: "date"},
         data: {
           id: 52221518,
+          html_url: "https://github.com/typedproject/tsed",
           stargazers_count: 1552,
           watchers_count: 1552,
           forks_count: 163,
@@ -39,6 +40,7 @@ describe("GithubCtrl", () => {
 
       expect(body).toEqual({
         id: 52221518,
+        html_url: "https://github.com/typedproject/tsed",
         stargazers_count: 1552,
         watchers_count: 1552,
         forks_count: 163,

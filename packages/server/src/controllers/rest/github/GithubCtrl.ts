@@ -5,6 +5,7 @@ import {GithubClient} from "../../../infra/back/github/GithubClient";
 
 const GithubRepo = object({
   id: string().description("Github repo id"),
+  html_url: string().required(),
   stargazers_count: string().required().description("Github stargazers"),
   watchers_count: string().required().description("Github watchers"),
   forks_count: string().required().description("Github forks"),
@@ -81,6 +82,7 @@ export class GithubCtrl {
 
     return {
       id: data.id,
+      html_url: data.html_url,
       stargazers_count: data.stargazers_count,
       watchers_count: data.watchers_count,
       forks_count: data.forks_count,

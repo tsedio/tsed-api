@@ -1,7 +1,9 @@
 import {InjectContext} from "@tsed/async-hook-context";
-import {Controller, Get, Inject, PathParams, PlatformContext, QueryParams, UseCache} from "@tsed/common";
+import {BodyParams, Controller, Get, HeaderParams, Inject, PathParams, PlatformContext, Post, QueryParams} from "@tsed/common";
 import {array, boolean, Default, Max, Min, number, object, Returns, string} from "@tsed/schema";
+import {GithubWebhookPayload} from "../../../domain/github/GithubWebhookPayload";
 import {GithubClient} from "../../../infra/back/github/GithubClient";
+import {CacheService} from "../../../infra/persistence/CacheService";
 
 const GithubRepo = object({
   id: string().description("Github repo id"),
@@ -65,6 +67,9 @@ export class GithubCtrl {
   $ctx?: PlatformContext;
 
   @Inject()
+  cache: CacheService;
+
+  @Inject()
   protected client: GithubClient;
 
   handleResponse({data}: any) {
@@ -74,11 +79,8 @@ export class GithubCtrl {
   @Get()
   @(Returns(200).ContentType("application/json").Schema(GithubRepo))
   @(Returns(401).Description("Repository unauthorized"))
-  @UseCache({
-    ttl: 600
-  })
   async get(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
-    const data = await this.handleResponse(await this.client.repos.get({owner, repo}));
+    const data = await this.client.getInfo(owner, repo);
 
     return {
       id: data.id,
@@ -93,25 +95,37 @@ export class GithubCtrl {
   @Get("/contributors")
   @(Returns(200).ContentType("application/json").Schema(GithubContributors))
   @(Returns(401).Description("Repository unauthorized"))
-  @UseCache({
-    ttl: 3600
-  })
   async getContributors(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
-    return this.handleResponse(await this.client.repos.listContributors({owner, repo, page: 0, per_page: 100}));
+    return this.client.getContributors(owner, repo, 1, 100);
   }
 
   @Get("/releases")
   @(Returns(200).ContentType("application/json").Schema(GithubReleases))
   @(Returns(401).Description("Repository unauthorized"))
-  @UseCache({
-    ttl: 3600
-  })
   async getReleases(
     @PathParams("owner") owner: string,
     @PathParams("repo") repo: string,
     @QueryParams("page", Number) @Min(1) @Default(1) page = 1,
     @QueryParams("per_page", Number) @Max(100) @Default(30) per_page = 30
   ) {
-    return this.handleResponse(await this.client.repos.listReleases({owner, repo, page, per_page}));
+    return this.client.getReleases(owner, repo, page, per_page);
+  }
+
+  @Post("/webhook")
+  @(Returns(200, String).Examples("OK"))
+  async webhook(@HeaderParams("x-github-event") event: string, @BodyParams() payload: GithubWebhookPayload) {
+    const [owner, repo] = payload.repository.fullName.split("/");
+
+    switch (event) {
+      case "release":
+        await this.cache.deleteMatchingKeys(new RegExp(`GithubClient:getReleases:${owner}:${repo}`));
+        await this.cache.deleteMatchingKeys(new RegExp(`GithubClient:getContributors:${owner}:${repo}`));
+        break;
+      case "star":
+        await this.cache.deleteMatchingKeys(new RegExp(`GithubClient:getInfo:${owner}:${repo}`));
+        break;
+    }
+
+    return "OK";
   }
 }

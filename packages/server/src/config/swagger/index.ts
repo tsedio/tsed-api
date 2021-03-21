@@ -4,7 +4,7 @@ const {version} = require("../../../package.json");
 
 export default [
   {
-    path: "/v3/docs",
+    path: "/docs",
     specVersion: "3.0.1",
     spec: {
       info: {

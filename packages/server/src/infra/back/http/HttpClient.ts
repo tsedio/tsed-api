@@ -7,7 +7,7 @@ import {get, omit} from "lodash";
 import querystring from "querystring";
 import {BaseLogClient} from "./BaseLogClient";
 
-export interface HttpClientOptions extends AxiosRequestConfig {
+export interface HttpClientOptions extends AxiosRequestConfig, Record<string, unknown> {
   type?: Type<any>;
   collectionType?: Type<any>;
   additionalProperties?: boolean;

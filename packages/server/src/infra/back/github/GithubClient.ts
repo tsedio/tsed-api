@@ -29,13 +29,6 @@ export class GithubClient extends BaseLogClient {
     this.octokit = new Octokit({
       auth: this.token
     });
-    this.octokit.hook.before("request", (options: RequestParameters) => {
-      options.startTime = new Date().getTime();
-
-      if (options.repo) {
-        this.checkWhitelist(options.repo as string);
-      }
-    });
     this.octokit.hook.after(
       "request",
       async (response: {status: string; data: any; headers: Record<string, string>}, options: RequestParameters) => {
@@ -71,5 +64,6 @@ export class GithubClient extends BaseLogClient {
     if (!this.whiteList.includes(repo)) {
       throw new Unauthorized(`Unauthorized repository`);
     }
+    return this;
   }
 }

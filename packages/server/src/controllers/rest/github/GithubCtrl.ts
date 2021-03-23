@@ -1,6 +1,6 @@
 import {InjectContext} from "@tsed/async-hook-context";
 import {BodyParams, Controller, Get, HeaderParams, Inject, PathParams, PlatformContext, Post, QueryParams} from "@tsed/common";
-import {array, boolean, Default, Max, Min, number, object, Returns, string} from "@tsed/schema";
+import {array, boolean, Default, Max, Min, Name, number, object, Returns, string} from "@tsed/schema";
 import {GithubWebhookPayload} from "../../../domain/github/GithubWebhookPayload";
 import {GithubClient} from "../../../infra/back/github/GithubClient";
 import {CacheService} from "../../../infra/persistence/CacheService";
@@ -62,6 +62,7 @@ const GithubRelease = object({
 const GithubReleases = array().items(GithubRelease).label("GithubReleases");
 
 @Controller("/github/:owner/:repo")
+@Name("Github")
 export class GithubCtrl {
   @InjectContext()
   $ctx?: PlatformContext;
@@ -80,7 +81,7 @@ export class GithubCtrl {
   @(Returns(200).ContentType("application/json").Schema(GithubRepo))
   @(Returns(401).Description("Repository unauthorized"))
   async get(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
-    const data = await this.client.getInfo(owner, repo);
+    const data = await this.client.checkWhitelist(repo).getInfo(owner, repo);
 
     return {
       id: data.id,
@@ -96,7 +97,7 @@ export class GithubCtrl {
   @(Returns(200).ContentType("application/json").Schema(GithubContributors))
   @(Returns(401).Description("Repository unauthorized"))
   async getContributors(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
-    return this.client.getContributors(owner, repo, 1, 100);
+    return this.client.checkWhitelist(repo).getContributors(owner, repo, 1, 100);
   }
 
   @Get("/releases")
@@ -108,7 +109,7 @@ export class GithubCtrl {
     @QueryParams("page", Number) @Min(1) @Default(1) page = 1,
     @QueryParams("per_page", Number) @Max(100) @Default(30) per_page = 30
   ) {
-    return this.client.getReleases(owner, repo, page, per_page);
+    return this.client.checkWhitelist(repo).getReleases(owner, repo, page, per_page);
   }
 
   @Post("/webhook")

@@ -1,0 +1,22 @@
+{
+  "handler": [
+    "before"
+  ],
+  "method": [
+    "create",
+    "update"
+  ],
+  "priority": 10,
+  "name": "save",
+  "title": "Save Submission",
+  "settings": {
+    "resource": ""
+  },
+  "condition": {
+    "eq": "",
+    "value": "",
+    "custom": ""
+  },
+  "form": "$machineName:packages",
+  "machineName": "packages:save1"
+}

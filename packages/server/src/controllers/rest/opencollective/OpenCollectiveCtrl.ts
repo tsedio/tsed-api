@@ -1,6 +1,6 @@
 import {Controller, Get, UseCache} from "@tsed/common";
 import {Inject} from "@tsed/di";
-import {any, array, boolean, datetime, email, number, object, Returns, string, url} from "@tsed/schema";
+import {any, array, boolean, datetime, email, Name, number, object, Returns, string, url} from "@tsed/schema";
 import {OpenCollectiveClient} from "../../../infra/back/opencollective/OpenCollectiveClient";
 
 const ttl = Number(process.env.OPEN_COLLECTIVE_TTL || 3600);
@@ -29,6 +29,7 @@ const OpenCollectiveMemberSchema = object({
 const OpenCollectiveMembersSchema = array().items(OpenCollectiveMemberSchema).label("OpenCollectiveMembersSchema");
 
 @Controller("/opencollective")
+@Name("OpenCollective")
 export class OpenCollectiveCtrl {
   @Inject()
   client: OpenCollectiveClient;

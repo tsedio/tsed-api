@@ -58,6 +58,7 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
   mongoose: mongooseConfig,
   formio: formioConfig,
   exclude: ["**/*.spec.ts"],
+  componentsScan: [`${rootDir}/migrations/**/*.ts`],
   statics: {
     "/backoffice": [
       {

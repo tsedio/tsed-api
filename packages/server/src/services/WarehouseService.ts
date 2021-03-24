@@ -1,4 +1,4 @@
-import {Injectable} from "@tsed/common";
+import {Injectable, UseCache} from "@tsed/common";
 import {Constant, Inject} from "@tsed/di";
 import {FormioDatabase, FormioSubmission} from "@tsed/formio";
 import {NpmPackage} from "../domain/npm/NpmPackage";
@@ -18,6 +18,9 @@ export class WarehouseService {
 
   private formId: string;
 
+  @UseCache({
+    ttl: 3600
+  })
   async getPlugins(keyword: string) {
     const packages = await this.npmClient.search(keyword);
 

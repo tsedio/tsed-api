@@ -1,8 +1,10 @@
 import {Controller, Get} from "@tsed/common";
 import {Inject} from "@tsed/di";
+import {Name} from "@tsed/schema";
 import {CacheService} from "../../../infra/persistence/CacheService";
 
 @Controller("/caches")
+@Name("Cache")
 export class CacheCtrl {
   @Inject()
   cache: CacheService;

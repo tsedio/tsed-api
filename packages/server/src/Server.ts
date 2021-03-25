@@ -29,6 +29,7 @@ const send = require("send");
 
 export const rootDir = __dirname;
 const backofficeDir = join(rootDir, "../../backoffice/build");
+const staticsDir = join(rootDir, "../statics");
 
 function setCustomCacheControl(res: ServerResponse, path: string) {
   if (send.mime.lookup(path) === "text/html") {
@@ -65,6 +66,11 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
         root: backofficeDir,
         maxAge: "1d",
         setHeaders: setCustomCacheControl
+      }
+    ],
+    "/statics": [
+      {
+        root: staticsDir
       }
     ]
   },

@@ -1,4 +1,5 @@
 import {CollectionOf, Description, Email, Enum, Example, Required, Url} from "@tsed/schema";
+import crypto from "crypto";
 
 export enum NpmPackageType {
   OFFICIAL = "official",
@@ -18,6 +19,11 @@ export class NpmPackageMaintainer {
   @Required()
   @Email()
   email: string;
+
+  @Url()
+  get avatar(): string {
+    return `https://www.gravatar.com/avatar/${crypto.createHash("md5").update(this.email.toLowerCase()).digest("hex")}`;
+  }
 }
 
 export class NpmPackage {

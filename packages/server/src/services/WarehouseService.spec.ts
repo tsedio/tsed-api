@@ -166,8 +166,8 @@ describe("WarehouseService", () => {
         }
       });
       expect(formioDatabase.submissionModel.findOne).toHaveBeenCalledWith({
-        data: {name: {$eq: "@tsed/common"}},
-        form: {$eq: "formId"}
+        "data.name": "@tsed/common",
+        form: "formId"
       });
       expect(formioDatabase.submissionModel.prototype.save).not.toHaveBeenCalled();
     });
@@ -209,8 +209,8 @@ describe("WarehouseService", () => {
         }
       });
       expect(formioDatabase.submissionModel.findOne).toHaveBeenCalledWith({
-        data: {name: {$eq: "@tsed/common"}},
-        form: {$eq: "formId"}
+        "data.name": "@tsed/common",
+        form: "formId"
       });
       expect(formioDatabase.submissionModel.prototype.save).toHaveBeenCalledWith();
     });

@@ -1,5 +1,5 @@
-import {Injectable, UseCache} from "@tsed/common";
-import {Constant, Inject} from "@tsed/di";
+import {Injectable} from "@tsed/common";
+import {Inject} from "@tsed/di";
 import {FormioDatabase, FormioSubmission} from "@tsed/formio";
 import {NpmPackage} from "../domain/npm/NpmPackage";
 import {GithubClient} from "../infra/back/github/GithubClient";
@@ -18,9 +18,6 @@ export class WarehouseService {
 
   private formId: string;
 
-  @UseCache({
-    ttl: 3600
-  })
   async getPlugins(keyword: string) {
     const packages = await this.npmClient.search(keyword);
 
@@ -71,10 +68,8 @@ export class WarehouseService {
     const formId = await this.getPackagesFormId();
 
     const submission = await this.formioDatabase.submissionModel.findOne({
-      form: {$eq: formId},
-      data: {
-        name: {$eq: pkg.name}
-      }
+      form: formId,
+      "data.name": pkg.name
     });
 
     if (!submission) {

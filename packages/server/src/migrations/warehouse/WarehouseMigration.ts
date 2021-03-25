@@ -23,7 +23,7 @@ export class WarehouseMigration {
         ...formPackagesAction,
         form: form._id,
         settings: {
-          resource: form._id
+          resource: ""
         }
       }).save();
 

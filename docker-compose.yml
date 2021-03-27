@@ -10,6 +10,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME:
       MONGO_INITDB_ROOT_PASSWORD:
+  redis:
+    image: redis:3.2.11-alpine
+    ports:
+      - 6379:6379
   server:
     build:
       context: .
@@ -25,8 +29,9 @@ services:
     tty: true         # -t
     environment:
       - NODE_ENV=development
-      - MONGOOSE_URL= mongodb://mongo:27017/tsed-formio-example
+      - MONGOOSE_URL=mongodb://mongo:27017/tsed-api
     depends_on:
       - mongo
+      - redis
 volumes:
   mdb-data:

@@ -24,6 +24,8 @@ export class NpmPackageMaintainer {
   get avatar(): string {
     return `https://www.gravatar.com/avatar/${crypto.createHash("md5").update(this.email.toLowerCase()).digest("hex")}`;
   }
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set avatar(avatar: string) {}
 }
 
 export class NpmPackage {
@@ -74,7 +76,7 @@ export class NpmPackage {
 
   @Description("Package type")
   @Enum(NpmPackageType)
-  get type() {
+  get type(): NpmPackageType {
     if (this.name.startsWith("@tsed/")) {
       return NpmPackageType.OFFICIAL;
     }
@@ -82,9 +84,12 @@ export class NpmPackage {
     return NpmPackageType.THIRD_PARTY;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set type(type: NpmPackageType) {}
+
   @Description("Package category")
   @Enum(NpmPackageCategory)
-  get category() {
+  get category(): NpmPackageCategory {
     if (this.name.startsWith("tsed-cli-") || this.name.startsWith("@tsed/cli")) {
       return NpmPackageCategory.CLI;
     }
@@ -95,6 +100,9 @@ export class NpmPackage {
 
     return NpmPackageCategory.FRAMEWORK;
   }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  set category(type: NpmPackageCategory) {}
 
   getRepositoryOwner() {
     if (this.repository?.startsWith("https://github.com/")) {

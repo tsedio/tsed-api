@@ -1,10 +1,12 @@
-import {Injectable} from "@tsed/common";
+import {Injectable, Logger} from "@tsed/common";
 import {Inject} from "@tsed/di";
 import {FormioDatabase} from "@tsed/formio";
+import {Utils} from "formiojs";
 import {WarehouseService} from "../../services/WarehouseService";
+import maintainersSchema from "./data/2021-03-24-form-schema-maintainers.json";
 import formPackagesAction from "./data/form-packages-actions.json";
 import formPackages from "./data/form-packages.json";
-import maintainersSchema from "./data/2021-03-24-form-schema-maintainers.json";
+import getComponent = Utils.getComponent;
 
 @Injectable()
 export class WarehouseMigration {
@@ -14,12 +16,17 @@ export class WarehouseMigration {
   @Inject()
   warehouseService: WarehouseService;
 
+  @Inject()
+  logger: Logger;
+
   async $onReady() {
     await this.install();
   }
 
   async install() {
+    this.logger.info("Check warehouse migration...");
     await this.formioDatabase.createFormIfNotExists(formPackages as any, async (form) => {
+      this.logger.info('Install "NPM packages" form');
       await new this.formioDatabase.actionModel({
         ...formPackagesAction,
         form: form._id,
@@ -33,16 +40,28 @@ export class WarehouseMigration {
 
     // update schema
     await this.addMaintainers();
+
+    this.logger.info("Check warehouse migration...OK");
   }
 
   async addMaintainers() {
     const form = await this.formioDatabase.getForm("packages");
-    const component = form?.components.find((component) => component.key === "maintainers");
-    if (form && component) {
-      const submit = form.components[form.components.length - 1];
+    if (form) {
+      const component = getComponent(form.components, "maintainers", false);
+      const submit = getComponent(form.components, "submit", false);
 
-      form.components[form.components.length - 1] = maintainersSchema as any;
-      form.components.push(submit);
+      if (form && !component) {
+        this.logger.info("Add maintainers to warehouse form...START");
+
+        form.components = form.components.filter((component) => component.key !== "submit").filter(Boolean);
+        form.components.push(maintainersSchema as any);
+
+        submit && form.components.push(submit);
+
+        await form.save();
+
+        this.logger.info("Add maintainers to warehouse form...OK");
+      }
     }
   }
 }

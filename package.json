@@ -27,10 +27,10 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@tsed/react-formio": "^1.8.11",
-    "@tsed/react-formio-container": "^1.8.11",
-    "@tsed/redux-utils": "^1.8.11",
-    "@tsed/tailwind-formio": "^1.8.11",
+    "@tsed/react-formio": "^1.8.12",
+    "@tsed/react-formio-container": "^1.8.12",
+    "@tsed/redux-utils": "^1.8.12",
+    "@tsed/tailwind-formio": "^1.8.12",
     "classnames": "2.2.6",
     "connected-react-router": "6.8.0",
     "file-saver": "2.0.5",

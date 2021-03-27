@@ -1,7 +1,6 @@
 import "@tsed/ajv";
 import "@tsed/async-hook-context";
-import {PlatformApplication, Res} from "@tsed/common";
-import {PlatformMiddlewareLoadingOptions} from "@tsed/common/lib/config/interfaces";
+import {$log, PlatformApplication, Res} from "@tsed/common";
 import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
 import "@tsed/formio";
@@ -14,17 +13,16 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import {ServerResponse} from "http";
 import methodOverride from "method-override";
-import mongoose from "mongoose";
 import {join} from "path";
 import {isProduction} from "./config/env";
 import formioConfig from "./config/formio";
-import "./config/logger";
+import {configureLogger, loggerConfig} from "./config/logger";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
+import cacheConfig from "./config/cache";
 import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
 import {EnsureHttpsMiddleware} from "./infra/middlewares/https/EnsureHttpsMiddleware";
 
-const mongooseStore = require("cache-manager-mongoose");
 const send = require("send");
 
 export const rootDir = __dirname;
@@ -44,20 +42,19 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  logger: {
-    disableRoutesSummary: isProduction
-  },
+  logger: loggerConfig,
+  swagger: swaggerConfig,
+  mongoose: mongooseConfig,
+  formio: formioConfig,
+  cache: cacheConfig,
   mount: {
     "/rest": [`${rootDir}/controllers/rest/**/*.ts`],
     "/": [VersionCtrl]
   },
-  swagger: swaggerConfig,
   views: {
     root: `${rootDir}/../views`,
     viewEngine: "ejs"
   },
-  mongoose: mongooseConfig,
-  formio: formioConfig,
   exclude: ["**/*.spec.ts"],
   componentsScan: [`${rootDir}/migrations/**/*.ts`],
   statics: {
@@ -88,17 +85,7 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
     bodyParser.urlencoded({
       extended: true
     })
-  ].filter(Boolean) as PlatformMiddlewareLoadingOptions[],
-  cache: {
-    ttl: 300,
-    store: mongooseStore,
-    mongoose,
-    modelName: "caches",
-    modelOptions: {
-      collection: "caches",
-      versionKey: false
-    }
-  }
+  ].filter(Boolean) as any[]
 })
 export class Server {
   @Inject()
@@ -111,5 +98,9 @@ export class Server {
     this.app.get("/backoffice/*", (req: any, res: Res) => {
       res.sendFile(join(backofficeDir, "index.html"));
     });
+  }
+
+  $onReady() {
+    configureLogger();
   }
 }

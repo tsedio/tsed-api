@@ -32,7 +32,12 @@ export class WarehouseService {
         pkg.icon = submission.data.icon;
         pkg.tags = submission.data.tags;
         pkg.description = submission.data.description || pkg.description;
+        pkg.homepage = submission.data.homepage || pkg.homepage || pkg.repository || pkg.npm;
         pkg.stars = await this.getStars(pkg);
+
+        if (submission.data.maintainers) {
+          pkg.maintainers.push(...submission.data.maintainers);
+        }
 
         return pkg;
       })

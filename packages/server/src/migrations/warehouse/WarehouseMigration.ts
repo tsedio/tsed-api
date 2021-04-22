@@ -1,6 +1,6 @@
 import {Injectable, Logger} from "@tsed/common";
 import {Inject} from "@tsed/di";
-import {FormioDatabase} from "@tsed/formio";
+import {FormioComponent, FormioDatabase} from "@tsed/formio";
 import {Utils} from "formiojs";
 import {WarehouseService} from "../../services/WarehouseService";
 import maintainersSchema from "./data/2021-03-24-form-schema-maintainers.json";
@@ -53,12 +53,12 @@ export class WarehouseMigration {
       if (form && !component) {
         this.logger.info("Add maintainers to warehouse form...START");
 
-        form.components = form.components.filter((component) => component.key !== "submit").filter(Boolean);
+        form.components = form.components.filter((component: FormioComponent) => component.key !== "submit").filter(Boolean);
         form.components.push(maintainersSchema as any);
 
         submit && form.components.push(submit);
 
-        await form.save();
+        await this.formioDatabase.formModel.updateOne({_id: form._id}, {$set: form});
 
         this.logger.info("Add maintainers to warehouse form...OK");
       }

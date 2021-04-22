@@ -4,19 +4,17 @@ import {FormioDatabase, FormioSubmission} from "@tsed/formio";
 import {NpmPackage} from "../domain/npm/NpmPackage";
 import {GithubClient} from "../infra/back/github/GithubClient";
 import {NpmClient} from "../infra/back/npm/NpmClient";
+import {FormioRepository} from "./FormioRepository";
 
 @Injectable()
-export class WarehouseService {
+export class WarehouseService extends FormioRepository {
+  protected formName = "packages";
+
   @Inject()
   protected npmClient: NpmClient;
 
   @Inject()
   protected githubClient: GithubClient;
-
-  @Inject()
-  protected formioDatabase: FormioDatabase;
-
-  private formId: string;
 
   async getPlugins(keyword: string) {
     const packages = await this.npmClient.search(keyword);
@@ -58,36 +56,21 @@ export class WarehouseService {
     return stargazers_count;
   }
 
-  async getPackagesFormId() {
-    if (!this.formId) {
-      const form = await this.formioDatabase.formModel.findOne({name: {$eq: "packages"}});
-      if (form) {
-        this.formId = form._id;
-      }
-    }
-
-    return this.formId;
-  }
-
   async getPackageSubmission(pkg: NpmPackage): Promise<FormioSubmission<NpmPackage & {disabled: boolean}>> {
-    const formId = await this.getPackagesFormId();
-
-    const submission = await this.formioDatabase.submissionModel.findOne({
-      form: formId,
+    const submission = await this.findOneSubmission({
       "data.name": pkg.name
     });
 
     if (!submission) {
-      return await new this.formioDatabase.submissionModel({
-        form: formId,
+      return await this.saveSubmission({
         data: {
           name: pkg.name,
           description: pkg.description,
           icon: ""
         }
-      }).save();
+      });
     }
 
-    return submission;
+    return submission as any;
   }
 }

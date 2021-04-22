@@ -100,7 +100,7 @@ export class HttpClient extends BaseLogClient {
     };
   }
 
-  private mapResponse(result: any, options: HttpClientOptions) {
+  protected mapResponse(result: any, options: HttpClientOptions) {
     const {type, collectionType, withHeaders, additionalProperties = false} = options;
 
     let data = !withHeaders ? result.data : result;

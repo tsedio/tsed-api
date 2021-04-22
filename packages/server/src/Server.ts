@@ -1,6 +1,6 @@
 import "@tsed/ajv";
 import "@tsed/async-hook-context";
-import {$log, PlatformApplication, Res} from "@tsed/common";
+import {PlatformApplication, Res} from "@tsed/common";
 import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
 import "@tsed/formio";
@@ -14,12 +14,11 @@ import cors from "cors";
 import {ServerResponse} from "http";
 import methodOverride from "method-override";
 import {join} from "path";
-import {isProduction} from "./config/env";
+import cacheConfig from "./config/cache";
 import formioConfig from "./config/formio";
 import {configureLogger, loggerConfig} from "./config/logger";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
-import cacheConfig from "./config/cache";
 import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
 import {EnsureHttpsMiddleware} from "./infra/middlewares/https/EnsureHttpsMiddleware";
 
@@ -56,7 +55,7 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
     viewEngine: "ejs"
   },
   exclude: ["**/*.spec.ts"],
-  componentsScan: [`${rootDir}/migrations/**/*.ts`],
+  componentsScan: [`${rootDir}/migrations/**/*.ts`, `${rootDir}/infra/protocols/**/*.ts`],
   statics: {
     "/backoffice": [
       {

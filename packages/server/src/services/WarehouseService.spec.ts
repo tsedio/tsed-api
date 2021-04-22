@@ -155,7 +155,7 @@ describe("WarehouseService", () => {
         }
       ]);
 
-      jest.spyOn(service, "getPackagesFormId").mockResolvedValue("formId");
+      jest.spyOn(service as any, "getFormId").mockResolvedValue("formId");
       jest.spyOn(formioDatabase.submissionModel.prototype, "save").mockResolvedValue(undefined);
 
       const result = await service.getPackageSubmission(pkg);
@@ -194,7 +194,7 @@ describe("WarehouseService", () => {
         }
       ]);
 
-      jest.spyOn(service, "getPackagesFormId").mockResolvedValue("formId");
+      jest.spyOn(service as any, "getFormId").mockResolvedValue("formId");
       jest.spyOn(formioDatabase.submissionModel.prototype, "save").mockResolvedValue({
         data: {
           icon: ""

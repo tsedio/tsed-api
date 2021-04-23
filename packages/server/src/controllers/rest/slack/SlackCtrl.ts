@@ -28,6 +28,8 @@ export class SlackCtrl {
       throw new NotFound("Channel url not found");
     }
 
+    await this.repositoriesService.addLinkView(repository, "slack");
+
     return ctx.response.redirect(302, repository.data.slackChannelUrl).body(repository.data.slackChannelUrl);
   }
 }

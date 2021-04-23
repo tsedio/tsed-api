@@ -1,6 +1,6 @@
 import {Controller, Get} from "@tsed/common";
 import {Inject} from "@tsed/di";
-import {Name} from "@tsed/schema";
+import {Name, Returns} from "@tsed/schema";
 import {CacheService} from "../../../infra/persistence/CacheService";
 
 @Controller("/caches")
@@ -10,12 +10,9 @@ export class CacheCtrl {
   cache: CacheService;
 
   @Get("/keys")
+  @(Returns(200).ContentType("application/json").Header("Cache-Control", "no-cache"))
   async keys() {
-    const result = await this.cache.getKeys();
-
-    return result.map(({_id, exp, val: {ttl}}: any) => {
-      return {id: _id, exp, ttl};
-    });
+    return this.cache.getKeysMetadata();
   }
 
   @Get("/clear")

@@ -1,3 +1,4 @@
+import {UseCache} from "@tsed/common";
 import {Injectable} from "@tsed/di";
 import {HttpClient} from "../http/HttpClient";
 
@@ -7,6 +8,7 @@ export class OpenCollectiveClient extends HttpClient {
 
   host = "https://opencollective.com";
 
+  @UseCache({ttl: 3600})
   getMembers(repo: string) {
     return this.get(`${this.host}/${repo}/members/all.json`);
   }

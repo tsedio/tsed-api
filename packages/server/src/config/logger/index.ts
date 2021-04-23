@@ -29,7 +29,7 @@ if (isProduction) {
 export function configureLogger() {
   if (process.env.LOG_ENTRIES_KEY) {
     $log.appenders
-      .set("stdout", {
+      .set("logentries", {
         type: "logentries",
         levels: ["info", "debug"],
         layout: {
@@ -39,7 +39,7 @@ export function configureLogger() {
           token: process.env.LOG_ENTRIES_KEY
         }
       })
-      .set("stderr", {
+      .set("logentries", {
         levels: ["trace", "fatal", "error", "warn"],
         type: "logentries",
         layout: {

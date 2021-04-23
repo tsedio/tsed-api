@@ -1,4 +1,4 @@
-import {Controller, Get, UseCache} from "@tsed/common";
+import {Controller, Get} from "@tsed/common";
 import {Inject} from "@tsed/di";
 import {any, array, boolean, datetime, email, Name, number, object, Returns, string, url} from "@tsed/schema";
 import {OpenCollectiveClient} from "../../../infra/back/opencollective/OpenCollectiveClient";
@@ -36,9 +36,6 @@ export class OpenCollectiveCtrl {
 
   @Get()
   @(Returns(200).ContentType("application/json").Schema(OpenCollectiveMembersSchema))
-  @UseCache({
-    ttl
-  })
   getMember() {
     return this.client.getMembers("tsed");
   }

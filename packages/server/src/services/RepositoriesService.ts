@@ -25,8 +25,13 @@ export class RepositoriesService extends FormioRepository<RepositoryDataModel> {
 
   async addLinkView(repository: MongooseDocument<FormioSubmission<RepositoryDataModel>>, type: string) {
     const key = `${type}Tracking`;
-    repository.data[key] = (repository.data[key] || 0) + 1;
 
-    await this.saveSubmission(repository);
+    await this.updateSubmission({
+      ...repository.toObject(),
+      data: {
+        ...repository.data,
+        [key]: (repository.data[key] || 0) + 1
+      }
+    });
   }
 }

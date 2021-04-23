@@ -19,6 +19,16 @@ export abstract class FormioRepository<SubmissionData = any> {
     return this.formId;
   }
 
+  async updateSubmission(submission: Omit<Partial<FormioSubmission<SubmissionData>>, "form">) {
+    return this.formioDatabase.submissionModel.updateOne(
+      {
+        _id: submission._id
+      },
+      submission,
+      {upsert: true}
+    );
+  }
+
   async saveSubmission(
     submission: Omit<Partial<FormioSubmission<SubmissionData>>, "form">
   ): Promise<MongooseDocument<FormioSubmission<SubmissionData>>> {

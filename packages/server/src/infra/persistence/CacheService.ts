@@ -1,30 +1,38 @@
 import {Inject, PlatformCache} from "@tsed/common";
-import {Constant, Injectable} from "@tsed/di";
-import mongoose from "mongoose";
+import {PlatformCachedObject} from "@tsed/common/lib/platform-cache/interfaces/PlatformCachedObject";
+import {Injectable} from "@tsed/di";
 
 @Injectable()
 export class CacheService {
-  @Inject()
-  cache: PlatformCache;
+  @Inject(PlatformCache)
+  protected cache: PlatformCache & {keys(): Promise<void>};
 
-  @Constant("cache.modelOptions.collection")
-  collectionName: string;
-
-  get model() {
-    return mongoose.model(this.collectionName);
+  async keys(): Promise<string[]> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    return await this.cache.cache.keys();
   }
 
-  getMatchingKeys(reg: RegExp) {
-    return this.model.find({
-      _id: {
-        $regex: reg,
-        $options: "i"
-      }
+  async getMatchingKeys(reg: RegExp) {
+    return (await this.keys()).filter((key: string) => {
+      return key.match(new RegExp(reg, "i"));
     });
   }
 
-  getKeys() {
-    return this.model.find({});
+  async getKeysMetadata(): Promise<(PlatformCachedObject & {key: string})[]> {
+    const keys = await this.keys();
+
+    const result = keys.map(async (key) => {
+      const item = await this.cache.get<PlatformCachedObject>(key);
+
+      return {
+        key,
+        ...item
+      };
+    });
+
+    console.log("=================");
+    return Promise.all(result) as any;
   }
 
   del(key: string): Promise<void> {
@@ -38,6 +46,6 @@ export class CacheService {
   async deleteMatchingKeys(regExp: RegExp) {
     const keys = await this.getMatchingKeys(regExp);
 
-    await Promise.all(await keys.map(({_id}: any) => this.del(_id)));
+    await Promise.all(await keys.map((key: string) => this.del(key)));
   }
 }

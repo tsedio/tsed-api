@@ -33,7 +33,7 @@ export function ToastContainer() {
       autoClose={5000}
       containerId='toastr'
       draggablePercent={60}
-      position={"bottom-right"}
+      position={"top-right"}
       closeButton={() => (
         <BxIcon name={"x"} className={"hover:text-gray-900 text-lg"} />
       )}

@@ -3,7 +3,7 @@
   "version": "1.8.1",
   "description": "",
   "author": "Romain Lenzotti",
-  "repository": "https://github.com/TypedProject/tsed-api",
+  "repository": "https://github.com/tsedio/tsed-api",
   "private": true,
   "scripts": {
     "configure": "monorepo ci configure",

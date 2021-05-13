@@ -230,12 +230,12 @@ describe("WarehouseService", () => {
 
       const pkg = new NpmPackage();
       pkg.name = "@tsed/common";
-      pkg.repository = "https://github.com/typedproject/tsed";
+      pkg.repository = "https://github.com/tsedio/tsed";
 
       const result = await service.getStars(pkg);
 
       expect(result).toEqual(1000);
-      expect(githubClient.getInfo).toHaveBeenCalledWith("typedproject", "tsed");
+      expect(githubClient.getInfo).toHaveBeenCalledWith("tsedio", "tsed");
     });
 
     it("should return 0 when the repository isn't a github", async () => {
@@ -251,7 +251,7 @@ describe("WarehouseService", () => {
 
       const pkg = new NpmPackage();
       pkg.name = "@tsed/common";
-      pkg.repository = "https://gitlab.com/typedproject/tsed";
+      pkg.repository = "https://gitlab.com/tsedio/tsed";
 
       const result = await service.getStars(pkg);
 

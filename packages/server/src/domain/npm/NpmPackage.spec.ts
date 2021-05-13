@@ -45,10 +45,10 @@ describe("NpmPackage", () => {
     it("should return the repository owner", () => {
       const pkg = new NpmPackage();
       pkg.name = "tsed-logger-";
-      pkg.repository = "https://github.com/typedproject/tsed";
+      pkg.repository = "https://github.com/tsedio/tsed";
 
       expect(pkg.getRepositoryOwner()).toEqual({
-        owner: "typedproject",
+        owner: "tsedio",
         repo: "tsed"
       });
     });
@@ -56,7 +56,7 @@ describe("NpmPackage", () => {
     it("should return nothing", () => {
       const pkg = new NpmPackage();
       pkg.name = "tsed-logger-";
-      pkg.repository = "https://gitlab.com/typedproject/tsed";
+      pkg.repository = "https://gitlab.com/tsedio/tsed";
 
       expect(pkg.getRepositoryOwner()).toEqual(false);
     });

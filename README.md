@@ -53,7 +53,7 @@ open http://localhost:3000
 
 ## Contributing
 
-You can make a PR directly on https://github.com/TypedProject/ts-express-decorators repository.
+You can make a PR directly on https://github.com/tsedio/ts-express-decorators repository.
 
 ## Backers
 

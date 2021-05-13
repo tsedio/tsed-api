@@ -41,7 +41,7 @@ export class NpmPackage {
 
   @Description("Git repository")
   @Url()
-  @Example("https://github.com/typedproject/tsed")
+  @Example("https://github.com/tsedio/tsed")
   repository: string;
 
   @Description("Npm url")

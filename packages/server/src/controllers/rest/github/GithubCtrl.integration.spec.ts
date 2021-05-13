@@ -28,7 +28,7 @@ describe("GithubCtrl", () => {
         headers: {etag: "etag", date: "date"},
         data: {
           id: 52221518,
-          html_url: "https://github.com/typedproject/tsed",
+          html_url: "https://github.com/tsedio/tsed",
           stargazers_count: 1552,
           watchers_count: 1552,
           forks_count: 163,
@@ -36,11 +36,11 @@ describe("GithubCtrl", () => {
         }
       } as any);
 
-      const {body} = await request.get("/rest/github/typedproject/tsed").expect(200);
+      const {body} = await request.get("/rest/github/tsedio/tsed").expect(200);
 
       expect(body).toEqual({
         id: 52221518,
-        html_url: "https://github.com/typedproject/tsed",
+        html_url: "https://github.com/tsedio/tsed",
         stargazers_count: 1552,
         watchers_count: 1552,
         forks_count: 163,
@@ -80,7 +80,7 @@ describe("GithubCtrl", () => {
         data
       } as any);
 
-      const {body} = await request.get("/rest/github/typedproject/tsed/contributors").expect(200);
+      const {body} = await request.get("/rest/github/tsedio/tsed/contributors").expect(200);
 
       expect(body).toEqual(data);
     });
@@ -91,10 +91,10 @@ describe("GithubCtrl", () => {
       const githubClient = PlatformTest.get<GithubClient>(GithubClient);
       const data = [
         {
-          url: "https://api.github.com/repos/TypedProject/tsed/releases/38791984",
-          assets_url: "https://api.github.com/repos/TypedProject/tsed/releases/38791984/assets",
-          upload_url: "https://uploads.github.com/repos/TypedProject/tsed/releases/38791984/assets{?name,label}",
-          html_url: "https://github.com/TypedProject/tsed/releases/tag/v6.26.4",
+          url: "https://api.github.com/repos/tsedio/tsed/releases/38791984",
+          assets_url: "https://api.github.com/repos/tsedio/tsed/releases/38791984/assets",
+          upload_url: "https://uploads.github.com/repos/tsedio/tsed/releases/38791984/assets{?name,label}",
+          html_url: "https://github.com/tsedio/tsed/releases/tag/v6.26.4",
           id: 38791984,
           author: {
             login: "string",
@@ -126,8 +126,8 @@ describe("GithubCtrl", () => {
           created_at: "2021-02-26T10:35:52Z",
           published_at: "2021-02-26T10:36:31Z",
           assets: [{}],
-          tarball_url: "https://api.github.com/repos/TypedProject/tsed/tarball/v6.26.4",
-          zipball_url: "https://api.github.com/repos/TypedProject/tsed/zipball/v6.26.4",
+          tarball_url: "https://api.github.com/repos/tsedio/tsed/tarball/v6.26.4",
+          zipball_url: "https://api.github.com/repos/tsedio/tsed/zipball/v6.26.4",
           body: "string"
         }
       ];
@@ -136,7 +136,7 @@ describe("GithubCtrl", () => {
         data
       } as any);
 
-      const {body} = await request.get("/rest/github/typedproject/tsed/releases").expect(200);
+      const {body} = await request.get("/rest/github/tsedio/tsed/releases").expect(200);
 
       expect(body).toEqual(data);
     });

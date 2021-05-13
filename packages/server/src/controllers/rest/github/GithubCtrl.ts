@@ -39,10 +39,10 @@ const GithubContributor = object({
 const GithubContributors = array().items(GithubContributor).label("GithubContributors");
 
 const GithubRelease = object({
-  url: string().required().example("https://api.github.com/repos/TypedProject/tsed/releases/38791984"),
-  assets_url: string().required().example("https://api.github.com/repos/TypedProject/tsed/releases/38791984/assets"),
-  upload_url: string().required().example("https://uploads.github.com/repos/TypedProject/tsed/releases/38791984/assets{?name,label}"),
-  html_url: string().required().example("https://github.com/TypedProject/tsed/releases/tag/v6.26.4"),
+  url: string().required().example("https://api.github.com/repos/tsedio/tsed/releases/38791984"),
+  assets_url: string().required().example("https://api.github.com/repos/tsedio/tsed/releases/38791984/assets"),
+  upload_url: string().required().example("https://uploads.github.com/repos/tsedio/tsed/releases/38791984/assets{?name,label}"),
+  html_url: string().required().example("https://github.com/tsedio/tsed/releases/tag/v6.26.4"),
   id: number().required().example(38791984),
   author: GithubContributor,
   node_id: string().required().example("MDc6UmVsZWFzZTM4NzkxOTg0"),
@@ -54,8 +54,8 @@ const GithubRelease = object({
   created_at: string().required().example("2021-02-26T10:35:52Z"),
   published_at: string().required().example("2021-02-26T10:36:31Z"),
   assets: array().items(object()),
-  tarball_url: string().required().example("https://api.github.com/repos/TypedProject/tsed/tarball/v6.26.4"),
-  zipball_url: string().required().example("https://api.github.com/repos/TypedProject/tsed/zipball/v6.26.4"),
+  tarball_url: string().required().example("https://api.github.com/repos/tsedio/tsed/tarball/v6.26.4"),
+  zipball_url: string().required().example("https://api.github.com/repos/tsedio/tsed/zipball/v6.26.4"),
   body: string().required()
 }).label("GithubRelease");
 

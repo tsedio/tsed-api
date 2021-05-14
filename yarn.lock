@@ -1272,10 +1272,10 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
-  version "7.12.18"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.18.tgz#af137bd7e7d9705a412b3caaf991fe6aaa97831b"
-  integrity sha512-BogPQ7ciE6SYAUPtlm9tWbgI9+2AgqSam6QivMgXgAT+fKbgppaj4ZX15MHeLC1PVF5sNk70huBu20XxWOs8Cg==
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.0", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13", "@babel/runtime@^7.12.18", "@babel/runtime@^7.12.5", "@babel/runtime@^7.3.1", "@babel/runtime@^7.5.0", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.6", "@babel/runtime@^7.8.4", "@babel/runtime@^7.9.2":
+  version "7.13.9"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.13.9.tgz#97dbe2116e2630c489f22e0656decd60aaa1fcee"
+  integrity sha512-aY2kU+xgJ3dJ1eU6FMB9EH8dIe8dmusF1xEku52joLvw6eAFN0AI+WxCLDnpev2LEejWBAy2sBvBOBAjI3zmvA==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -4706,12 +4706,12 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@tanem/svg-injector@^8.0.34":
-  version "8.2.4"
-  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-8.2.4.tgz#717676de40c8e641f8e8db8ab31157af49bca3cc"
-  integrity sha512-j1tL6uQgG1tq6W933Ri0ghfPNmABldHMRaxBi4U+LjxLw0Pn6HJiu1GvcYRcthdNRoJImCQd8qAApb+tPxCnfw==
+"@tanem/svg-injector@^9.0.0":
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/@tanem/svg-injector/-/svg-injector-9.0.1.tgz#875948ea8a0c2241e01b4b18f803feac5f02740d"
+  integrity sha512-+v4o9pRDkouxE/olTTX/gNElTb5+hCz/tPQebxQCbgLq+T1SY0+xa1zsxbuF543R9OAdZ3TKZeYnzVE24BYbPQ==
   dependencies:
-    "@babel/runtime" "^7.12.13"
+    "@babel/runtime" "^7.12.18"
     content-type "^1.0.4"
     tslib "^2.1.0"
 
@@ -20856,13 +20856,13 @@ react-sizeme@^2.6.7:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-svg@10.0.23:
-  version "10.0.23"
-  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-10.0.23.tgz#de51da303e83b7aec929f518b6f9d87896596056"
-  integrity sha512-903OK45tu78OJYWu0wjGO9ObbXaxvdff4ai+LiKQV3ZG6fhAQmDXjg0oMWHqilRxPavHQTWTla48ERZJEVNgEw==
+react-svg@12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/react-svg/-/react-svg-12.0.0.tgz#4f99549a59cd97eb6757cf0a2f403a260fdce8fb"
+  integrity sha512-P/+hqW/Zf/qr7qouwvs+h8PyUaVMwikldYQzYBHuGlSXZhEAUaSlwfBZ+fX348K/GNnzG6Np8+/Q4EMkt4j3JA==
   dependencies:
-    "@babel/runtime" "^7.6.3"
-    "@tanem/svg-injector" "^8.0.34"
+    "@babel/runtime" "^7.12.18"
+    "@tanem/svg-injector" "^9.0.0"
     prop-types "^15.7.2"
 
 react-syntax-highlighter@^11.0.2:

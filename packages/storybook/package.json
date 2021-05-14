@@ -30,7 +30,7 @@
     "@tsed/yarn-workspaces": "1.14.0",
     "babel-loader": "8.2.2",
     "cross-env": "7.0.3",
-    "react-svg": "10.0.23",
+    "react-svg": "12.0.0",
     "url-loader": "2.2.0"
   },
   "browserslist": {

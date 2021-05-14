@@ -56,7 +56,7 @@
   },
   "devDependencies": {
     "@tsed/cli-plugin-eslint": "2.8.1",
-    "@tsed/cli-plugin-jest": "2.8.1",
+    "@tsed/cli-plugin-jest": "2.10.1",
     "@tsed/cli-plugin-mongoose": "2.8.1",
     "@tsed/cli-plugin-passport": "2.8.1",
     "@tsed/testing-mongoose": "6.48.4",

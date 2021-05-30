@@ -6,7 +6,7 @@
 }
 
 .fadeInLong {
-  animation: fadeIn 500ms;
+  animation: fadeIn 1000ms;
 }
 
 @keyframes fadeIn {
@@ -24,6 +24,7 @@
    =========================== */
 .fadeOut {
   animation: fadeOut 500ms;
+  animation-delay: 300ms;
 }
 
 @keyframes fadeOut {

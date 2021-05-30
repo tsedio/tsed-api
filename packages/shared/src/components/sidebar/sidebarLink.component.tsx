@@ -17,7 +17,8 @@ export function SidebarLink({
   sidebarOpen
 }: SidebarLinkProps) {
   const ref = useTooltip({
-    title,
+    title: `<span class="whitespace-nowrap">${title}</span>`,
+    html: true,
     trigger: "hover",
     placement: "left"
   });

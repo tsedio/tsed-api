@@ -54,7 +54,7 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
-    "@tsed/monorepo-utils": "1.17.0",
+    "@tsed/monorepo-utils": "1.18.2",
     "@craco/craco": "6.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

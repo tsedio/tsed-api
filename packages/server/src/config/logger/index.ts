@@ -5,6 +5,7 @@ import "@tsed/logger-logentries";
 $log.name = process.env.LOG_NAME || "API";
 
 export const loggerConfig = {
+  level: process.env.LOG_LEVEL || "info",
   disableRoutesSummary: isProduction
 };
 

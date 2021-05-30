@@ -6,6 +6,7 @@
   "repository": "https://github.com/tsedio/tsed-api",
   "private": true,
   "scripts": {
+    "clean": "monorepo clean workspaces",
     "configure": "monorepo ci configure",
     "test": "lerna run test --stream",
     "test:e2e": "lerna run test:e2e",
@@ -27,10 +28,12 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@tsed/react-formio": "^1.8.16",
-    "@tsed/react-formio-container": "^1.8.16",
-    "@tsed/redux-utils": "^1.8.16",
-    "@tsed/tailwind-formio": "^1.8.16",
+    "@tsed/ajv": "6.52.0",
+    "@tsed/react-formio": "1.9.2",
+    "@tsed/react-formio-container": "1.9.2",
+    "@tsed/redux-utils": "1.9.2",
+    "@tsed/tailwind-formio": "1.9.2",
+    "ajv": "8.5.0",
     "classnames": "2.2.6",
     "connected-react-router": "6.8.0",
     "file-saver": "2.0.5",

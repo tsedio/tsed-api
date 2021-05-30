@@ -27,7 +27,7 @@
     "@tsed/shared": "1.8.2",
     "@tsed/tailwind": "1.8.2",
     "@tsed/tailwind-formio": "1.8.16",
-    "@tsed/yarn-workspaces": "1.14.0",
+    "@tsed/yarn-workspaces": "1.17.0",
     "babel-loader": "8.2.2",
     "cross-env": "7.0.3",
     "react-svg": "10.0.23",

@@ -1,40 +1,20 @@
+import { initAuth } from "@tsed/react-formio";
 import "@tsed/shared";
-import { Formio, initAuth, logout, Templates } from "@tsed/react-formio";
-import tailwind from "@tsed/tailwind-formio";
 import { ConnectedRouter } from "connected-react-router";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { ToastContainer } from "./toastr/toastr.util";
 import App from "./App";
-import { Config } from "./config";
+import { install } from "./formio";
 import reportWebVitals from "./reportWebVitals";
 import configureStore, { history } from "./store";
 import "./styles.css";
+import { ToastContainer } from "./toastr/toastr.util";
 
 const store = configureStore({});
 
 // Formio configuration
-Formio.setProjectUrl(Config.formioUrl);
-Formio.setBaseUrl(Config.formioUrl);
-
-Formio.registerPlugin(
-  {
-    priority: 0,
-    wrapRequestPromise(promise: Promise<any>) {
-      return promise.catch((er) => {
-        if (er === "Unauthorized") {
-          store.dispatch(logout());
-        }
-        throw er;
-      });
-    }
-  },
-  "connectStore"
-);
-
-Formio.use(tailwind);
-Templates.framework = "tailwind";
+install(store);
 
 store.dispatch(initAuth() as any);
 

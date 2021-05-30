@@ -2,6 +2,7 @@ import { ArianeLinks, BxIcon, withIf } from "@tsed/shared";
 import { AuthState, useTooltip } from "@tsed/react-formio";
 import noop from "lodash/noop";
 import React from "react";
+import { Config } from "../config";
 import { HeaderButton } from "./header.button.component";
 
 export interface HeaderProps {
@@ -61,11 +62,7 @@ export function Header(props: HeaderProps) {
                   {page && page.headerNav && <page.headerNav page={page} />}
                 </div>
 
-                <div
-                  className={
-                    "header__user-info flex font-sans font-bold items-center px-4 relative text-primary"
-                  }
-                >
+                <HeaderButton to={Config.auth.profile.path}>
                   <span
                     className={
                       "bg-gray-light p-1 flex items-center rounded-full justify-center mr-1 text-white"
@@ -73,14 +70,15 @@ export function Header(props: HeaderProps) {
                   >
                     <BxIcon name={"user"} className={"text-sm"} />
                   </span>
-                  <span className='ml-1'>{auth.user.data.email}</span>
-                </div>
+                  <span className='ml-1'>
+                    {auth.user.data.fullName || auth.user.data.email}
+                  </span>
+                </HeaderButton>
 
                 <HeaderButton
                   ref={signoutRef}
                   paddingX={0}
                   className={"header__link-logout ml-2"}
-                  to='/auth'
                   onClick={onLogout}
                 >
                   <BxIcon name={"power-off"} className={"text-md"} />

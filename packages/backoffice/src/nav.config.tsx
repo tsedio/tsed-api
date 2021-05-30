@@ -1,4 +1,4 @@
-import { getFormioBasePath } from "./config";
+import { Config, getFormioBasePath } from "./config";
 import { CreateFormButton } from "./formio/components/buttons/createFormButton.component";
 
 export default [
@@ -11,6 +11,11 @@ export default [
         title: "Dashboard",
         icon: "home",
         href: "/"
+      },
+      {
+        title: "Profile",
+        icon: "user",
+        href: Config.auth.profile.path
       }
     ]
   },

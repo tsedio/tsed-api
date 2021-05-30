@@ -7,6 +7,10 @@ body {
     @apply bg-gray-100;
 }
 
+.has-error .help-block {
+  @apply p-3 block;
+}
+
 .Toastify__progress-bar--default {
     background: transparent;
     @apply bg-primary;

@@ -1,9 +1,11 @@
 import { FormioContainer, FormioEventObj } from "@tsed/react-formio-container";
+import { Loader } from "@tsed/shared";
 import { Route, RouteComponentProps, RouteProps } from "react-router";
 import { AuthView } from "./auth/auth.view";
 import { ProtectedRoute } from "./auth/protectedRoute.component";
 import { Config } from "./config";
 import { HomeView } from "./home/home.view";
+import { ProfileView } from "./profile/profile.view";
 import { RegisterView } from "./register/register.view";
 import { toastr } from "./toastr/toastr.util";
 
@@ -29,6 +31,7 @@ export const routes: RouteConfig[] = [
     guard: ProtectedRoute,
     component: FormioContainer,
     options: {
+      LoaderComponent: Loader,
       onSuccess(eventObj: FormioEventObj) {
         toastr.success(eventObj.title, eventObj.message);
       },
@@ -48,6 +51,12 @@ export const routes: RouteConfig[] = [
     exact: true,
     guard: Route,
     component: RegisterView
+  },
+  {
+    path: Config.auth.profile.path,
+    exact: true,
+    guard: ProtectedRoute,
+    component: ProfileView
   },
   {
     path: "*",

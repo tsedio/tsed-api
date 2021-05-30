@@ -11,6 +11,7 @@ export function getFormioBasePath(...paths: string[]) {
 
 export const Config = {
   projectTitle: "Ts.ED",
+  projectIcon: "/tsed.svg",
   headerHeight: "64px",
   formioUrl,
   apiUrl,
@@ -33,6 +34,11 @@ export const Config = {
     register: {
       path: "/register",
       form: "user/register"
+    },
+    profile: {
+      path: "/profile",
+      form: "user",
+      oauthLinksForm: "oAuthLink"
     }
   }
 };

@@ -20,6 +20,7 @@ import {configureLogger, loggerConfig} from "./config/logger";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
 import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
+import "./infra/formio";
 import {EnsureHttpsMiddleware} from "./infra/middlewares/https/EnsureHttpsMiddleware";
 
 const send = require("send");
@@ -41,7 +42,7 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8083,
   httpsPort: false, // CHANGE
-  logger: loggerConfig,
+  logger: {...loggerConfig},
   swagger: swaggerConfig,
   mongoose: mongooseConfig,
   formio: formioConfig,
@@ -92,6 +93,13 @@ export class Server {
 
   @Configuration()
   settings: Configuration;
+
+  $beforeRoutesInit() {
+    // this.app.use(bodyParser.json(), (req: any, res: any, next: any) => {
+    //   console.log(req.method, req.originalUrl, req.body, req.query);
+    //   return next();
+    // });
+  }
 
   $afterRoutesInit() {
     this.app.get("/backoffice/*", (req: any, res: Res) => {

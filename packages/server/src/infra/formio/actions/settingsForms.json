@@ -1,0 +1,1075 @@
+{
+  "components": [
+    {
+      "type": "hidden",
+      "input": true,
+      "key": "priority"
+    },
+    {
+      "type": "hidden",
+      "input": true,
+      "key": "name"
+    },
+    {
+      "type": "textfield",
+      "input": true,
+      "label": "Title",
+      "key": "title"
+    },
+    {
+      "type": "fieldset",
+      "input": false,
+      "tree": true,
+      "legend": "Action Settings",
+      "components": [
+        {
+          "input": false,
+          "type": "container",
+          "key": "settings",
+          "components": [
+            {
+              "type": "select",
+              "input": true,
+              "label": "OAuth Provider",
+              "key": "provider",
+              "placeholder": "Select the OAuth Provider",
+              "template": "<span>{{ item.title }}</span>",
+              "dataSrc": "json",
+              "data": {
+                "json": "[{\"name\":\"github\",\"title\":\"GitHub\"}]"
+              },
+              "valueProperty": "name",
+              "multiple": false,
+              "validate": {
+                "required": true
+              }
+            },
+            {
+              "type": "select",
+              "input": true,
+              "label": "Action",
+              "key": "association",
+              "placeholder": "Select the action to perform",
+              "template": "<span>{{ item.title }}</span>",
+              "dataSrc": "json",
+              "data": {
+                "json": "[{\"association\":\"remote\",\"title\":\"Remote Authentication\"},{\"association\":\"existing\",\"title\":\"Login Existing Resource\"},{\"association\":\"new\",\"title\":\"Register New Resource\"},{\"association\":\"link\",\"title\":\"Link Current User\"}]"
+              },
+              "valueProperty": "association",
+              "multiple": false,
+              "validate": {
+                "required": true
+              }
+            },
+            {
+              "type": "select",
+              "input": true,
+              "label": "Resource",
+              "key": "resource",
+              "placeholder": "Select the Resource to authenticate against",
+              "template": "<span>{{ item.title }}</span>",
+              "dataSrc": "url",
+              "data": {
+                "url": "/project/605ae550d0fb2f097fe63a6c/form?type=resource"
+              },
+              "valueProperty": "name",
+              "multiple": false,
+              "validate": {
+                "required": true
+              },
+              "customConditional": "show = ['existing', 'new'].indexOf(data.settings.association) !== -1;"
+            },
+            {
+              "type": "select",
+              "input": true,
+              "label": "Role",
+              "key": "role",
+              "placeholder": "Select the Role that will be added to new Resources",
+              "template": "<span>{{ item.title }}</span>",
+              "dataSrc": "json",
+              "data": {
+                "json": [
+                  {
+                    "_id": "605ae550d0fb2f52a6e63a70",
+                    "description": "A role for Administrative Users.",
+                    "deleted": null,
+                    "default": false,
+                    "admin": true,
+                    "title": "Administrator",
+                    "machineName": "voklisbfgqkbdom:administrator",
+                    "project": "605ae550d0fb2f097fe63a6c",
+                    "created": "2021-03-24T07:08:00.724Z",
+                    "modified": "2021-03-24T07:08:00.730Z",
+                    "__v": 0
+                  },
+                  {
+                    "_id": "605ae550d0fb2f3126e63a72",
+                    "description": "A role for Anonymous Users.",
+                    "deleted": null,
+                    "default": true,
+                    "admin": false,
+                    "title": "Anonymous",
+                    "machineName": "voklisbfgqkbdom:anonymous",
+                    "project": "605ae550d0fb2f097fe63a6c",
+                    "created": "2021-03-24T07:08:00.746Z",
+                    "modified": "2021-03-24T07:08:00.748Z",
+                    "__v": 0
+                  },
+                  {
+                    "_id": "605ae550d0fb2f5b1fe63a71",
+                    "description": "A role for Authenticated Users.",
+                    "deleted": null,
+                    "default": false,
+                    "admin": false,
+                    "title": "Authenticated",
+                    "machineName": "voklisbfgqkbdom:authenticated",
+                    "project": "605ae550d0fb2f097fe63a6c",
+                    "created": "2021-03-24T07:08:00.740Z",
+                    "modified": "2021-03-24T07:08:00.742Z",
+                    "__v": 0
+                  }
+                ]
+              },
+              "valueProperty": "_id",
+              "multiple": false,
+              "customConditional": "show = ['new'].indexOf(data.settings.association) !== -1;"
+            },
+            {
+              "type": "select",
+              "input": true,
+              "label": "Sign-in with OAuth Button",
+              "key": "button",
+              "placeholder": "Select the button that triggers OAuth sign-in",
+              "template": "<span>{{ item.label || item.key }}</span>",
+              "dataSrc": "json",
+              "data": {
+                "json": "[{\"label\":\"Login with github\",\"action\":\"oauth\",\"showValidations\":false,\"theme\":\"primary\",\"size\":\"md\",\"block\":false,\"leftIcon\":\"fa-github\",\"rightIcon\":\"\",\"shortcut\":\"\",\"description\":\"\",\"tooltip\":\"\",\"customClass\":\"\",\"tabindex\":\"\",\"disableOnInvalid\":false,\"hidden\":false,\"autofocus\":false,\"disabled\":false,\"tableView\":false,\"modalEdit\":false,\"key\":\"github\",\"tags\":[],\"properties\":{},\"conditional\":{\"show\":null,\"when\":null,\"eq\":\"\",\"json\":\"\"},\"customConditional\":\"\",\"logic\":[],\"attributes\":{},\"overlay\":{\"style\":\"\",\"page\":\"\",\"left\":\"\",\"top\":\"\",\"width\":\"\",\"height\":\"\"},\"type\":\"button\",\"oauthProvider\":\"github\",\"input\":true,\"placeholder\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"multiple\":false,\"defaultValue\":null,\"protected\":false,\"unique\":false,\"persistent\":false,\"clearOnHide\":true,\"refreshOn\":\"\",\"redrawOn\":\"\",\"labelPosition\":\"top\",\"errorLabel\":\"\",\"hideLabel\":false,\"dbIndex\":false,\"customDefaultValue\":\"\",\"calculateValue\":\"\",\"calculateServer\":false,\"widget\":{\"type\":\"input\"},\"validateOn\":\"change\",\"validate\":{\"required\":false,\"custom\":\"\",\"customPrivate\":false,\"strictDateValidation\":false,\"multiple\":false,\"unique\":false},\"allowCalculateOverride\":false,\"encrypted\":false,\"showCharCount\":false,\"showWordCount\":false,\"allowMultipleMasks\":false,\"dataGridLabel\":true,\"id\":\"ebmo5b9\"}]"
+              },
+              "valueProperty": "key",
+              "multiple": false,
+              "validate": {
+                "required": true
+              }
+            },
+            {
+              "input": true,
+              "tree": true,
+              "components": [
+                {
+                  "input": true,
+                  "inputType": "text",
+                  "label": "Claim",
+                  "key": "claim",
+                  "multiple": false,
+                  "placeholder": "Leave empty for everyone",
+                  "defaultValue": "",
+                  "protected": false,
+                  "unique": false,
+                  "persistent": true,
+                  "hidden": false,
+                  "clearOnHide": true,
+                  "type": "textfield"
+                },
+                {
+                  "input": true,
+                  "inputType": "text",
+                  "label": "Value",
+                  "key": "value",
+                  "multiple": false,
+                  "defaultValue": "",
+                  "protected": false,
+                  "unique": false,
+                  "persistent": true,
+                  "hidden": false,
+                  "clearOnHide": true,
+                  "type": "textfield"
+                },
+                {
+                  "input": true,
+                  "tableView": true,
+                  "label": "Role",
+                  "key": "role",
+                  "placeholder": "",
+                  "dataSrc": "json",
+                  "data": {
+                    "json": [
+                      {
+                        "_id": "605ae550d0fb2f52a6e63a70",
+                        "description": "A role for Administrative Users.",
+                        "deleted": null,
+                        "default": false,
+                        "admin": true,
+                        "title": "Administrator",
+                        "machineName": "voklisbfgqkbdom:administrator",
+                        "project": "605ae550d0fb2f097fe63a6c",
+                        "created": "2021-03-24T07:08:00.724Z",
+                        "modified": "2021-03-24T07:08:00.730Z",
+                        "__v": 0
+                      },
+                      {
+                        "_id": "605ae550d0fb2f3126e63a72",
+                        "description": "A role for Anonymous Users.",
+                        "deleted": null,
+                        "default": true,
+                        "admin": false,
+                        "title": "Anonymous",
+                        "machineName": "voklisbfgqkbdom:anonymous",
+                        "project": "605ae550d0fb2f097fe63a6c",
+                        "created": "2021-03-24T07:08:00.746Z",
+                        "modified": "2021-03-24T07:08:00.748Z",
+                        "__v": 0
+                      },
+                      {
+                        "_id": "605ae550d0fb2f5b1fe63a71",
+                        "description": "A role for Authenticated Users.",
+                        "deleted": null,
+                        "default": false,
+                        "admin": false,
+                        "title": "Authenticated",
+                        "machineName": "voklisbfgqkbdom:authenticated",
+                        "project": "605ae550d0fb2f097fe63a6c",
+                        "created": "2021-03-24T07:08:00.740Z",
+                        "modified": "2021-03-24T07:08:00.742Z",
+                        "__v": 0
+                      }
+                    ]
+                  },
+                  "valueProperty": "_id",
+                  "defaultValue": "",
+                  "refreshOn": "",
+                  "filter": "",
+                  "template": "<span>{{ item.title }}</span>",
+                  "multiple": false,
+                  "protected": false,
+                  "unique": false,
+                  "persistent": true,
+                  "hidden": false,
+                  "clearOnHide": true,
+                  "validate": {
+                    "required": true
+                  },
+                  "type": "select"
+                }
+              ],
+              "tableView": true,
+              "label": "Assign Roles",
+              "key": "roles",
+              "protected": false,
+              "persistent": true,
+              "hidden": false,
+              "clearOnHide": true,
+              "type": "datagrid",
+              "customConditional": "show = ['remote'].indexOf(data.settings.association) !== -1;"
+            },
+            {
+              "type": "fieldset",
+              "components": [
+                {
+                  "input": true,
+                  "tree": true,
+                  "components": [
+                    {
+                      "input": true,
+                      "inputType": "text",
+                      "label": "Claim",
+                      "key": "claim",
+                      "multiple": false,
+                      "placeholder": "Leave empty for everyone",
+                      "defaultValue": "",
+                      "protected": false,
+                      "unique": false,
+                      "persistent": true,
+                      "hidden": false,
+                      "clearOnHide": true,
+                      "type": "textfield"
+                    },
+                    {
+                      "input": true,
+                      "tableView": true,
+                      "label": "Field",
+                      "key": "field",
+                      "placeholder": "",
+                      "dataSrc": "url",
+                      "data": {
+                        "url": "/project/605ae550d0fb2f097fe63a6c/{{data.settings.resource}}"
+                      },
+                      "valueProperty": "key",
+                      "defaultValue": "",
+                      "refreshOn": "resource",
+                      "filter": "",
+                      "template": "<span>{{ item.label || item.key }}</span>",
+                      "multiple": false,
+                      "protected": false,
+                      "lazyLoad": false,
+                      "unique": false,
+                      "selectValues": "components",
+                      "persistent": true,
+                      "hidden": false,
+                      "clearOnHide": true,
+                      "validate": {
+                        "required": true
+                      },
+                      "type": "select"
+                    }
+                  ],
+                  "tableView": true,
+                  "label": "Map Claims",
+                  "key": "openid-claims",
+                  "protected": false,
+                  "persistent": true,
+                  "hidden": false,
+                  "clearOnHide": true,
+                  "type": "datagrid",
+                  "customConditional": "show = ['openid'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Email Field",
+                  "key": "autofill-github-email",
+                  "placeholder": "Select which field to autofill with GitHub account Email",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['github'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Username Field",
+                  "key": "autofill-github-login",
+                  "placeholder": "Select which field to autofill with GitHub account Username",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['github'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Name Field",
+                  "key": "autofill-github-name",
+                  "placeholder": "Select which field to autofill with GitHub account Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['github'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Email Field",
+                  "key": "autofill-facebook-email",
+                  "placeholder": "Select which field to autofill with Facebook account Email",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Name Field",
+                  "key": "autofill-facebook-name",
+                  "placeholder": "Select which field to autofill with Facebook account Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill First Name Field",
+                  "key": "autofill-facebook-first_name",
+                  "placeholder": "Select which field to autofill with Facebook account First Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Middle Name Field",
+                  "key": "autofill-facebook-middle_name",
+                  "placeholder": "Select which field to autofill with Facebook account Middle Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Last Name Field",
+                  "key": "autofill-facebook-last_name",
+                  "placeholder": "Select which field to autofill with Facebook account Last Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Email Field",
+                  "key": "autofill-office365-Id",
+                  "placeholder": "Select which field to autofill with Office 365 account Email",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['office365'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Display Name Field",
+                  "key": "autofill-office365-DisplayName",
+                  "placeholder": "Select which field to autofill with Office 365 account Display Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['office365'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Email Field",
+                  "key": "autofill-dropbox-email",
+                  "placeholder": "Select which field to autofill with Dropbox account Email",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill First Name Field",
+                  "key": "autofill-dropbox-given_name",
+                  "placeholder": "Select which field to autofill with Dropbox account First Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Last Name Field",
+                  "key": "autofill-dropbox-familiar_name",
+                  "placeholder": "Select which field to autofill with Dropbox account Last Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Display Name Field",
+                  "key": "autofill-dropbox-display_name",
+                  "placeholder": "Select which field to autofill with Dropbox account Display Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Email Field",
+                  "key": "autofill-google-email",
+                  "placeholder": "Select which field to autofill with Google account Email",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill First Name Field",
+                  "key": "autofill-google-given_name",
+                  "placeholder": "Select which field to autofill with Google account First Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Last Name Field",
+                  "key": "autofill-google-family_name",
+                  "placeholder": "Select which field to autofill with Google account Last Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill Display Name Field",
+                  "key": "autofill-google-name",
+                  "placeholder": "Select which field to autofill with Google account Display Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;"
+                },
+                {
+                  "type": "select",
+                  "input": true,
+                  "label": "Autofill First Name Field",
+                  "key": "autofill-linkedin-firstName",
+                  "placeholder": "Select which field to autofill with LinkedIn  account First Name",
+                  "template": "<span>{{ item.label || item.key }}</span>",
+                  "dataSrc": "url",
+                  "data": {
+                    "url": "/project/605ae550d0fb2f097fe63a6c/form/605ae550d0fb2f311de63a75/components"
+                  },
+                  "valueProperty": "key",
+                  "multiple": false,
+                  "customConditional": "show = ['linkedin'].indexOf(data.settings.provider) !== -1;"
+                }
+              ],
+              "legend": "Field Mapping",
+              "input": false,
+              "key": "fieldset",
+              "customConditional": "show = ['new'].indexOf(data.settings.association) !== -1;"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "fieldset",
+      "input": false,
+      "tree": false,
+      "key": "conditions",
+      "legend": "Action Execution",
+      "components": [
+        {
+          "type": "hidden",
+          "input": true,
+          "key": "handler"
+        },
+        {
+          "type": "hidden",
+          "input": true,
+          "key": "method"
+        }
+      ]
+    },
+    {
+      "key": "fieldset",
+      "type": "fieldset",
+      "input": false,
+      "tree": false,
+      "legend": "Action Conditions (optional)",
+      "components": [
+        {
+          "type": "container",
+          "key": "condition",
+          "input": false,
+          "tree": true,
+          "components": [
+            {
+              "key": "columns",
+              "type": "columns",
+              "input": false,
+              "columns": [
+                {
+                  "components": [
+                    {
+                      "type": "select",
+                      "input": true,
+                      "label": "Trigger this action only if field",
+                      "key": "field",
+                      "placeholder": "Select the conditional field",
+                      "template": "<span>{{ item.label || item.key }}</span>",
+                      "dataSrc": "json",
+                      "data": {
+                        "json": "[{\"key\":\"\"},{\"type\":\"email\",\"persistent\":true,\"unique\":false,\"protected\":false,\"defaultValue\":\"\",\"suffix\":\"\",\"prefix\":\"\",\"placeholder\":\"Enter your email address\",\"key\":\"email\",\"lockKey\":true,\"label\":\"Email\",\"inputType\":\"email\",\"tableView\":true,\"input\":true,\"customClass\":\"\",\"multiple\":false,\"hidden\":false,\"clearOnHide\":true,\"refreshOn\":\"\",\"redrawOn\":\"\",\"modalEdit\":false,\"labelPosition\":\"top\",\"description\":\"\",\"errorLabel\":\"\",\"tooltip\":\"\",\"hideLabel\":false,\"tabindex\":\"\",\"disabled\":false,\"autofocus\":false,\"dbIndex\":false,\"customDefaultValue\":\"\",\"calculateValue\":\"\",\"calculateServer\":false,\"widget\":{\"type\":\"input\"},\"attributes\":{},\"validateOn\":\"change\",\"validate\":{\"required\":false,\"custom\":\"\",\"customPrivate\":false,\"strictDateValidation\":false,\"multiple\":false,\"unique\":false,\"minLength\":\"\",\"maxLength\":\"\",\"pattern\":\"\"},\"conditional\":{\"show\":null,\"when\":null,\"eq\":\"\"},\"overlay\":{\"style\":\"\",\"left\":\"\",\"top\":\"\",\"width\":\"\",\"height\":\"\"},\"allowCalculateOverride\":false,\"encrypted\":false,\"showCharCount\":false,\"showWordCount\":false,\"properties\":{},\"allowMultipleMasks\":false,\"mask\":false,\"inputFormat\":\"plain\",\"inputMask\":\"\",\"spellcheck\":true,\"kickbox\":{\"enabled\":false},\"id\":\"ekvxiy\"},{\"type\":\"password\",\"persistent\":true,\"protected\":true,\"suffix\":\"\",\"prefix\":\"\",\"placeholder\":\"Enter your password.\",\"key\":\"password\",\"lockKey\":true,\"label\":\"Password\",\"inputType\":\"password\",\"tableView\":false,\"input\":true,\"customClass\":\"\",\"multiple\":false,\"defaultValue\":null,\"unique\":false,\"hidden\":false,\"clearOnHide\":true,\"refreshOn\":\"\",\"redrawOn\":\"\",\"modalEdit\":false,\"labelPosition\":\"top\",\"description\":\"\",\"errorLabel\":\"\",\"tooltip\":\"\",\"hideLabel\":false,\"tabindex\":\"\",\"disabled\":false,\"autofocus\":false,\"dbIndex\":false,\"customDefaultValue\":\"\",\"calculateValue\":\"\",\"calculateServer\":false,\"widget\":{\"type\":\"input\"},\"attributes\":{},\"validateOn\":\"change\",\"validate\":{\"required\":false,\"custom\":\"\",\"customPrivate\":false,\"strictDateValidation\":false,\"multiple\":false,\"unique\":false,\"minLength\":\"\",\"maxLength\":\"\",\"pattern\":\"\"},\"conditional\":{\"show\":null,\"when\":null,\"eq\":\"\"},\"overlay\":{\"style\":\"\",\"left\":\"\",\"top\":\"\",\"width\":\"\",\"height\":\"\"},\"allowCalculateOverride\":false,\"encrypted\":false,\"showCharCount\":false,\"showWordCount\":false,\"properties\":{},\"allowMultipleMasks\":false,\"mask\":false,\"inputFormat\":\"plain\",\"inputMask\":\"\",\"spellcheck\":true,\"id\":\"e6rrtoh\"},{\"type\":\"button\",\"theme\":\"primary\",\"disableOnInvalid\":true,\"action\":\"submit\",\"block\":false,\"rightIcon\":\"\",\"leftIcon\":\"\",\"size\":\"md\",\"key\":\"submit\",\"tableView\":false,\"label\":\"Submit\",\"input\":true,\"placeholder\":\"\",\"prefix\":\"\",\"customClass\":\"\",\"suffix\":\"\",\"multiple\":false,\"defaultValue\":null,\"protected\":false,\"unique\":false,\"persistent\":false,\"hidden\":false,\"clearOnHide\":true,\"refreshOn\":\"\",\"redrawOn\":\"\",\"modalEdit\":false,\"labelPosition\":\"top\",\"description\":\"\",\"errorLabel\":\"\",\"tooltip\":\"\",\"hideLabel\":false,\"tabindex\":\"\",\"disabled\":false,\"autofocus\":false,\"dbIndex\":false,\"customDefaultValue\":\"\",\"calculateValue\":\"\",\"calculateServer\":false,\"widget\":{\"type\":\"input\"},\"attributes\":{},\"validateOn\":\"change\",\"validate\":{\"required\":false,\"custom\":\"\",\"customPrivate\":false,\"strictDateValidation\":false,\"multiple\":false,\"unique\":false},\"conditional\":{\"show\":null,\"when\":null,\"eq\":\"\"},\"overlay\":{\"style\":\"\",\"left\":\"\",\"top\":\"\",\"width\":\"\",\"height\":\"\"},\"allowCalculateOverride\":false,\"encrypted\":false,\"showCharCount\":false,\"showWordCount\":false,\"properties\":{},\"allowMultipleMasks\":false,\"dataGridLabel\":true,\"id\":\"ebxzuw\"},{\"label\":\"Login with github\",\"action\":\"oauth\",\"showValidations\":false,\"theme\":\"primary\",\"size\":\"md\",\"block\":false,\"leftIcon\":\"fa-github\",\"rightIcon\":\"\",\"shortcut\":\"\",\"description\":\"\",\"tooltip\":\"\",\"customClass\":\"\",\"tabindex\":\"\",\"disableOnInvalid\":false,\"hidden\":false,\"autofocus\":false,\"disabled\":false,\"tableView\":false,\"modalEdit\":false,\"key\":\"github\",\"tags\":[],\"properties\":{},\"conditional\":{\"show\":null,\"when\":null,\"eq\":\"\",\"json\":\"\"},\"customConditional\":\"\",\"logic\":[],\"attributes\":{},\"overlay\":{\"style\":\"\",\"page\":\"\",\"left\":\"\",\"top\":\"\",\"width\":\"\",\"height\":\"\"},\"type\":\"button\",\"oauthProvider\":\"github\",\"input\":true,\"placeholder\":\"\",\"prefix\":\"\",\"suffix\":\"\",\"multiple\":false,\"defaultValue\":null,\"protected\":false,\"unique\":false,\"persistent\":false,\"clearOnHide\":true,\"refreshOn\":\"\",\"redrawOn\":\"\",\"labelPosition\":\"top\",\"errorLabel\":\"\",\"hideLabel\":false,\"dbIndex\":false,\"customDefaultValue\":\"\",\"calculateValue\":\"\",\"calculateServer\":false,\"widget\":{\"type\":\"input\"},\"validateOn\":\"change\",\"validate\":{\"required\":false,\"custom\":\"\",\"customPrivate\":false,\"strictDateValidation\":false,\"multiple\":false,\"unique\":false},\"allowCalculateOverride\":false,\"encrypted\":false,\"showCharCount\":false,\"showWordCount\":false,\"allowMultipleMasks\":false,\"dataGridLabel\":true,\"id\":\"ebmo5b9\"}]"
+                      },
+                      "valueProperty": "key",
+                      "multiple": false
+                    },
+                    {
+                      "type": "select",
+                      "input": true,
+                      "label": "",
+                      "key": "eq",
+                      "placeholder": "Select comparison",
+                      "template": "<span>{{ item.label }}</span>",
+                      "dataSrc": "values",
+                      "data": {
+                        "values": [
+                          {
+                            "value": "",
+                            "label": ""
+                          },
+                          {
+                            "value": "equals",
+                            "label": "Equals"
+                          },
+                          {
+                            "value": "notEqual",
+                            "label": "Does Not Equal"
+                          }
+                        ],
+                        "json": "",
+                        "url": "",
+                        "resource": ""
+                      },
+                      "valueProperty": "value",
+                      "multiple": false
+                    },
+                    {
+                      "input": true,
+                      "type": "textfield",
+                      "inputType": "text",
+                      "label": "",
+                      "key": "value",
+                      "placeholder": "Enter value",
+                      "multiple": false
+                    }
+                  ]
+                },
+                {
+                  "components": [
+                    {
+                      "key": "well2",
+                      "type": "well",
+                      "input": false,
+                      "components": [
+                        {
+                          "key": "html",
+                          "type": "htmlelement",
+                          "tag": "h4",
+                          "input": false,
+                          "content": "Or you can provide your own custom JavaScript or <a href=\"http://jsonlogic.com\" target=\"_blank\">JSON</a> condition logic here",
+                          "className": ""
+                        },
+                        {
+                          "label": "",
+                          "type": "textarea",
+                          "input": true,
+                          "key": "custom",
+                          "editorComponents": [
+                            {
+                              "type": "email",
+                              "persistent": true,
+                              "unique": false,
+                              "protected": false,
+                              "defaultValue": "",
+                              "suffix": "",
+                              "prefix": "",
+                              "placeholder": "Enter your email address",
+                              "key": "email",
+                              "lockKey": true,
+                              "label": "Email",
+                              "inputType": "email",
+                              "tableView": true,
+                              "input": true,
+                              "customClass": "",
+                              "multiple": false,
+                              "hidden": false,
+                              "clearOnHide": true,
+                              "refreshOn": "",
+                              "redrawOn": "",
+                              "modalEdit": false,
+                              "labelPosition": "top",
+                              "description": "",
+                              "errorLabel": "",
+                              "tooltip": "",
+                              "hideLabel": false,
+                              "tabindex": "",
+                              "disabled": false,
+                              "autofocus": false,
+                              "dbIndex": false,
+                              "customDefaultValue": "",
+                              "calculateValue": "",
+                              "calculateServer": false,
+                              "widget": {
+                                "type": "input"
+                              },
+                              "attributes": {},
+                              "validateOn": "change",
+                              "validate": {
+                                "required": false,
+                                "custom": "",
+                                "customPrivate": false,
+                                "strictDateValidation": false,
+                                "multiple": false,
+                                "unique": false,
+                                "minLength": "",
+                                "maxLength": "",
+                                "pattern": ""
+                              },
+                              "conditional": {
+                                "show": null,
+                                "when": null,
+                                "eq": ""
+                              },
+                              "overlay": {
+                                "style": "",
+                                "left": "",
+                                "top": "",
+                                "width": "",
+                                "height": ""
+                              },
+                              "allowCalculateOverride": false,
+                              "encrypted": false,
+                              "showCharCount": false,
+                              "showWordCount": false,
+                              "properties": {},
+                              "allowMultipleMasks": false,
+                              "mask": false,
+                              "inputFormat": "plain",
+                              "inputMask": "",
+                              "spellcheck": true,
+                              "kickbox": {
+                                "enabled": false
+                              },
+                              "id": "ekvxiy"
+                            },
+                            {
+                              "type": "password",
+                              "persistent": true,
+                              "protected": true,
+                              "suffix": "",
+                              "prefix": "",
+                              "placeholder": "Enter your password.",
+                              "key": "password",
+                              "lockKey": true,
+                              "label": "Password",
+                              "inputType": "password",
+                              "tableView": false,
+                              "input": true,
+                              "customClass": "",
+                              "multiple": false,
+                              "defaultValue": null,
+                              "unique": false,
+                              "hidden": false,
+                              "clearOnHide": true,
+                              "refreshOn": "",
+                              "redrawOn": "",
+                              "modalEdit": false,
+                              "labelPosition": "top",
+                              "description": "",
+                              "errorLabel": "",
+                              "tooltip": "",
+                              "hideLabel": false,
+                              "tabindex": "",
+                              "disabled": false,
+                              "autofocus": false,
+                              "dbIndex": false,
+                              "customDefaultValue": "",
+                              "calculateValue": "",
+                              "calculateServer": false,
+                              "widget": {
+                                "type": "input"
+                              },
+                              "attributes": {},
+                              "validateOn": "change",
+                              "validate": {
+                                "required": false,
+                                "custom": "",
+                                "customPrivate": false,
+                                "strictDateValidation": false,
+                                "multiple": false,
+                                "unique": false,
+                                "minLength": "",
+                                "maxLength": "",
+                                "pattern": ""
+                              },
+                              "conditional": {
+                                "show": null,
+                                "when": null,
+                                "eq": ""
+                              },
+                              "overlay": {
+                                "style": "",
+                                "left": "",
+                                "top": "",
+                                "width": "",
+                                "height": ""
+                              },
+                              "allowCalculateOverride": false,
+                              "encrypted": false,
+                              "showCharCount": false,
+                              "showWordCount": false,
+                              "properties": {},
+                              "allowMultipleMasks": false,
+                              "mask": false,
+                              "inputFormat": "plain",
+                              "inputMask": "",
+                              "spellcheck": true,
+                              "id": "e6rrtoh"
+                            },
+                            {
+                              "type": "button",
+                              "theme": "primary",
+                              "disableOnInvalid": true,
+                              "action": "submit",
+                              "block": false,
+                              "rightIcon": "",
+                              "leftIcon": "",
+                              "size": "md",
+                              "key": "submit",
+                              "tableView": false,
+                              "label": "Submit",
+                              "input": true,
+                              "placeholder": "",
+                              "prefix": "",
+                              "customClass": "",
+                              "suffix": "",
+                              "multiple": false,
+                              "defaultValue": null,
+                              "protected": false,
+                              "unique": false,
+                              "persistent": false,
+                              "hidden": false,
+                              "clearOnHide": true,
+                              "refreshOn": "",
+                              "redrawOn": "",
+                              "modalEdit": false,
+                              "labelPosition": "top",
+                              "description": "",
+                              "errorLabel": "",
+                              "tooltip": "",
+                              "hideLabel": false,
+                              "tabindex": "",
+                              "disabled": false,
+                              "autofocus": false,
+                              "dbIndex": false,
+                              "customDefaultValue": "",
+                              "calculateValue": "",
+                              "calculateServer": false,
+                              "widget": {
+                                "type": "input"
+                              },
+                              "attributes": {},
+                              "validateOn": "change",
+                              "validate": {
+                                "required": false,
+                                "custom": "",
+                                "customPrivate": false,
+                                "strictDateValidation": false,
+                                "multiple": false,
+                                "unique": false
+                              },
+                              "conditional": {
+                                "show": null,
+                                "when": null,
+                                "eq": ""
+                              },
+                              "overlay": {
+                                "style": "",
+                                "left": "",
+                                "top": "",
+                                "width": "",
+                                "height": ""
+                              },
+                              "allowCalculateOverride": false,
+                              "encrypted": false,
+                              "showCharCount": false,
+                              "showWordCount": false,
+                              "properties": {},
+                              "allowMultipleMasks": false,
+                              "dataGridLabel": true,
+                              "id": "ebxzuw"
+                            },
+                            {
+                              "label": "Login with github",
+                              "action": "oauth",
+                              "showValidations": false,
+                              "theme": "primary",
+                              "size": "md",
+                              "block": false,
+                              "leftIcon": "fa-github",
+                              "rightIcon": "",
+                              "shortcut": "",
+                              "description": "",
+                              "tooltip": "",
+                              "customClass": "",
+                              "tabindex": "",
+                              "disableOnInvalid": false,
+                              "hidden": false,
+                              "autofocus": false,
+                              "disabled": false,
+                              "tableView": false,
+                              "modalEdit": false,
+                              "key": "github",
+                              "tags": [],
+                              "properties": {},
+                              "conditional": {
+                                "show": null,
+                                "when": null,
+                                "eq": "",
+                                "json": ""
+                              },
+                              "customConditional": "",
+                              "logic": [],
+                              "attributes": {},
+                              "overlay": {
+                                "style": "",
+                                "page": "",
+                                "left": "",
+                                "top": "",
+                                "width": "",
+                                "height": ""
+                              },
+                              "type": "button",
+                              "oauthProvider": "github",
+                              "input": true,
+                              "placeholder": "",
+                              "prefix": "",
+                              "suffix": "",
+                              "multiple": false,
+                              "defaultValue": null,
+                              "protected": false,
+                              "unique": false,
+                              "persistent": false,
+                              "clearOnHide": true,
+                              "refreshOn": "",
+                              "redrawOn": "",
+                              "labelPosition": "top",
+                              "errorLabel": "",
+                              "hideLabel": false,
+                              "dbIndex": false,
+                              "customDefaultValue": "",
+                              "calculateValue": "",
+                              "calculateServer": false,
+                              "widget": {
+                                "type": "input"
+                              },
+                              "validateOn": "change",
+                              "validate": {
+                                "required": false,
+                                "custom": "",
+                                "customPrivate": false,
+                                "strictDateValidation": false,
+                                "multiple": false,
+                                "unique": false
+                              },
+                              "allowCalculateOverride": false,
+                              "encrypted": false,
+                              "showCharCount": false,
+                              "showWordCount": false,
+                              "allowMultipleMasks": false,
+                              "dataGridLabel": true,
+                              "id": "ebmo5b9"
+                            }
+                          ],
+                          "placeholder": "// Example: Only execute if submitted roles has 'authenticated'.\nJavaScript: execute = (data.roles.indexOf('authenticated') !== -1);\nJSON: { \"in\": [ \"authenticated\", { \"var\": \"data.roles\" } ] }"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "html2",
+      "type": "htmlelement",
+      "tag": "hr",
+      "input": false,
+      "content": "",
+      "className": ""
+    },
+    {
+      "type": "button",
+      "input": true,
+      "label": "Save Action",
+      "key": "submit",
+      "size": "md",
+      "leftIcon": "",
+      "rightIcon": "",
+      "block": false,
+      "action": "submit",
+      "disableOnInvalid": true,
+      "theme": "primary"
+    }
+  ]
+}

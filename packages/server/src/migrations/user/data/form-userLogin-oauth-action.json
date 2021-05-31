@@ -1,0 +1,31 @@
+{
+  "handler": [
+    "before",
+    "after"
+  ],
+  "method": [
+    "form",
+    "create"
+  ],
+  "priority": 20,
+  "name": "oauth",
+  "title": "OAuth",
+  "settings": {
+    "provider": "github",
+    "association": "new",
+    "button": "connectWithGithub",
+    "resource": "$machineName:user",
+    "role": "$machineName:authenticated",
+    "autofill-github-email": "email",
+    "autofill-github-login": "fullName",
+    "autofill-github-name": ""
+  },
+  "condition": {
+    "eq": "",
+    "value": "",
+    "custom": "",
+    "field": {}
+  },
+  "form": "$machineName:userLogin",
+  "machineName": "userLogin:oauth"
+}

@@ -63,6 +63,30 @@ export default [
         icon: "user",
         ctaLabel: "Manage users",
         roles: ["administrator"]
+      },
+      {
+        title: "Edit Login form",
+        description: "Edit user login form definition.",
+        href: getFormioBasePath("forms", "user__login", "edit"),
+        icon: "detail",
+        ctaLabel: "Edit form",
+        roles: ["administrator"]
+      },
+      {
+        title: "Edit Register form",
+        description: "Edit registration form definition.",
+        href: getFormioBasePath("forms", "user__register", "edit"),
+        icon: "detail",
+        ctaLabel: "Edit form",
+        roles: ["administrator"]
+      },
+      {
+        title: "Edit OAuth link",
+        description: "Edit OAuth link form definition.",
+        href: getFormioBasePath("forms", "oauthLink", "edit"),
+        icon: "detail",
+        ctaLabel: "Edit form",
+        roles: ["administrator"]
       }
     ]
   }

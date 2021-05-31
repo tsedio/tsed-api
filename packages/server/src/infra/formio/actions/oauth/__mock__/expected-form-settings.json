@@ -1,0 +1,508 @@
+[
+  {
+    "data": {
+      "json": "[{\"name\":\"github\",\"title\":\"github\"}]"
+    },
+    "dataSrc": "json",
+    "input": true,
+    "key": "provider",
+    "label": "OAuth Provider",
+    "multiple": false,
+    "placeholder": "Select the OAuth Provider",
+    "template": "<span>{{ item.title }}</span>",
+    "type": "select",
+    "validate": {
+      "required": true
+    },
+    "valueProperty": "name"
+  },
+  {
+    "data": {
+      "json": "[{\"association\":\"existing\",\"title\":\"Login Existing Resource\"},{\"association\":\"new\",\"title\":\"Register New Resource\"},{\"association\":\"link\",\"title\":\"Link Current User\"}]"
+    },
+    "dataSrc": "json",
+    "input": true,
+    "key": "association",
+    "label": "Action",
+    "multiple": false,
+    "placeholder": "Select the action to perform",
+    "template": "<span>{{ item.title }}</span>",
+    "type": "select",
+    "validate": {
+      "required": true
+    },
+    "valueProperty": "association"
+  },
+  {
+    "customConditional": "show = ['existing', 'new'].indexOf(_.get(data, \"settings.association\")) !== -1;",
+    "data": {
+      "url": "/form?type=resource"
+    },
+    "dataSrc": "url",
+    "input": true,
+    "key": "resource",
+    "label": "Resource",
+    "multiple": false,
+    "placeholder": "Select the Resource to authenticate against",
+    "template": "<span>{{ item.title }}</span>",
+    "type": "select",
+    "validate": {
+      "required": true
+    },
+    "valueProperty": "_id"
+  },
+  {
+    "customConditional": "show = ['new'].indexOf(data.settings.association) !== -1;",
+    "data": {
+      "json": "[{\"_id\":\"roleId\",\"title\":\"role\"}]"
+    },
+    "dataSrc": "json",
+    "input": true,
+    "key": "role",
+    "label": "Role",
+    "multiple": false,
+    "placeholder": "Select the Role that will be added to new Resources",
+    "template": "<span>{{ item.title }}</span>",
+    "type": "select",
+    "valueProperty": "_id"
+  },
+  {
+    "data": {
+      "json": "[{\"type\":\"button\",\"action\":\"oauth\"}]"
+    },
+    "dataSrc": "json",
+    "input": true,
+    "key": "button",
+    "label": "Sign-in with OAuth Button",
+    "multiple": false,
+    "placeholder": "Select the button that triggers OAuth sign-in",
+    "template": "<span>{{ item.label || item.key }}</span>",
+    "type": "select",
+    "validate": {
+      "required": true
+    },
+    "valueProperty": "key"
+  },
+  {
+    "clearOnHide": true,
+    "components": [
+      {
+        "clearOnHide": true,
+        "defaultValue": "",
+        "hidden": false,
+        "input": true,
+        "inputType": "text",
+        "key": "claim",
+        "label": "Claim",
+        "multiple": false,
+        "persistent": true,
+        "placeholder": "Leave empty for everyone",
+        "protected": false,
+        "type": "textfield",
+        "unique": false
+      },
+      {
+        "clearOnHide": true,
+        "defaultValue": "",
+        "hidden": false,
+        "input": true,
+        "inputType": "text",
+        "key": "value",
+        "label": "Value",
+        "multiple": false,
+        "persistent": true,
+        "protected": false,
+        "type": "textfield",
+        "unique": false
+      },
+      {
+        "clearOnHide": true,
+        "data": {
+          "json": "[{\"_id\":\"roleId\",\"title\":\"role\"}]"
+        },
+        "dataSrc": "json",
+        "defaultValue": "",
+        "filter": "",
+        "hidden": false,
+        "input": true,
+        "key": "role",
+        "label": "Role",
+        "multiple": false,
+        "persistent": true,
+        "placeholder": "",
+        "protected": false,
+        "refreshOn": "",
+        "tableView": true,
+        "template": "<span>{{ item.title }}</span>",
+        "type": "select",
+        "unique": false,
+        "validate": {
+          "required": true
+        },
+        "valueProperty": "_id"
+      }
+    ],
+    "customConditional": "show = ['remote'].indexOf(data.settings.association) !== -1;",
+    "hidden": false,
+    "input": true,
+    "key": "roles",
+    "label": "Assign Roles",
+    "persistent": true,
+    "protected": false,
+    "tableView": true,
+    "tree": true,
+    "type": "datagrid"
+  },
+  {
+    "components": [
+      {
+        "clearOnHide": true,
+        "components": [
+          {
+            "clearOnHide": true,
+            "defaultValue": "",
+            "hidden": false,
+            "input": true,
+            "inputType": "text",
+            "key": "claim",
+            "label": "Claim",
+            "multiple": false,
+            "persistent": true,
+            "placeholder": "Leave empty for everyone",
+            "protected": false,
+            "type": "textfield",
+            "unique": false
+          },
+          {
+            "clearOnHide": true,
+            "data": {
+              "url": "/form/{{data.settings.resource}}"
+            },
+            "dataSrc": "url",
+            "defaultValue": "",
+            "filter": "",
+            "hidden": false,
+            "input": true,
+            "key": "field",
+            "label": "Field",
+            "lazyLoad": false,
+            "multiple": false,
+            "persistent": true,
+            "placeholder": "",
+            "protected": false,
+            "refreshOn": "resource",
+            "selectValues": "components",
+            "tableView": true,
+            "template": "<span>{{ item.label || item.key }}</span>",
+            "type": "select",
+            "unique": false,
+            "validate": {
+              "required": true
+            },
+            "valueProperty": "key"
+          }
+        ],
+        "customConditional": "show = ['openid'].indexOf(data.settings.provider) !== -1;",
+        "hidden": false,
+        "input": true,
+        "key": "openid-claims",
+        "label": "Map Claims",
+        "persistent": true,
+        "protected": false,
+        "tableView": true,
+        "tree": true,
+        "type": "datagrid"
+      },
+      {
+        "customConditional": "show = ['github'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-github-email",
+        "label": "Autofill Email Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with GitHub account Email",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['github'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-github-login",
+        "label": "Autofill Username Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with GitHub account Username",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['github'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-github-name",
+        "label": "Autofill Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with GitHub account Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-facebook-email",
+        "label": "Autofill Email Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Facebook account Email",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-facebook-name",
+        "label": "Autofill Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Facebook account Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-facebook-first_name",
+        "label": "Autofill First Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Facebook account First Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-facebook-middle_name",
+        "label": "Autofill Middle Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Facebook account Middle Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['facebook'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-facebook-last_name",
+        "label": "Autofill Last Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Facebook account Last Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['office365'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-office365-Id",
+        "label": "Autofill Email Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Office 365 account Email",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['office365'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-office365-DisplayName",
+        "label": "Autofill Display Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Office 365 account Display Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-dropbox-email",
+        "label": "Autofill Email Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Dropbox account Email",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-dropbox-given_name",
+        "label": "Autofill First Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Dropbox account First Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-dropbox-familiar_name",
+        "label": "Autofill Last Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Dropbox account Last Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['dropbox'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-dropbox-display_name",
+        "label": "Autofill Display Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Dropbox account Display Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-google-email",
+        "label": "Autofill Email Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Google account Email",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-google-given_name",
+        "label": "Autofill First Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Google account First Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-google-family_name",
+        "label": "Autofill Last Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Google account Last Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['google'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-google-name",
+        "label": "Autofill Display Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with Google account Display Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      },
+      {
+        "customConditional": "show = ['linkedin'].indexOf(data.settings.provider) !== -1;",
+        "data": {
+          "url": "/form/{{data.settings.resource}}/components"
+        },
+        "dataSrc": "url",
+        "input": true,
+        "key": "autofill-linkedin-firstName",
+        "label": "Autofill First Name Field",
+        "multiple": false,
+        "placeholder": "Select which field to autofill with LinkedIn  account First Name",
+        "template": "<span>{{ item.label || item.key }}</span>",
+        "type": "select",
+        "valueProperty": "key"
+      }
+    ],
+    "customConditional": "show = ['new'].indexOf(data.settings.association) !== -1;",
+    "input": false,
+    "key": "fieldset",
+    "legend": "Field Mapping",
+    "type": "fieldset"
+  }
+]

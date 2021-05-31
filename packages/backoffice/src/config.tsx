@@ -11,7 +11,8 @@ export function getFormioBasePath(...paths: string[]) {
 
 export const Config = {
   projectTitle: "Ts.ED",
-  projectIcon: "/tsed.svg",
+  projectIcon:
+    process.env.NODE_ENV === "production" ? "/statics/tsed.svg" : "/tsed.svg",
   headerHeight: "64px",
   formioUrl,
   apiUrl,

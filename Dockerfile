@@ -13,7 +13,10 @@
 ## version         : 1.0                                                     ##
 ###############################################################################
 ###############################################################################
-FROM node:14.15.2-alpine
+ARG NODE_VERSION=14.16.0
+FROM node:${NODE_VERSION}-alpine as builder
+
+WORKDIR /src
 
 RUN apk update
 
@@ -28,6 +31,10 @@ COPY ./packages/backoffice/package.json ./packages/backoffice/package.json
 COPY ./packages/server/package.json ./packages/server/package.json
 
 RUN yarn install --production --frozen-lockfile --ignore-scripts
+
+FROM node:${NODE_VERSION}-alpine
+WORKDIR /
+COPY --from=builder /src .
 
 COPY ./packages/backoffice/build ./packages/backoffice/build
 COPY ./packages/server ./packages/server

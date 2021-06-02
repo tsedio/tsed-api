@@ -31,7 +31,7 @@ export function AuthView() {
           <h1 className='text-4xl'>
             {Config.projectIcon ? (
               <img
-                src={"/tsed.svg"}
+                src={Config.projectIcon}
                 alt={Config.projectTitle}
                 style={{ maxWidth: "150px" }}
               />

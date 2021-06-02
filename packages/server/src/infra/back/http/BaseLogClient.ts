@@ -57,6 +57,7 @@ export class BaseLogClient {
   protected formatLog(options: Record<string, any>) {
     const {startTime, url, method} = options;
     const {callee} = this;
+    const duration = new Date().getTime() - startTime;
 
     return {
       callee,
@@ -64,7 +65,7 @@ export class BaseLogClient {
       method,
       callee_qs: options.params && querystring.stringify(options.params),
       request_id: this.$ctx && this.$ctx.id,
-      duration: new Date().getTime() - startTime
+      duration: isNaN(duration) ? undefined : duration
     };
   }
 

@@ -1,4 +1,5 @@
-import {UseCache} from "@tsed/common";
+import {InjectContext} from "@tsed/async-hook-context";
+import {PlatformContext, UseCache} from "@tsed/common";
 import {Injectable} from "@tsed/di";
 import {deserialize} from "@tsed/json-mapper";
 import {Method} from "axios";
@@ -33,6 +34,9 @@ export interface NpmRequestOptions extends HttpClientOptions {
 export class NpmClient extends HttpClient {
   hostRegistry = "https://registry.npmjs.org";
   hostApi = "https://api.npmjs.org";
+
+  @InjectContext()
+  context?: PlatformContext;
 
   static escapeName(name: string): string {
     // scoped packages contain slashes and the npm registry expects them to be escaped
@@ -117,10 +121,15 @@ export class NpmClient extends HttpClient {
   }
 
   async downloads(pkg: string): Promise<number> {
-    const {downloads} = await this.get<{downloads: number}>(`/downloads/point/last-month/${pkg}`, {
-      host: this.hostApi
-    });
+    try {
+      const {downloads} = await this.get<{downloads: number}>(`/downloads/point/last-month/${pkg}`, {
+        host: this.hostApi
+      });
 
-    return downloads;
+      return downloads;
+    } catch (er) {
+      this.context?.logger.warn({message: "Unable to get downloads for the following packages", pkg, error: er});
+      return 0;
+    }
   }
 }

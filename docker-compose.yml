@@ -13,7 +13,7 @@ services:
   redis:
     image: redis:3.2.11-alpine
     ports:
-      - 6379:6379
+      - "6379:6379"
   server:
     build:
       context: .
@@ -30,8 +30,11 @@ services:
     environment:
       - NODE_ENV=development
       - MONGOOSE_URL=mongodb://mongo:27017/tsed-api
+      - REDIS_URL=//redis:6379
     depends_on:
       - mongo
       - redis
+    volumes:
+      - ./packages/server/.env:/packages/server/.env
 volumes:
   mdb-data:

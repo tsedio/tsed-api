@@ -1,4 +1,4 @@
-import {Controller, Get} from "@tsed/common";
+import {Controller, Get, QueryParams} from "@tsed/common";
 import {Hidden, Returns} from "@tsed/schema";
 
 const packageJson = require("../../../../package.json");
@@ -8,9 +8,12 @@ const packageJson = require("../../../../package.json");
 export class VersionCtrl {
   @Get("/")
   @(Returns(200).ContentType("application/json"))
-  get() {
-    return {
-      version: packageJson.version
-    };
+  get(@QueryParams("code") code?: string) {
+    // disable response when oauth flow is performed by formio
+    if (!code) {
+      return {
+        version: packageJson.version
+      };
+    }
   }
 }

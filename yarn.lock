@@ -4873,10 +4873,10 @@
     "@tsed/core" "6.52.0"
     tslib "2.1.0"
 
-"@tsed/logger-logentries@5.14.0":
-  version "5.14.0"
-  resolved "https://registry.yarnpkg.com/@tsed/logger-logentries/-/logger-logentries-5.14.0.tgz#3ed2657451dd59b17b9bd4a04d7d5ba3e61cd241"
-  integrity sha512-yuGKVWExKcAQcRvE6SW89E0zrCHCFOWLdjQJIvQb55sEvy1s4Y85QwC0YuqIZt+WP1xhD4TICN5BJrikP5NyDQ==
+"@tsed/logger-logentries@5.15.0":
+  version "5.15.0"
+  resolved "https://registry.yarnpkg.com/@tsed/logger-logentries/-/logger-logentries-5.15.0.tgz#13556189ec5c72ef4ed3180b0d98aa200f6ade2d"
+  integrity sha512-e/dsyItHtH8uxdpq4xTEfSTRkW1m7LLipfBC2/2aHBNnwfZPl2I2sfxT87zn+euLX4siCivt2Tvo485M/6eZMQ==
   dependencies:
     le_node "^1.8.0"
 
@@ -4947,15 +4947,6 @@
   resolved "https://registry.yarnpkg.com/@tsed/react-formio-container/-/react-formio-container-1.9.2.tgz#9ed9a4e3a5373cff1667c085496f32da5b69a783"
   integrity sha512-qbxa7r7EvbB8qBUR4v2AJzdg7OP4eLRSWmVueNDolsZxsARoQ8hc0jA+Oc0N7/GzVgH4/Jg0Efe9SYPhDAvJWw==
 
-"@tsed/react-formio@1.8.16":
-  version "1.8.16"
-  resolved "https://registry.yarnpkg.com/@tsed/react-formio/-/react-formio-1.8.16.tgz#4a9795d3ee96644dae7e5e266163fdc6240dd630"
-  integrity sha512-/bD0sQnW9zu5HrmUMXbNbttTypijyGy2hT4vCDl1wbY0+Jr9PvS52BrzQM4FG2YrOulXDWwJy3hDitB7YudQpg==
-  dependencies:
-    "@tsed/redux-utils" "1.8.16"
-    eventemitter2 "^6.4.3"
-    prop-types "^15.7.2"
-
 "@tsed/react-formio@1.9.2":
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/@tsed/react-formio/-/react-formio-1.9.2.tgz#482cb1108b5ef2e7251f22f6fb314c443b741348"
@@ -4964,11 +4955,6 @@
     "@tsed/redux-utils" "1.9.2"
     eventemitter2 "^6.4.3"
     prop-types "^15.7.2"
-
-"@tsed/redux-utils@1.8.16":
-  version "1.8.16"
-  resolved "https://registry.yarnpkg.com/@tsed/redux-utils/-/redux-utils-1.8.16.tgz#1579b775bdc5d988bf749d7f7eab9f9d3b98b348"
-  integrity sha512-kEA4k2ElW440KDT23x4+jEinxA/Nx+RAJTH/ywp8gT14Jljmsyg8woyTInQWlhZpxSzwSvwzuGw52u2AagvRtA==
 
 "@tsed/redux-utils@1.9.2":
   version "1.9.2"
@@ -4993,11 +4979,6 @@
   dependencies:
     swagger-ui-dist "^3.46.0"
     tslib "2.1.0"
-
-"@tsed/tailwind-formio@1.8.16":
-  version "1.8.16"
-  resolved "https://registry.yarnpkg.com/@tsed/tailwind-formio/-/tailwind-formio-1.8.16.tgz#3fd254d29e0f05d2cde70e41bc62fd6e1d316bdf"
-  integrity sha512-aAjrv/5B+P8IC3t5fs/sO8g+TjXDoICm/Y1sB11Dh6Ovd0MPT9PXZ4CXidmyTDPSj9EKXMVrwuMIoMsmrDqDPQ==
 
 "@tsed/tailwind-formio@1.9.2":
   version "1.9.2"

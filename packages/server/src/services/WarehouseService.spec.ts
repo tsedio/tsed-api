@@ -1,10 +1,35 @@
 import {PlatformTest} from "@tsed/common";
-import {FormioDatabase} from "@tsed/formio";
 import {deserialize} from "@tsed/json-mapper";
 import {NpmPackage} from "../domain/npm/NpmPackage";
 import {GithubClient} from "../infra/back/github/GithubClient";
 import {NpmClient} from "../infra/back/npm/NpmClient";
 import {WarehouseService} from "./WarehouseService";
+
+async function getWarehouseFixture({data, npmData}: any) {
+  const npmClient = {
+    search: jest.fn().mockResolvedValue([
+      deserialize(
+        npmData || {
+          name: "@tsed/common"
+        },
+        {type: NpmPackage}
+      )
+    ])
+  };
+
+  const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
+    {
+      token: NpmClient,
+      use: npmClient
+    }
+  ]);
+
+  jest.spyOn(service, "getSubmissions").mockResolvedValue([data as any]);
+  jest.spyOn(service, "saveSubmission").mockImplementation((o: any) => o);
+  jest.spyOn(service, "getStars").mockResolvedValue(1000);
+
+  return {npmClient, service};
+}
 
 describe("WarehouseService", () => {
   beforeEach(() => PlatformTest.create());
@@ -12,106 +37,110 @@ describe("WarehouseService", () => {
 
   describe("getPlugins()", () => {
     it("should return all plugins available for the given keywords", async () => {
-      const npmClient = {
-        search: jest.fn().mockResolvedValue([
-          deserialize(
-            {
-              name: "@tsed/common"
-            },
-            {type: NpmPackage}
-          )
-        ])
-      };
-
-      const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
-        {
-          token: NpmClient,
-          use: npmClient
-        }
-      ]);
-
-      jest.spyOn(service, "getPackageSubmission").mockResolvedValue({
-        _id: "id",
-        form: "formId",
+      const {service} = await getWarehouseFixture({
         data: {
-          icon: "",
-          disabled: false
+          _id: "id",
+          form: "formId",
+          data: {
+            name: "@tsed/common",
+            icon: "",
+            disabled: false,
+            maintainers: [
+              {
+                username: "Romakita",
+                email: "romakita@tsed.io"
+              }
+            ]
+          }
         }
-      } as any);
-
-      jest.spyOn(service, "getStars").mockResolvedValue(1000);
+      });
 
       const result = await service.getPlugins("tsed");
 
       expect(result).toEqual([
         {
           icon: "",
+          homepage: "",
           name: "@tsed/common",
-          stars: 1000
+          stars: 1000,
+          maintainers: [
+            {
+              username: "Romakita",
+              email: "romakita@tsed.io"
+            }
+          ]
         }
       ]);
     });
-    it("should return nothing when the package is mentioned as disabled", async () => {
-      const npmClient = {
-        search: jest.fn().mockResolvedValue([
-          deserialize(
-            {
-              name: "@tsed/common"
-            },
-            {type: NpmPackage}
-          )
-        ])
-      };
+    it("should save the unknown package to database", async () => {
+      const {service} = await getWarehouseFixture({
+        data: {
+          _id: "id",
+          form: "formId",
+          data: {
+            name: "@tsed/common",
+            icon: "",
+            disabled: false
+          }
+        },
+        npmData: {
+          name: "@tsed/prisma",
+          description: "A prisma package",
+          version: "1.0.0",
+          repository: "https://github.com/tsedio/tsed-prisma",
+          homepage: "https://github.com/tsedio/tsed-prisma"
+        }
+      });
 
-      const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
+      const result = await service.getPlugins("tsed");
+
+      expect(result).toEqual([
         {
-          token: NpmClient,
-          use: npmClient
+          name: "@tsed/common",
+          maintainers: []
+        },
+        {
+          description: "A prisma package",
+          homepage: "https://github.com/tsedio/tsed-prisma",
+          icon: "",
+          name: "@tsed/prisma",
+          repository: "https://github.com/tsedio/tsed-prisma",
+          stars: 1000,
+          version: "1.0.0",
+          maintainers: []
         }
       ]);
-
-      jest.spyOn(service, "getPackageSubmission").mockResolvedValue({
-        _id: "id",
-        form: "formId",
+      expect(service.saveSubmission).toHaveBeenCalledWith({data: {description: "A prisma package", icon: "", name: "@tsed/prisma"}});
+    });
+    it("should return nothing when the package is mentioned as disabled", async () => {
+      const {service} = await getWarehouseFixture({
         data: {
-          icon: "",
-          disabled: true
+          _id: "id",
+          form: "formId",
+          data: {
+            name: "@tsed/common",
+            icon: "",
+            disabled: true
+          }
         }
-      } as any);
-
-      jest.spyOn(service, "getStars").mockResolvedValue(1000);
+      });
 
       const result = await service.getPlugins("tsed");
 
       expect(result).toEqual([]);
     });
     it("should get icon from formio", async () => {
-      const npmClient = {
-        search: jest.fn().mockResolvedValue([
-          deserialize(
-            {
-              name: "@tsed/common"
-            },
-            {type: NpmPackage}
-          )
-        ])
-      };
-
-      const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
-        {
-          token: NpmClient,
-          use: npmClient
-        }
-      ]);
-
-      jest.spyOn(service, "getPackageSubmission").mockResolvedValue({
-        _id: "id",
-        form: "formId",
+      const {service} = await getWarehouseFixture({
         data: {
-          icon: "https://icon.formio",
-          disabled: false
+          _id: "id",
+          form: "formId",
+          data: {
+            name: "@tsed/common",
+            icon: "https://icon.formio",
+            disabled: false
+          }
         }
-      } as any);
+      });
 
       jest.spyOn(service, "getStars").mockResolvedValue(1000);
 
@@ -121,98 +150,11 @@ describe("WarehouseService", () => {
         {
           icon: "https://icon.formio",
           name: "@tsed/common",
-          stars: 1000
+          homepage: "",
+          stars: 1000,
+          maintainers: []
         }
       ]);
-    });
-  });
-
-  describe("getPackageSubmission()", () => {
-    it("should return the package submission", async () => {
-      const pkg = new NpmPackage();
-      pkg.name = "@tsed/common";
-
-      const formioDatabase = {
-        submissionModel: class {
-          static findOne = jest.fn().mockResolvedValue({
-            data: {
-              icon: ""
-            }
-          });
-
-          constructor(public props: any) {}
-
-          save(): any {
-            return {};
-          }
-        }
-      };
-
-      const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
-        {
-          token: FormioDatabase,
-          use: formioDatabase
-        }
-      ]);
-
-      jest.spyOn(service as any, "getFormId").mockResolvedValue("formId");
-      jest.spyOn(formioDatabase.submissionModel.prototype, "save").mockResolvedValue(undefined);
-
-      const result = await service.getPackageSubmission(pkg);
-
-      expect(result).toEqual({
-        data: {
-          icon: ""
-        }
-      });
-      expect(formioDatabase.submissionModel.findOne).toHaveBeenCalledWith({
-        "data.name": "@tsed/common",
-        form: "formId"
-      });
-      expect(formioDatabase.submissionModel.prototype.save).not.toHaveBeenCalled();
-    });
-    it("should return the package submission and create submission if not exists", async () => {
-      const pkg = new NpmPackage();
-      pkg.name = "@tsed/common";
-
-      const formioDatabase = {
-        submissionModel: class {
-          static findOne = jest.fn().mockResolvedValue(undefined);
-
-          constructor(public props: any) {}
-
-          save(): any {
-            return {};
-          }
-        }
-      };
-
-      const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
-        {
-          token: FormioDatabase,
-          use: formioDatabase
-        }
-      ]);
-
-      jest.spyOn(service as any, "getFormId").mockResolvedValue("formId");
-      jest.spyOn(formioDatabase.submissionModel.prototype, "save").mockResolvedValue({
-        data: {
-          icon: ""
-        }
-      });
-
-      const result = await service.getPackageSubmission(pkg);
-
-      expect(result).toEqual({
-        data: {
-          icon: ""
-        }
-      });
-      expect(formioDatabase.submissionModel.findOne).toHaveBeenCalledWith({
-        "data.name": "@tsed/common",
-        form: "formId"
-      });
-      expect(formioDatabase.submissionModel.prototype.save).toHaveBeenCalledWith();
     });
   });
 

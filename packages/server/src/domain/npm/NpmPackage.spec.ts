@@ -9,6 +9,14 @@ describe("NpmPackage", () => {
     expect(pkg.category).toEqual(NpmPackageCategory.FRAMEWORK);
   });
 
+  it("should create new NpmPackage with PREMIUM type", () => {
+    const pkg = new NpmPackage();
+    pkg.name = "@tsedio/prisma";
+
+    expect(pkg.type).toEqual(NpmPackageType.PREMIUM);
+    expect(pkg.category).toEqual(NpmPackageCategory.FRAMEWORK);
+  });
+
   it("should create new NpmPackage with OFFICIAL type and CLI category", () => {
     const pkg = new NpmPackage();
     pkg.name = "@tsed/cli-test";

@@ -41,6 +41,7 @@ yarn install
 
 ```bash
 docker-compose up -d mongo
+docker-compose up -d redis
 yarn start:server
 yarn start:backoffice
 ```

@@ -1,27 +1,35 @@
 import {Injectable} from "@tsed/common";
+import {toMap} from "@tsed/core";
 import {Inject} from "@tsed/di";
-import {FormioDatabase, FormioSubmission} from "@tsed/formio";
+import {FormioSubmission} from "@tsed/formio";
 import {NpmPackage} from "../domain/npm/NpmPackage";
 import {GithubClient} from "../infra/back/github/GithubClient";
 import {NpmClient} from "../infra/back/npm/NpmClient";
 import {FormioRepository} from "./FormioRepository";
 
+export type SubmissionPackage = FormioSubmission<NpmPackage & {disabled: boolean}>;
+
 @Injectable()
 export class WarehouseService extends FormioRepository {
   protected formName = "packages";
-
   @Inject()
   protected npmClient: NpmClient;
-
   @Inject()
   protected githubClient: GithubClient;
 
-  async getPlugins(keyword: string) {
-    const packages = await this.npmClient.search(keyword);
+  async getPlugins(keyword: string): Promise<NpmPackage[]> {
+    const [packages, submissions] = await Promise.all([this.npmClient.search(keyword), this.getPackagesSubmissions()]);
+
+    const submissionsPackagesMap = toMap(submissions, (item: SubmissionPackage) => item.data.name);
 
     const result = await Promise.all(
       packages.map(async (pkg) => {
-        const submission = await this.getPackageSubmission(pkg);
+        if (!submissionsPackagesMap.has(pkg.name)) {
+          submissionsPackagesMap.set(pkg.name, await this.createPackage(pkg));
+        }
+
+        const submission = submissionsPackagesMap.get(pkg.name);
+        submissionsPackagesMap.delete(pkg.name);
 
         if (submission.data.disabled) {
           return false;
@@ -30,7 +38,7 @@ export class WarehouseService extends FormioRepository {
         pkg.icon = submission.data.icon;
         pkg.tags = submission.data.tags;
         pkg.description = submission.data.description || pkg.description;
-        pkg.homepage = submission.data.homepage || pkg.homepage || pkg.repository || pkg.npm;
+        pkg.homepage = (submission.data.homepage || pkg.homepage || pkg.repository || pkg.npm || "").replace("//packages", "/packages");
         pkg.stars = await this.getStars(pkg);
 
         if (submission.data.maintainers) {
@@ -41,7 +49,13 @@ export class WarehouseService extends FormioRepository {
       })
     );
 
-    return result.filter(Boolean);
+    const otherPackages = [...submissionsPackagesMap.values()].map((submissionPackage) => {
+      return new NpmPackage({
+        ...submissionPackage.data
+      });
+    });
+
+    return [...otherPackages, ...(result.filter(Boolean) as NpmPackage[])];
   }
 
   async getStars(pkg: NpmPackage) {
@@ -56,21 +70,17 @@ export class WarehouseService extends FormioRepository {
     return stargazers_count;
   }
 
-  async getPackageSubmission(pkg: NpmPackage): Promise<FormioSubmission<NpmPackage & {disabled: boolean}>> {
-    const submission = await this.findOneSubmission({
-      "data.name": pkg.name
+  getPackagesSubmissions(): Promise<SubmissionPackage> {
+    return this.getSubmissions() as Promise<any>;
+  }
+
+  async createPackage(pkg: NpmPackage): Promise<SubmissionPackage> {
+    return this.saveSubmission({
+      data: {
+        name: pkg.name,
+        description: pkg.description,
+        icon: ""
+      }
     });
-
-    if (!submission) {
-      return await this.saveSubmission({
-        data: {
-          name: pkg.name,
-          description: pkg.description,
-          icon: ""
-        }
-      });
-    }
-
-    return submission as any;
   }
 }

@@ -3,6 +3,7 @@ import crypto from "crypto";
 
 export enum NpmPackageType {
   OFFICIAL = "official",
+  PREMIUM = "premium",
   THIRD_PARTY = "3rd-party"
 }
 
@@ -24,6 +25,7 @@ export class NpmPackageMaintainer {
   get avatar(): string {
     return `https://www.gravatar.com/avatar/${crypto.createHash("md5").update(this.email.toLowerCase()).digest("hex")}`;
   }
+
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   set avatar(avatar: string) {}
 }
@@ -62,7 +64,7 @@ export class NpmPackage {
   bugs: string;
 
   @CollectionOf(NpmPackageMaintainer)
-  maintainers: NpmPackageMaintainer[];
+  maintainers: NpmPackageMaintainer[] = [];
 
   @Description("Npm downloads count")
   downloads: number;
@@ -74,11 +76,43 @@ export class NpmPackage {
   @CollectionOf(String)
   tags: string[];
 
+  constructor({
+    name,
+    description,
+    version,
+    repository,
+    npm,
+    icon,
+    homepage,
+    bugs,
+    maintainers,
+    downloads,
+    stars,
+    tags
+  }: Partial<NpmPackage> = {}) {
+    name && (this.name = name);
+    description && (this.description = description);
+    version && (this.version = version);
+    repository && (this.repository = repository);
+    npm && (this.npm = npm);
+    icon && (this.icon = icon);
+    homepage && (this.homepage = homepage);
+    bugs && (this.bugs = bugs);
+    maintainers && (this.maintainers = maintainers);
+    downloads && (this.downloads = downloads);
+    stars && (this.stars = stars);
+    tags && (this.tags = tags);
+  }
+
   @Description("Package type")
   @Enum(NpmPackageType)
   get type(): NpmPackageType {
     if (this.name.startsWith("@tsed/")) {
       return NpmPackageType.OFFICIAL;
+    }
+
+    if (this.name.startsWith("@tsedio/")) {
+      return NpmPackageType.PREMIUM;
     }
 
     return NpmPackageType.THIRD_PARTY;

@@ -46,8 +46,8 @@ function findButtons(forms: any[], result: any[] = []) {
   return result;
 }
 
-function getOAuth2(strategy: any): OAuth2 | undefined {
-  return strategy._oauth2;
+function getOAuth2(instance: any): OAuth2 | undefined {
+  return instance?.$strategy?._oauth2;
 }
 
 const ASSOCIATION_LIST = [
@@ -139,14 +139,14 @@ export class OAuthAction implements ActionMethods {
     const basePath = this.hooks.alter("path", "/form", req);
     const oAuthProviders = this.injector.getProviders(PROVIDER_TYPE_PROTOCOL).reduce((providers, provider) => {
       const {name} = provider.store.get("protocol");
-      const strategy = provider.instance.$strategy as oauth2.Strategy;
-      const oauth2 = getOAuth2(strategy);
+      const instance = this.injector.get(provider.token);
+      const oauth2 = getOAuth2(instance);
 
-      if (!oauth2) {
-        return providers;
+      if (oauth2) {
+        return [...providers, {name, title: name}];
       }
 
-      return [...providers, {name, title: name}];
+      return providers;
     }, []);
 
     return [
@@ -415,19 +415,20 @@ export class OAuthAction implements ActionMethods {
   protected getOAuthProviders(): Map<string, {strategy: oauth2.Strategy; instance: any; options: any}> {
     return this.injector.getProviders(PROVIDER_TYPE_PROTOCOL).reduce((providers, provider) => {
       const {name} = provider.store.get("protocol");
-      const strategy = provider.instance.$strategy as oauth2.Strategy;
-      const oauth2 = getOAuth2(strategy);
+      const instance = this.injector.get(provider.token);
+      const oauth2 = getOAuth2(instance);
 
       if (!oauth2) {
         return providers;
       }
 
+      const strategy = instance.$strategy as oauth2.Strategy;
       const authURI = oauth2.getAuthorizeUrl().split("?")[0];
       const {settings} = getValue(provider.configuration, `passport.protocols.${name}`);
 
       return providers.set(name, {
         strategy,
-        instance: provider.instance,
+        instance,
         options: {
           provider: name,
           authURI,

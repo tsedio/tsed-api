@@ -70,8 +70,10 @@ async function getOAuthFixture() {
       }
     }
   ]);
+
   jest.spyOn(oAuthAction.injector, "getProviders").mockReturnValue([
     {
+      token: "test1",
       store: {
         get() {
           return {name: "github"};
@@ -92,13 +94,6 @@ async function getOAuthFixture() {
             }
           }
         }
-      },
-      instance: {
-        $strategy: {
-          _oauth2: {
-            getAuthorizeUrl: jest.fn().mockReturnValue("https://accounts.tsed.io/auth?state=state")
-          }
-        }
       }
     } as any,
     {
@@ -106,12 +101,24 @@ async function getOAuthFixture() {
         get() {
           return {name: "ldap"};
         }
-      },
-      instance: {
-        $strategy: {}
       }
     } as any
   ]);
+
+  jest.spyOn(oAuthAction.injector, "get").mockImplementation((token) => {
+    if (token === "test1") {
+      return {
+        $strategy: {
+          _oauth2: {
+            getAuthorizeUrl: jest.fn().mockReturnValue("https://accounts.tsed.io/auth?state=state")
+          }
+        }
+      };
+    }
+
+    return {};
+  });
+
   return {oAuthAction, authService, databaseService};
 }
 

@@ -324,17 +324,26 @@ export class OAuthAction implements ActionMethods {
   }
 
   async verify(profile: Profile, accessToken: string, refreshToken: string, ctx: Context) {
-    const {settings} = ctx.get("formio:action") || {};
+    try {
+      const {settings} = ctx.get("formio:action") || {};
 
-    const {association} = settings;
+      const {association} = settings;
 
-    switch (association) {
-      case "link":
-        return this.verifyLinkProfile(profile, accessToken, refreshToken, ctx);
-      case "new":
-        return this.verifyNewProfile(profile, accessToken, refreshToken, ctx);
-      case "existing":
-        return this.verifyExistingProfile(profile, accessToken, refreshToken, ctx);
+      switch (association) {
+        case "link":
+          return await this.verifyLinkProfile(profile, accessToken, refreshToken, ctx);
+        case "new":
+          return await this.verifyNewProfile(profile, accessToken, refreshToken, ctx);
+        case "existing":
+          return await this.verifyExistingProfile(profile, accessToken, refreshToken, ctx);
+      }
+    } catch (er) {
+      this.injector.logger.error({
+        event: "FORMIO_VERIFY",
+        error: er
+      });
+
+      throw er;
     }
   }
 

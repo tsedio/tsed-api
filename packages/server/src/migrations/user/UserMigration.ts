@@ -19,17 +19,20 @@ export class RepositoriesMigration {
   async install() {
     this.logger.info("Check user migration...");
     const form = await this.formioDatabase.getForm("userLogin");
+    const mapper = await this.formioDatabase.getFormioMapper();
 
     if (form && this.shouldUpdate(form as FormioForm)) {
       try {
         this.logger.info("Create form definition...");
         await this.formioDatabase.saveFormDefinition({...userLoginForm, _id: form._id.toString()} as any);
 
-        this.logger.info("Create action...");
-        await new this.formioDatabase.actionModel({
+        const mappedAction = mapper.mapToImport({
           ...userLoginOAuthAction,
           form: form._id
-        }).save();
+        });
+
+        this.logger.info("Create action...");
+        await new this.formioDatabase.actionModel(mappedAction).save();
       } catch (er) {
         this.logger.error({
           event: "FORMIO_MIGRATION_ERROR",

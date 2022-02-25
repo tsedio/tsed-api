@@ -9,6 +9,7 @@ import {HttpClient, HttpClientOptions} from "../http/HttpClient";
 
 const REGEX_REGISTRY_ENFORCED_HTTPS = /^https?:\/\/([^\/]+\.)?(yarnpkg\.com|npmjs\.(org|com))(\/|$)/;
 const REGEX_REGISTRY_PREFIX = /^(https?:)?\/\//i;
+const REGEX_EXCLUDED_KEYWORDS = /hentai|porn/gi;
 
 export function addSuffix(pattern: string, suffix: string): string {
   if (!pattern.endsWith(suffix)) {
@@ -76,7 +77,8 @@ export class NpmClient extends HttpClient {
    * @param options
    */
   @UseCache({
-    ttl: 3600,
+    ttl: 3600 * 24 * 10,
+    refreshThreshold: 900,
     type: NpmPackage,
     collectionType: Array,
     key([type]: string[]): string {
@@ -102,20 +104,24 @@ export class NpmClient extends HttpClient {
       }
     });
 
-    const promises = result.map<Promise<NpmPackage>>(async ({package: {links, ...props}}) => {
-      const downloads = await this.downloads(props.name);
-      return deserialize(
-        {
-          ...props,
-          repository: links.repository,
-          homepage: links.homepage,
-          npm: links.npm,
-          bugs: links.bugs,
-          downloads
-        },
-        {type: NpmPackage}
-      );
-    });
+    const promises = result
+      .filter(({package: obj}) => !obj.name.match(REGEX_EXCLUDED_KEYWORDS))
+      .map<Promise<NpmPackage>>(async ({package: {links, ...props}}) => {
+        const downloads = await this.downloads(props.name);
+
+        return deserialize(
+          {
+            ...props,
+            repository: links.repository,
+            homepage: links.homepage,
+            npm: links.npm,
+            bugs: links.bugs,
+            downloads
+          },
+          {type: NpmPackage}
+        );
+      })
+      .filter(Boolean);
 
     return await Promise.all(promises);
   }

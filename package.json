@@ -28,7 +28,7 @@
     "release": "semantic-release"
   },
   "dependencies": {
-    "@tsed/ajv": "6.52.0",
+    "@tsed/ajv": "6.103.0",
     "ajv": "8.5.0"
   },
   "devDependencies": {

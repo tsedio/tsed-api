@@ -1,4 +1,4 @@
-import {Injectable} from "@tsed/common";
+import {Injectable, UseCache} from "@tsed/common";
 import {toMap} from "@tsed/core";
 import {Inject} from "@tsed/di";
 import {FormioSubmission} from "@tsed/formio";
@@ -9,14 +9,28 @@ import {FormioRepository} from "./FormioRepository";
 
 export type SubmissionPackage = FormioSubmission<NpmPackage & {disabled: boolean}>;
 
+const RANKS = {
+  premium: -1,
+  official: 0,
+  "3rd-party": 0
+};
+
 @Injectable()
 export class WarehouseService extends FormioRepository {
   protected formName = "packages";
+
   @Inject()
   protected npmClient: NpmClient;
+
   @Inject()
   protected githubClient: GithubClient;
 
+  @UseCache({
+    ttl: 3600 * 24 * 10,
+    refreshThreshold: 900,
+    type: NpmPackage,
+    collectionType: Array
+  })
   async getPlugins(keyword: string): Promise<NpmPackage[]> {
     const [packages, submissions] = await Promise.all([this.npmClient.search(keyword), this.getPackagesSubmissions()]);
 
@@ -55,7 +69,17 @@ export class WarehouseService extends FormioRepository {
       });
     });
 
-    return [...otherPackages, ...(result.filter(Boolean) as NpmPackage[])];
+    return [...otherPackages, ...(result.filter(Boolean) as NpmPackage[])].sort((p1, p2) => {
+      if (RANKS[p1.type] < RANKS[p2.type]) {
+        return -1;
+      }
+
+      if (p1.downloads > p2.downloads) {
+        return -1;
+      }
+
+      return 1;
+    });
   }
 
   async getStars(pkg: NpmPackage) {

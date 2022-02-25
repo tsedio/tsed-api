@@ -9,6 +9,10 @@ async function bootstrap() {
 
     await platform.listen();
     $log.debug("Server initialized");
+
+    process.on("SIGINT", () => {
+      platform.stop();
+    });
   } catch (er) {
     $log.error(er);
   }

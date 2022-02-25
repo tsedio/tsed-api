@@ -2,18 +2,23 @@
 
 const path = require('path')
 const defaultLogFile = path.join(__dirname, '/logs/project-server.log')
-
+console.log(process.env.WORKDIR)
 // eslint-disable-next-line node/exports-style
 module.exports = {
   'apps': [
     {
-      'script': 'packages/server/dist/index.js',
-      'instances': process.env.PM2_NB_INSTANCE || 1,
-      'exec_mode': 'cluster',
+      name: "api",
+      'script': `${process.env.WORKDIR}/packages/server/dist/index.js`,
+      'cwd': `${process.env.WORKDIR}/packages/server`,
+      node_args: process.env.NODE_ARGS || "--max_old_space_size=1800",
+      exec_mode: "cluster",
+      instances: process.env.NODE_ENV === "test" ? 1 : process.env.NB_INSTANCES || 2,
+      autorestart: true,
+      max_memory_restart: process.env.MAX_MEMORY_RESTART || "750M",
       'out_file': defaultLogFile,
       'error_file': defaultLogFile,
       'merge_logs': true,
-      'kill_timeout': 30000
+      'kill_timeout': 30000,
     }
   ]
 }

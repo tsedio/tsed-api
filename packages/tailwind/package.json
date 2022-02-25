@@ -1,6 +1,6 @@
 {
   "name": "@tsed/tailwind",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "main": "./tailwind.config.js",
   "description": "Tailwind configuration",
   "license": "MIT",
@@ -20,7 +20,5 @@
     "tailwindcss-cli": "0.1.2",
     "tailwindcss-inset": "1.0.0",
     "tailwindcss-transforms": "2.2.0"
-  },
-  "dependencies": {},
-  "peerDependencies": {}
+  }
 }

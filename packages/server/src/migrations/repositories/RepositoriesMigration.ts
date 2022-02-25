@@ -18,15 +18,19 @@ export class RepositoriesMigration {
 
   async install() {
     this.logger.info("Check repositories migration...");
+    const mapper = await this.formioDatabase.getFormioMapper();
+
     await this.formioDatabase.createFormIfNotExists(formRepositories as any, async (form) => {
       this.logger.info('Install "Repositories" form');
-      await new this.formioDatabase.actionModel({
+      const action = mapper.mapToImport({
         ...formRepositoriesAction,
         form: form._id,
         settings: {
           resource: ""
         }
-      }).save();
+      });
+
+      await new this.formioDatabase.actionModel(action).save();
     });
 
     this.logger.info("Check repositories migration...OK");

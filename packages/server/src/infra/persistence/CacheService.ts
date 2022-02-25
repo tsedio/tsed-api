@@ -1,6 +1,5 @@
-import {Inject, PlatformCache} from "@tsed/common";
-import {PlatformCachedObject} from "@tsed/common/lib/platform-cache/interfaces/PlatformCachedObject";
-import {Injectable} from "@tsed/di";
+import {Inject, Injectable} from "@tsed/di";
+import {PlatformCache, PlatformCachedObject} from "@tsed/platform-cache";
 
 @Injectable()
 export class CacheService {
@@ -10,7 +9,7 @@ export class CacheService {
   async keys(): Promise<string[]> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
-    return await this.cache.cache.keys();
+    return await this.cache.keys("*");
   }
 
   async getMatchingKeys(reg: RegExp) {
@@ -31,7 +30,6 @@ export class CacheService {
       };
     });
 
-    console.log("=================");
     return Promise.all(result) as any;
   }
 

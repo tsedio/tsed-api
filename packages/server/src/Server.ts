@@ -14,16 +14,15 @@ import cors from "cors";
 import {ServerResponse} from "http";
 import methodOverride from "method-override";
 import {join} from "path";
+import send from "send";
 import cacheConfig from "./config/cache";
 import formioConfig from "./config/formio";
 import {configureLogger, loggerConfig} from "./config/logger";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
-import {VersionCtrl} from "./controllers/rest/version/VersionCtrl";
+import * as controllers from "./controllers/rest/index";
 import "./infra/formio";
 import {EnsureHttpsMiddleware} from "./infra/middlewares/https/EnsureHttpsMiddleware";
-
-const send = require("send");
 
 export const rootDir = __dirname;
 const backofficeDir = join(rootDir, "../../backoffice/build");
@@ -47,9 +46,12 @@ function setCustomCacheControl(res: ServerResponse, path: string) {
   mongoose: mongooseConfig,
   formio: formioConfig,
   cache: cacheConfig,
+  passport: {
+    disableSession: true
+  },
   mount: {
-    "/rest": [`${rootDir}/controllers/rest/**/*.ts`],
-    "/": [VersionCtrl]
+    "/rest": Object.values(controllers),
+    "/": [controllers.VersionCtrl, controllers.HealthCtrl]
   },
   views: {
     root: `${rootDir}/../views`,
@@ -93,13 +95,6 @@ export class Server {
 
   @Configuration()
   settings: Configuration;
-
-  $beforeRoutesInit() {
-    // this.app.use(bodyParser.json(), (req: any, res: any, next: any) => {
-    //   console.log(req.method, req.originalUrl, req.body, req.query);
-    //   return next();
-    // });
-  }
 
   $afterRoutesInit() {
     this.app.get("/backoffice/*", (req: any, res: Res) => {

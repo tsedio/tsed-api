@@ -46,8 +46,8 @@ function findButtons(forms: any[], result: any[] = []) {
   return result;
 }
 
-function getOAuth2(strategy: any): OAuth2 | undefined {
-  return strategy._oauth2;
+function getOAuth2(instance: any): OAuth2 | undefined {
+  return instance?.$strategy?._oauth2;
 }
 
 const ASSOCIATION_LIST = [
@@ -139,14 +139,14 @@ export class OAuthAction implements ActionMethods {
     const basePath = this.hooks.alter("path", "/form", req);
     const oAuthProviders = this.injector.getProviders(PROVIDER_TYPE_PROTOCOL).reduce((providers, provider) => {
       const {name} = provider.store.get("protocol");
-      const strategy = provider.instance.$strategy as oauth2.Strategy;
-      const oauth2 = getOAuth2(strategy);
+      const instance = this.injector.get(provider.token);
+      const oauth2 = getOAuth2(instance);
 
-      if (!oauth2) {
-        return providers;
+      if (oauth2) {
+        return [...providers, {name, title: name}];
       }
 
-      return [...providers, {name, title: name}];
+      return providers;
     }, []);
 
     return [
@@ -324,17 +324,26 @@ export class OAuthAction implements ActionMethods {
   }
 
   async verify(profile: Profile, accessToken: string, refreshToken: string, ctx: Context) {
-    const {settings} = ctx.get("formio:action") || {};
+    try {
+      const {settings} = ctx.get("formio:action") || {};
 
-    const {association} = settings;
+      const {association} = settings;
 
-    switch (association) {
-      case "link":
-        return this.verifyLinkProfile(profile, accessToken, refreshToken, ctx);
-      case "new":
-        return this.verifyNewProfile(profile, accessToken, refreshToken, ctx);
-      case "existing":
-        return this.verifyExistingProfile(profile, accessToken, refreshToken, ctx);
+      switch (association) {
+        case "link":
+          return await this.verifyLinkProfile(profile, accessToken, refreshToken, ctx);
+        case "new":
+          return await this.verifyNewProfile(profile, accessToken, refreshToken, ctx);
+        case "existing":
+          return await this.verifyExistingProfile(profile, accessToken, refreshToken, ctx);
+      }
+    } catch (er) {
+      this.injector.logger.error({
+        event: "FORMIO_VERIFY",
+        error: er
+      });
+
+      throw er;
     }
   }
 
@@ -415,19 +424,20 @@ export class OAuthAction implements ActionMethods {
   protected getOAuthProviders(): Map<string, {strategy: oauth2.Strategy; instance: any; options: any}> {
     return this.injector.getProviders(PROVIDER_TYPE_PROTOCOL).reduce((providers, provider) => {
       const {name} = provider.store.get("protocol");
-      const strategy = provider.instance.$strategy as oauth2.Strategy;
-      const oauth2 = getOAuth2(strategy);
+      const instance = this.injector.get(provider.token);
+      const oauth2 = getOAuth2(instance);
 
       if (!oauth2) {
         return providers;
       }
 
+      const strategy = instance.$strategy as oauth2.Strategy;
       const authURI = oauth2.getAuthorizeUrl().split("?")[0];
       const {settings} = getValue(provider.configuration, `passport.protocols.${name}`);
 
       return providers.set(name, {
         strategy,
-        instance: provider.instance,
+        instance,
         options: {
           provider: name,
           authURI,

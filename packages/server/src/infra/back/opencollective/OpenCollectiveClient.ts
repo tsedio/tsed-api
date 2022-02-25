@@ -8,7 +8,7 @@ export class OpenCollectiveClient extends HttpClient {
 
   host = "https://opencollective.com";
 
-  @UseCache({ttl: 3600})
+  @UseCache({ttl: 3600 * 24 * 10, refreshThreshold: 900})
   getMembers(repo: string) {
     return this.get(`${this.host}/${repo}/members/all.json`);
   }

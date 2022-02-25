@@ -15,7 +15,7 @@ import {ServerResponse} from "http";
 import methodOverride from "method-override";
 import {join} from "path";
 import send from "send";
-import cacheConfig from "./config/cache";
+import {cacheConfig} from "./config/cache";
 import formioConfig from "./config/formio";
 import {configureLogger, loggerConfig} from "./config/logger";
 import mongooseConfig from "./config/mongoose";

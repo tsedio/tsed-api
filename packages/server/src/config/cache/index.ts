@@ -1,20 +1,6 @@
 import {$log} from "@tsed/common";
 import redisStore from "cache-manager-ioredis";
 
-export default {
-  ttl: 300,
-  store: redisStore,
-  ...(process.env.REDIS_URL
-    ? {
-        url: process.env.REDIS_URL
-      }
-    : {
-        host: "localhost",
-        port: 6379,
-        db: 0
-      })
-};
-
 function clusterRetryStrategy(times: number) {
   $log.fatal({event: "REDIS_ERROR", message: `Redis is not responding - Retry count: ${times}`});
   return 2000;
@@ -84,6 +70,6 @@ function getConfiguration() {
 
 export const cacheConfig = {
   ttl: 300,
-  store: redisStore,
+  store: redisStore as any,
   ...getConfiguration()
 };

@@ -56,15 +56,22 @@ function getConfiguration() {
   }
 
   if (process.env.REDIS_URL) {
+    const url = new URL(process.env.REDIS_URL);
+
     return {
-      url: process.env.REDIS_URL
+      host: url.hostname,
+      password: url.password,
+      port: url.port,
+      username: url.username,
+      tls: url.protocol === "rediss:",
+      db: process.env.REDIS_DB_INDEX || 0
     };
   }
 
   return {
     host: process.env.REDIS_HOST || "localhost",
     port: process.env.REDIS_PORT || 6379,
-    auth_pass: process.env.REDIS_PASSWORD,
+    password: process.env.REDIS_PASSWORD,
     db: process.env.REDIS_DB_INDEX || 0
   };
 }
@@ -74,8 +81,3 @@ export const cacheConfig = {
   store: redisStore as any,
   ...getConfiguration()
 };
-
-$log.info({
-  event: "REDIS_CONFIG",
-  config: cacheConfig
-});

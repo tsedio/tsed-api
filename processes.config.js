@@ -2,7 +2,7 @@
 
 const path = require('path')
 const defaultLogFile = path.join(__dirname, '/logs/project-server.log')
-console.log(process.env.WORKDIR)
+
 // eslint-disable-next-line node/exports-style
 module.exports = {
   'apps': [

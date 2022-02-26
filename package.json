@@ -23,7 +23,7 @@
     "start:backoffice": "lerna run start --scope=@tsed/backoffice --stream",
     "start:server": "lerna run start --scope=@tsed/server --stream",
     "start:storybook": "lerna run start:storybook --scope=@tsed/storybook --stream",
-    "start:prod": "pm2-docker --raw processes.config.js --no-deamon",
+    "start:prod": "pm2-runtime start processes.config.js --env production",
     "docker:build": "yarn build && docker-compose build",
     "release": "semantic-release"
   },

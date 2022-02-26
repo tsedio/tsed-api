@@ -54,6 +54,7 @@ function getConfiguration() {
       clusterConfig: getClusterConfig(process.env.REDIS_NODES, process.env.REDIS_OPTS)
     };
   }
+
   if (process.env.REDIS_URL) {
     return {
       url: process.env.REDIS_URL
@@ -73,3 +74,8 @@ export const cacheConfig = {
   store: redisStore as any,
   ...getConfiguration()
 };
+
+$log.info({
+  event: "REDIS_CONFIG",
+  config: cacheConfig
+});

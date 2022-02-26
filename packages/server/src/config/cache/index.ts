@@ -7,7 +7,19 @@ function clusterRetryStrategy(times: number) {
 }
 
 function reconnectOnError(err: any) {
-  $log.fatal({event: "REDIS_ERROR", message: `Redis Cluster - Reconnect on error: ${(err && err.message) || err}`});
+  $log.fatal({event: "REDIS_ERROR", message: `Redis - Reconnect on error: ${(err && err.message) || err}`});
+}
+
+function redisOptions(opts: any = {}) {
+  return {
+    reconnectOnError,
+    noDelay: opts.noDelay || true,
+    connectTimeout: opts.connectTimeout || 15000,
+    autoResendUnfulfilledCommands: opts.autoResendUnfulfilledCommands || true,
+    maxRetriesPerRequest: opts.maxRetriesPerRequest || 5,
+    enableAutoPipelining: true,
+    autoPipeliningIgnoredCommands: ["scan"]
+  };
 }
 
 function getClusterConfig(_nodes: string, _opts: string | undefined) {
@@ -25,15 +37,7 @@ function getClusterConfig(_nodes: string, _opts: string | undefined) {
     clusterRetryStrategy,
     enableOfflineQueue: opts.enableOfflineQueue || true,
     enableReadyCheck: opts.enableReadyCheck || true,
-    redisOptions: {
-      reconnectOnError,
-      noDelay: opts.noDelay || true,
-      connectTimeout: opts.connectTimeout || 15000,
-      autoResendUnfulfilledCommands: opts.autoResendUnfulfilledCommands || true,
-      maxRetriesPerRequest: opts.maxRetriesPerRequest || 5,
-      enableAutoPipelining: true,
-      autoPipeliningIgnoredCommands: ["scan"]
-    }
+    redisOptions: redisOptions(opts)
   };
 
   $log.info({
@@ -64,7 +68,8 @@ function getConfiguration() {
       port: url.port,
       username: url.username,
       tls: url.protocol === "rediss:",
-      db: process.env.REDIS_DB_INDEX || 0
+      db: process.env.REDIS_DB_INDEX || 0,
+      ...redisOptions()
     };
   }
 
@@ -72,7 +77,8 @@ function getConfiguration() {
     host: process.env.REDIS_HOST || "localhost",
     port: process.env.REDIS_PORT || 6379,
     password: process.env.REDIS_PASSWORD,
-    db: process.env.REDIS_DB_INDEX || 0
+    db: process.env.REDIS_DB_INDEX || 0,
+    ...redisOptions()
   };
 }
 

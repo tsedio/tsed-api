@@ -4,6 +4,7 @@ import {PlatformApplication, Res} from "@tsed/common";
 import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";
 import "@tsed/formio";
+import {Logger} from "@tsed/logger";
 import "@tsed/mongoose";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/swagger";
@@ -93,6 +94,9 @@ export class Server {
   @Inject()
   app: PlatformApplication;
 
+  @Inject()
+  logger: Logger;
+
   @Configuration()
   settings: Configuration;
 
@@ -100,6 +104,17 @@ export class Server {
     this.app.get("/backoffice/*", (req: any, res: Res) => {
       res.sendFile(join(backofficeDir, "index.html"));
     });
+  }
+
+  $onCreateCacheManager(cacheManager: any) {
+    if ("store" in cacheManager) {
+      cacheManager.store.getClient().on("error", (error: any) => {
+        this.logger.error({
+          event: "REDIS_ERROR",
+          error
+        });
+      });
+    }
   }
 
   $onReady() {

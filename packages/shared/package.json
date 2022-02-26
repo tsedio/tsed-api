@@ -1,6 +1,6 @@
 {
   "name": "@tsed/shared",
-  "version": "1.11.3",
+  "version": "1.11.4",
   "main": "src/index.ts",
   "module": "dist/index.modern.js",
   "source": "src/index.ts",
@@ -15,8 +15,8 @@
     "prettier:fix": "yarn prettier \"{src,test}/**/*.{ts,tsx}\" --write"
   },
   "dependencies": {
-    "@tsed/config": "1.11.3",
-    "@tsed/tailwind": "1.11.3"
+    "@tsed/config": "1.11.4",
+    "@tsed/tailwind": "1.11.4"
   },
   "devDependencies": {
     "cross-env": "^7.0.3"

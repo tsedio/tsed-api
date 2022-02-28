@@ -5,7 +5,7 @@ import {Hidden, Returns} from "@tsed/schema";
 @Hidden()
 export class HealthCtrl {
   @Get("/")
-  @(Returns(200).ContentType("application/json"))
+  @Returns(200).ContentType("application/json")
   get() {
     return {status: "OK"};
   }

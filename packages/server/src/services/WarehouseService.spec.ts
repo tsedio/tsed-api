@@ -59,16 +59,17 @@ describe("WarehouseService", () => {
 
       expect(result).toEqual([
         {
-          icon: "",
+          downloads: 0,
           homepage: "",
-          name: "@tsed/common",
-          stars: 1000,
+          icon: "",
           maintainers: [
             {
-              username: "Romakita",
-              email: "romakita@tsed.io"
+              email: "romakita@tsed.io",
+              username: "Romakita"
             }
-          ]
+          ],
+          name: "@tsed/common",
+          stars: 1000
         }
       ]);
     });
@@ -96,21 +97,31 @@ describe("WarehouseService", () => {
 
       expect(result).toEqual([
         {
+          downloads: 0,
+          maintainers: [],
           name: "@tsed/common",
-          maintainers: []
+          stars: 0,
+          tags: []
         },
         {
           description: "A prisma package",
+          downloads: 0,
           homepage: "https://github.com/tsedio/tsed-prisma",
           icon: "",
+          maintainers: [],
           name: "@tsed/prisma",
           repository: "https://github.com/tsedio/tsed-prisma",
           stars: 1000,
-          version: "1.0.0",
-          maintainers: []
+          version: "1.0.0"
         }
       ]);
-      expect(service.saveSubmission).toHaveBeenCalledWith({data: {description: "A prisma package", icon: "", name: "@tsed/prisma"}});
+      expect(service.saveSubmission).toHaveBeenCalledWith({
+        data: {
+          description: "A prisma package",
+          icon: "",
+          name: "@tsed/prisma"
+        }
+      });
     });
     it("should return nothing when the package is mentioned as disabled", async () => {
       const {service} = await getWarehouseFixture({
@@ -148,11 +159,12 @@ describe("WarehouseService", () => {
 
       expect(result).toEqual([
         {
-          icon: "https://icon.formio",
-          name: "@tsed/common",
+          downloads: 0,
           homepage: "",
-          stars: 1000,
-          maintainers: []
+          icon: "https://icon.formio",
+          maintainers: [],
+          name: "@tsed/common",
+          stars: 1000
         }
       ]);
     });

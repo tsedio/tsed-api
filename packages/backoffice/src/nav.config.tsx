@@ -79,14 +79,6 @@ export default [
         icon: "detail",
         ctaLabel: "Edit form",
         roles: ["administrator"]
-      },
-      {
-        title: "Edit OAuth link",
-        description: "Edit OAuth link form definition.",
-        href: getFormioBasePath("forms", "oauthLink", "edit"),
-        icon: "detail",
-        ctaLabel: "Edit form",
-        roles: ["administrator"]
       }
     ]
   }

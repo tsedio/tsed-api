@@ -35,7 +35,7 @@ export class OpenCollectiveCtrl {
   client: OpenCollectiveClient;
 
   @Get()
-  @(Returns(200).ContentType("application/json").Schema(OpenCollectiveMembersSchema))
+  @Returns(200).ContentType("application/json").Schema(OpenCollectiveMembersSchema)
   getMember() {
     return this.client.getMembers("tsed");
   }

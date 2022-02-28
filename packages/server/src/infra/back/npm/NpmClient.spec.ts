@@ -45,8 +45,8 @@ describe("NpmClient", () => {
           name: "@tsed/common",
           npm: "links.npm",
           repository: "links.repository",
-          "stars": 0,
-          "tags": [],
+          stars: 0,
+          tags: []
         }
       ]);
       expect(service.get).toHaveBeenCalledWith("-/v1/search", {

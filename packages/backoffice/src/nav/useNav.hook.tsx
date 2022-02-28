@@ -44,9 +44,8 @@ export function useNav() {
   const currentLocation = useLocation();
   const routes = useMemo(() => findAll(nav), [nav]);
 
-  const [, , formType, formId, formAction] = currentLocation.pathname.split(
-    "/"
-  );
+  const [, , formType, formId, formAction] =
+    currentLocation.pathname.split("/");
 
   const exact = !!routes.get(currentLocation.pathname);
   let page = findNested(currentLocation.pathname, routes);

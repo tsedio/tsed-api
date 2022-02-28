@@ -11,7 +11,7 @@ export class WarehouseCtrl {
   protected warehouseService: WarehouseService;
 
   @Get("/")
-  @(Returns(200, Array).Of(NpmPackage).ContentType("application/json"))
+  @Returns(200, Array).Of(NpmPackage).ContentType("application/json")
   @Summary("Get all published package on NPM related to Ts.ED")
   getPlugins() {
     return this.warehouseService.getPlugins("tsed");

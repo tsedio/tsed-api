@@ -7,7 +7,7 @@ import {join} from "path";
 @Hidden()
 export class VersionCtrl {
   @Get("/")
-  @(Returns(200).ContentType("application/json"))
+  @Returns(200).ContentType("application/json")
   async get(@QueryParams("code") code?: string) {
     // disable response when oauth flow is performed by formio
     if (!code) {

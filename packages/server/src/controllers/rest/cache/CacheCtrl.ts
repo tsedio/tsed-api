@@ -10,7 +10,7 @@ export class CacheCtrl {
   cache: CacheService;
 
   @Get("/keys")
-  @(Returns(200).ContentType("application/json").Header("Cache-Control", "no-cache"))
+  @Returns(200).ContentType("application/json").Header("Cache-Control", "no-cache")
   async keys() {
     return this.cache.getKeysMetadata();
   }

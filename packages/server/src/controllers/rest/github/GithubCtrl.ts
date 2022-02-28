@@ -78,8 +78,8 @@ export class GithubCtrl {
   }
 
   @Get()
-  @(Returns(200).ContentType("application/json").Schema(GithubRepo))
-  @(Returns(401).Description("Repository unauthorized"))
+  @Returns(200).ContentType("application/json").Schema(GithubRepo)
+  @Returns(401).Description("Repository unauthorized")
   async get(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
     const data = await this.client.checkWhitelist(repo).getInfo(owner, repo);
 
@@ -94,15 +94,15 @@ export class GithubCtrl {
   }
 
   @Get("/contributors")
-  @(Returns(200).ContentType("application/json").Schema(GithubContributors))
-  @(Returns(401).Description("Repository unauthorized"))
+  @Returns(200).ContentType("application/json").Schema(GithubContributors)
+  @Returns(401).Description("Repository unauthorized")
   async getContributors(@PathParams("owner") owner: string, @PathParams("repo") repo: string) {
     return this.client.checkWhitelist(repo).getContributors(owner, repo, 1, 100);
   }
 
   @Get("/releases")
-  @(Returns(200).ContentType("application/json").Schema(GithubReleases))
-  @(Returns(401).Description("Repository unauthorized"))
+  @Returns(200).ContentType("application/json").Schema(GithubReleases)
+  @Returns(401).Description("Repository unauthorized")
   async getReleases(
     @PathParams("owner") owner: string,
     @PathParams("repo") repo: string,
@@ -113,7 +113,7 @@ export class GithubCtrl {
   }
 
   @Post("/webhook")
-  @(Returns(200, String).Examples("OK"))
+  @Returns(200, String).Examples("OK")
   async webhook(@HeaderParams("x-github-event") event: string, @BodyParams() payload: GithubWebhookPayload) {
     const [owner, repo] = payload.repository.fullName.split("/");
 

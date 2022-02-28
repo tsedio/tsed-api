@@ -1,4 +1,4 @@
-import { CollectionOf, Description, Email, Enum, Example, Required, Url } from "@tsed/schema";
+import {CollectionOf, Description, Email, Enum, Example, Required, Url} from "@tsed/schema";
 import crypto from "crypto";
 
 export enum NpmPackageType {
@@ -27,8 +27,7 @@ export class NpmPackageMaintainer {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set avatar(avatar: string) {
-  }
+  set avatar(avatar: string) {}
 }
 
 export class NpmPackage {
@@ -68,29 +67,29 @@ export class NpmPackage {
   maintainers: NpmPackageMaintainer[] = [];
 
   @Description("Npm downloads count")
-  downloads: number = 0;
+  downloads = 0;
 
   @Description("Github stars count")
-  stars: number = 0;
+  stars = 0;
 
   @Description("Package tags")
   @CollectionOf(String)
   tags: string[] = [];
 
   constructor({
-                name,
-                description,
-                version,
-                repository,
-                npm,
-                icon,
-                homepage,
-                bugs,
-                maintainers,
-                downloads,
-                stars,
-                tags
-              }: Partial<NpmPackage> = {}) {
+    name,
+    description,
+    version,
+    repository,
+    npm,
+    icon,
+    homepage,
+    bugs,
+    maintainers,
+    downloads,
+    stars,
+    tags
+  }: Partial<NpmPackage> = {}) {
     name && (this.name = name);
     description && (this.description = description);
     version && (this.version = version);
@@ -120,8 +119,7 @@ export class NpmPackage {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set type(type: NpmPackageType) {
-  }
+  set type(type: NpmPackageType) {}
 
   @Description("Package category")
   @Enum(NpmPackageCategory)
@@ -138,13 +136,12 @@ export class NpmPackage {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  set category(type: NpmPackageCategory) {
-  }
+  set category(type: NpmPackageCategory) {}
 
   getRepositoryOwner() {
     if (this.repository?.startsWith("https://github.com/")) {
       const [owner, repo] = this.repository.replace("https://github.com/", "").split("/");
-      return { owner, repo };
+      return {owner, repo};
     }
 
     return false;

@@ -1,18 +1,18 @@
-import { PlatformTest } from "@tsed/common";
-import { deserialize } from "@tsed/json-mapper";
-import { NpmPackage } from "../domain/npm/NpmPackage";
-import { GithubClient } from "../infra/back/github/GithubClient";
-import { NpmClient } from "../infra/back/npm/NpmClient";
-import { WarehouseService } from "./WarehouseService";
+import {PlatformTest} from "@tsed/common";
+import {deserialize} from "@tsed/json-mapper";
+import {NpmPackage} from "../domain/npm/NpmPackage";
+import {GithubClient} from "../infra/back/github/GithubClient";
+import {NpmClient} from "../infra/back/npm/NpmClient";
+import {WarehouseService} from "./WarehouseService";
 
-async function getWarehouseFixture({ data, npmData }: any) {
+async function getWarehouseFixture({data, npmData}: any) {
   const npmClient = {
     search: jest.fn().mockResolvedValue([
       deserialize(
         npmData || {
           name: "@tsed/common"
         },
-        { type: NpmPackage }
+        {type: NpmPackage}
       )
     ])
   };
@@ -28,7 +28,7 @@ async function getWarehouseFixture({ data, npmData }: any) {
   jest.spyOn(service, "saveSubmission").mockImplementation((o: any) => o);
   jest.spyOn(service, "getStars").mockResolvedValue(1000);
 
-  return { npmClient, service };
+  return {npmClient, service};
 }
 
 describe("WarehouseService", () => {
@@ -37,7 +37,7 @@ describe("WarehouseService", () => {
 
   describe("getPlugins()", () => {
     it("should return all plugins available for the given keywords", async () => {
-      const { service } = await getWarehouseFixture({
+      const {service} = await getWarehouseFixture({
         data: {
           _id: "id",
           form: "formId",
@@ -59,22 +59,22 @@ describe("WarehouseService", () => {
 
       expect(result).toEqual([
         {
-          "downloads": 0,
-          "homepage": "",
-          "icon": "",
-          "maintainers": [
+          downloads: 0,
+          homepage: "",
+          icon: "",
+          maintainers: [
             {
-              "email": "romakita@tsed.io",
-              "username": "Romakita"
+              email: "romakita@tsed.io",
+              username: "Romakita"
             }
           ],
-          "name": "@tsed/common",
-          "stars": 1000
+          name: "@tsed/common",
+          stars: 1000
         }
       ]);
     });
     it("should save the unknown package to database", async () => {
-      const { service } = await getWarehouseFixture({
+      const {service} = await getWarehouseFixture({
         data: {
           _id: "id",
           form: "formId",
@@ -97,22 +97,22 @@ describe("WarehouseService", () => {
 
       expect(result).toEqual([
         {
-          "downloads": 0,
-          "maintainers": [],
-          "name": "@tsed/common",
-          "stars": 0,
-          "tags": []
+          downloads: 0,
+          maintainers: [],
+          name: "@tsed/common",
+          stars: 0,
+          tags: []
         },
         {
-          "description": "A prisma package",
-          "downloads": 0,
-          "homepage": "https://github.com/tsedio/tsed-prisma",
-          "icon": "",
-          "maintainers": [],
-          "name": "@tsed/prisma",
-          "repository": "https://github.com/tsedio/tsed-prisma",
-          "stars": 1000,
-          "version": "1.0.0"
+          description: "A prisma package",
+          downloads: 0,
+          homepage: "https://github.com/tsedio/tsed-prisma",
+          icon: "",
+          maintainers: [],
+          name: "@tsed/prisma",
+          repository: "https://github.com/tsedio/tsed-prisma",
+          stars: 1000,
+          version: "1.0.0"
         }
       ]);
       expect(service.saveSubmission).toHaveBeenCalledWith({
@@ -124,7 +124,7 @@ describe("WarehouseService", () => {
       });
     });
     it("should return nothing when the package is mentioned as disabled", async () => {
-      const { service } = await getWarehouseFixture({
+      const {service} = await getWarehouseFixture({
         data: {
           _id: "id",
           form: "formId",
@@ -141,7 +141,7 @@ describe("WarehouseService", () => {
       expect(result).toEqual([]);
     });
     it("should get icon from formio", async () => {
-      const { service } = await getWarehouseFixture({
+      const {service} = await getWarehouseFixture({
         data: {
           _id: "id",
           form: "formId",
@@ -159,12 +159,12 @@ describe("WarehouseService", () => {
 
       expect(result).toEqual([
         {
-          "downloads": 0,
-          "homepage": "",
-          "icon": "https://icon.formio",
-          "maintainers": [],
-          "name": "@tsed/common",
-          "stars": 1000
+          downloads: 0,
+          homepage: "",
+          icon: "https://icon.formio",
+          maintainers: [],
+          name: "@tsed/common",
+          stars: 1000
         }
       ]);
     });
@@ -173,7 +173,7 @@ describe("WarehouseService", () => {
   describe("getStars()", () => {
     it("should get stargazers_count from github", async () => {
       const githubClient = {
-        getInfo: jest.fn().mockResolvedValue({ stargazers_count: 1000 })
+        getInfo: jest.fn().mockResolvedValue({stargazers_count: 1000})
       };
       const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
         {
@@ -194,7 +194,7 @@ describe("WarehouseService", () => {
 
     it("should return 0 when the repository isn't a github", async () => {
       const githubClient = {
-        getInfo: jest.fn().mockResolvedValue({ stargazers_count: 1000 })
+        getInfo: jest.fn().mockResolvedValue({stargazers_count: 1000})
       };
       const service = await PlatformTest.invoke<WarehouseService>(WarehouseService, [
         {

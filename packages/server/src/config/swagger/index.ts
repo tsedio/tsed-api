@@ -4,7 +4,7 @@ const {version} = require("../../../package.json");
 
 export default [
   {
-    path: "/docs",
+    path: "/doc",
     specVersion: "3.0.1",
     spec: {
       info: {
@@ -36,9 +36,9 @@ export default [
     }
   },
   {
-    path: "/projects/doc",
+    path: "/doc-formio",
     specVersion: "2.0",
-    fileName: "/../spec.json",
+    fileName: "../projects/spec.json",
     disableSpec: true,
     showExplorer: true
   }

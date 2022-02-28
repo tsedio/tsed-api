@@ -1,12 +1,15 @@
 import { FormioContainer, FormioEventObj } from "@tsed/react-formio-container";
 import { Loader } from "@tsed/shared";
 import { Route, RouteComponentProps, RouteProps } from "react-router";
+import { ApiViewSpec } from "./api/api.view";
 import { AuthView } from "./auth/auth.view";
 import { ProtectedRoute } from "./auth/protectedRoute.component";
+import { BackupView } from "./backup/backup.view";
 import { Config } from "./config";
 import { HomeView } from "./home/home.view";
 import { ProfileView } from "./profile/profile.view";
 import { RegisterView } from "./register/register.view";
+import { SettingsView } from "./settings/settings.view";
 import { toastr } from "./toastr/toastr.util";
 
 export interface RouteConfig extends RouteProps {
@@ -57,6 +60,21 @@ export const routes: RouteConfig[] = [
     exact: true,
     guard: ProtectedRoute,
     component: ProfileView
+  },
+  {
+    path: "/api",
+    guard: ProtectedRoute,
+    component: ApiViewSpec
+  },
+  {
+    path: "/backup",
+    guard: ProtectedRoute,
+    component: BackupView
+  },
+  {
+    path: "/settings",
+    guard: ProtectedRoute,
+    component: SettingsView
   },
   {
     path: "*",

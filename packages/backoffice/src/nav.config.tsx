@@ -49,6 +49,13 @@ export default [
           delete: true
         },
         headerNav: CreateFormButton
+      },
+      {
+        title: "API",
+        description: "Swagger documentation",
+        icon: "code-alt",
+        href: "/api",
+        ctaLabel: "Go to API"
       }
     ]
   },
@@ -57,7 +64,7 @@ export default [
     roles: ["administrator"],
     items: [
       {
-        title: "Manage users",
+        title: "Accounts",
         description: "Manage all user accounts and his roles.",
         href: getFormioBasePath("resources", "user", "submissions"),
         icon: "user",
@@ -65,20 +72,62 @@ export default [
         roles: ["administrator"]
       },
       {
-        title: "Edit Login form",
-        description: "Edit user login form definition.",
-        href: getFormioBasePath("forms", "user__login", "edit"),
-        icon: "detail",
-        ctaLabel: "Edit form",
+        title: "Roles",
+        description: "Manage all roles.",
+        href: "/roles",
+        icon: "group",
+        ctaLabel: "Manage users",
         roles: ["administrator"]
       },
       {
-        title: "Edit Register form",
-        description: "Edit registration form definition.",
-        href: getFormioBasePath("forms", "user__register", "edit"),
-        icon: "detail",
-        ctaLabel: "Edit form",
-        roles: ["administrator"]
+        title: "Import/Export",
+        description: "Export or import database",
+        href: "/backup",
+        icon: "data",
+        ctaLabel: "Go to backup tools",
+        roles: ["administrator"],
+        items: [
+          {
+            title: "Import",
+            description: "Import forms/resources/submissions from a json file",
+            icon: "upload",
+            roles: ["administrator"],
+            ctaLabel: "Go to import tool"
+          },
+          {
+            title: "Export",
+            description: "Export forms/resources/submissions",
+            icon: "download",
+            roles: ["administrator"],
+            ctaLabel: "Go to export tool"
+          }
+        ]
+      },
+      {
+        title: "Settings",
+        description: "Manage form.io settings",
+        href: "/settings",
+        icon: "cog",
+        ctaLabel: "Go to settings",
+        roles: ["administrator"],
+        items: [
+          {
+            title: "Login form",
+            description: "Edit user login form definition.",
+            href: getFormioBasePath("forms", "user__login", "edit"),
+            icon: "detail",
+            ctaLabel: "Edit form",
+            roles: ["administrator"]
+          },
+          {
+            title: "Register form",
+            description: "Edit registration form definition.",
+            href: getFormioBasePath("forms", "user__register", "edit"),
+            icon: "detail",
+            ctaLabel: "Edit form",
+            roles: ["administrator"]
+          }
+        ]
       }
     ]
   }

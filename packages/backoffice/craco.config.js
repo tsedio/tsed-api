@@ -3,6 +3,8 @@ module.exports = {
   devServer: {
     proxy: {
       "/rest": "http://localhost:8083",
+      "/doc": "http://localhost:8083",
+      "/doc-formio": "http://localhost:8083",
       "/projects": "http://localhost:8083"
     }
   }

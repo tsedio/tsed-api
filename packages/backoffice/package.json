@@ -1,14 +1,14 @@
 {
   "name": "@tsed/backoffice",
-  "version": "1.12.1",
+  "version": "1.12.2",
   "private": true,
   "author": "Romain Lenzotti",
   "dependencies": {
     "cross-env": "^7.0.3"
   },
   "devDependencies": {
-    "@tsed/config": "1.12.1",
-    "@tsed/shared": "1.12.1"
+    "@tsed/config": "1.12.2",
+    "@tsed/shared": "1.12.2"
   },
   "scripts": {
     "start": "yarn craco start",

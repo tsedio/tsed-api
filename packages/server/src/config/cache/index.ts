@@ -67,7 +67,7 @@ function getConfiguration() {
       password: url.password,
       port: url.port,
       username: url.username,
-      tls: url.protocol === "rediss:",
+      tls: url.protocol === "rediss:" ? {rejectUnauthorized: false} : false,
       db: process.env.REDIS_DB_INDEX || 0,
       ...redisOptions()
     };

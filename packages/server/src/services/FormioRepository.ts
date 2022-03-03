@@ -1,6 +1,7 @@
 import {Inject} from "@tsed/di";
 import {FormioDatabase, FormioSubmission} from "@tsed/formio";
 import {MongooseDocument} from "@tsed/mongoose";
+import {omit} from "lodash";
 
 export abstract class FormioRepository<SubmissionData = any> {
   @Inject()
@@ -32,7 +33,7 @@ export abstract class FormioRepository<SubmissionData = any> {
       {
         _id: instance._id
       },
-      {$set: instance},
+      {$set: omit(instance, ["__v"])},
       {upsert: true}
     );
 

@@ -1,11 +1,11 @@
 {
-  "title": "ToDo Application",
-  "description": "A simple to-do application.",
+  "title": "Ts.ED API",
+  "description": "Rest API for Ts.ED",
   "version": "2.0.0",
-  "name": "todo",
+  "name": "tsed-api",
   "preview": {
-    "url": "https://formio.github.io/formio-app-todo/dist",
-    "repo": "https://github.com/formio/formio-app-todo"
+    "url": "https://api.tsed.io",
+    "repo": "https://github.com/tsedio/tsed-api"
   },
   "roles": {
     "administrator": {

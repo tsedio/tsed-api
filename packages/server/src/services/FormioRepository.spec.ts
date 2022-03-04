@@ -20,12 +20,12 @@ describe("FormioRepository", () => {
           })
         },
         submissionModel: class {
-          static updateOne = jest.fn().mockResolvedValue({});
-          public _id: string;
-          constructor(o: any) {
-            Object.assign(this, o);
-            this._id = o._id || "newid";
-          }
+          static findOneAndUpdate = jest.fn().mockImplementation(({_id}, instance) => {
+            return {
+              _id: _id || "newid",
+              ...instance
+            };
+          });
         }
       };
 
@@ -49,10 +49,10 @@ describe("FormioRepository", () => {
         },
         form: "id"
       });
-      expect(database.submissionModel.updateOne).toHaveBeenCalledWith(
-        {_id: "newid"},
-        {$set: {_id: "newid", data: {label: "label"}, form: "id"}},
-        {upsert: true}
+      expect(database.submissionModel.findOneAndUpdate).toHaveBeenCalledWith(
+        {_id: undefined},
+        {data: {label: "label"}, form: "id"},
+        {upsert: true, new: true}
       );
     });
     it("should save submission", async () => {
@@ -63,12 +63,12 @@ describe("FormioRepository", () => {
           })
         },
         submissionModel: class {
-          static updateOne = jest.fn().mockResolvedValue({});
-          public _id: string;
-          constructor(o: any) {
-            Object.assign(this, o);
-            this._id = o._id || "newid";
-          }
+          static findOneAndUpdate = jest.fn().mockImplementation(({_id}, instance) => {
+            return {
+              _id: _id || "newid",
+              ...instance
+            };
+          });
         }
       };
 
@@ -93,10 +93,10 @@ describe("FormioRepository", () => {
         },
         form: "id"
       });
-      expect(database.submissionModel.updateOne).toHaveBeenCalledWith(
+      expect(database.submissionModel.findOneAndUpdate).toHaveBeenCalledWith(
         {_id: "id"},
-        {$set: {_id: "id", data: {label: "label"}, form: "id"}},
-        {upsert: true}
+        {_id: "id", data: {label: "label"}, form: "id"},
+        {upsert: true, new: true}
       );
     });
   });

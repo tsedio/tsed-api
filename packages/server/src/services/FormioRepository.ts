@@ -24,20 +24,18 @@ export abstract class FormioRepository<SubmissionData = any> {
   }
 
   async saveSubmission(submission: Omit<Partial<FormioSubmission<SubmissionData>>, "form"> & {form?: any}) {
-    const instance = new this.formioDatabase.submissionModel({
-      ...submission,
+    submission = {
+      ...omit(submission, ["__v"]),
       form: submission.form || (await this.getFormId())
-    });
+    };
 
-    await this.formioDatabase.submissionModel.updateOne(
+    return this.formioDatabase.submissionModel.findOneAndUpdate(
       {
-        _id: instance._id
+        _id: submission._id
       },
-      {$set: omit(instance, ["__v"])},
-      {upsert: true}
+      submission,
+      {new: true, upsert: true}
     );
-
-    return instance;
   }
 
   async getSubmissions(): Promise<MongooseDocument<FormioSubmission<SubmissionData>>[]> {

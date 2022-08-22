@@ -19,7 +19,8 @@ export class WarehouseMigration {
   async install() {
     this.logger.info("Check warehouse migration...");
     const mapper = await this.formioDatabase.getFormioMapper();
-    await this.formioDatabase.createFormIfNotExists(formPackages as any, async (form) => {
+
+    await this.formioDatabase.importFormIfNotExists(formPackages as any, async (form) => {
       this.logger.info('Install "NPM packages" form');
       await new this.formioDatabase.actionModel(
         mapper.mapToImport({

@@ -18,7 +18,7 @@ import {join} from "path";
 import send from "send";
 import {cacheConfig} from "./config/cache";
 import formioConfig from "./config/formio";
-import {configureLogger, loggerConfig} from "./config/logger";
+import {loggerConfig} from "./config/logger";
 import mongooseConfig from "./config/mongoose";
 import swaggerConfig from "./config/swagger";
 import * as controllers from "./controllers/rest/index";
@@ -115,9 +115,5 @@ export class Server {
         });
       });
     }
-  }
-
-  $onReady() {
-    configureLogger();
   }
 }

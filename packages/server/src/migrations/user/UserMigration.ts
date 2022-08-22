@@ -24,7 +24,7 @@ export class RepositoriesMigration {
     if (form && this.shouldUpdate(form as FormioForm)) {
       try {
         this.logger.info("Create form definition...");
-        await this.formioDatabase.saveFormDefinition({...userLoginForm, _id: form._id.toString()} as any);
+        await this.formioDatabase.importForm({...userLoginForm, _id: form._id.toString()} as any);
 
         const mappedAction = mapper.mapToImport({
           ...userLoginOAuthAction,

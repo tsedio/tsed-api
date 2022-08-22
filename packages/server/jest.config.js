@@ -22,12 +22,7 @@ module.exports = {
 
   // An object that configures minimum threshold enforcement for coverage results
   coverageThreshold: {
-    global: {
-      'branches': 73.56,
-      'functions': 79.17,
-      'lines': 89.36,
-      'statements': 89.79
-    }
+    global: require('./coverage.json')
   },
 
   // An array of file extensions your modules use

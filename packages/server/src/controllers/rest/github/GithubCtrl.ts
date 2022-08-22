@@ -1,4 +1,4 @@
-import {InjectContext} from "@tsed/async-hook-context";
+import {InjectContext} from "@tsed/di";
 import {BodyParams, Controller, Get, HeaderParams, Inject, PathParams, PlatformContext, Post, QueryParams} from "@tsed/common";
 import {array, boolean, Default, Max, Min, Name, number, object, Returns, string} from "@tsed/schema";
 import {GithubWebhookPayload} from "../../../domain/github/GithubWebhookPayload";

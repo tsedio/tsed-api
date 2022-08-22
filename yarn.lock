@@ -5815,13 +5815,6 @@
     ajv-formats "2.1.1"
     tslib "2.4.0"
 
-"@tsed/async-hook-context@6.128.2":
-  version "6.128.2"
-  resolved "https://registry.yarnpkg.com/@tsed/async-hook-context/-/async-hook-context-6.128.2.tgz#b2bf40af0d688410ce60bcb1116af6d702340ded"
-  integrity sha512-crxvow17jdSI/7/yhV1VlAAWJfsU6EXktEd15c9vMgUOnqT1qn9B9PRyavTOuOVQRKawtJCXgZr+w78UWqASmg==
-  dependencies:
-    tslib "2.4.0"
-
 "@tsed/cli-plugin-eslint@3.24.0":
   version "3.24.0"
   resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-eslint/-/cli-plugin-eslint-3.24.0.tgz#51dc014c13047bd329f7142580d17ba09ebc79d0"

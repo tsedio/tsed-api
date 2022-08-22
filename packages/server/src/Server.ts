@@ -1,5 +1,4 @@
 import "@tsed/ajv";
-import "@tsed/async-hook-context";
 import {PlatformApplication, Res} from "@tsed/common";
 import {Env} from "@tsed/core";
 import {Configuration, Inject} from "@tsed/di";

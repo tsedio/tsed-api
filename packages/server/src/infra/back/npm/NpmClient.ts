@@ -1,6 +1,5 @@
-import {InjectContext} from "@tsed/async-hook-context";
 import {PlatformContext, UseCache} from "@tsed/common";
-import {Injectable} from "@tsed/di";
+import {Injectable, InjectContext} from "@tsed/di";
 import {deserialize} from "@tsed/json-mapper";
 import {Method} from "axios";
 import url from "url";

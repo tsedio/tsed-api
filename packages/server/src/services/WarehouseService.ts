@@ -25,12 +25,12 @@ export class WarehouseService extends FormioRepository {
   @Inject()
   protected githubClient: GithubClient;
 
-  // @UseCache({
-  //   ttl: 3600 * 24 * 10,
-  //   refreshThreshold: 900,
-  //   type: NpmPackage,
-  //   collectionType: Array
-  // })
+  @UseCache({
+    ttl: 3600 * 24 * 10,
+    refreshThreshold: 900,
+    type: NpmPackage,
+    collectionType: Array
+  })
   async getPlugins(keyword: string): Promise<NpmPackage[]> {
     const [packages, submissions] = await Promise.all([this.npmClient.search(keyword), this.getPackagesSubmissions()]);
 

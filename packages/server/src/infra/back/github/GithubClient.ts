@@ -1,7 +1,8 @@
 import {Octokit} from "@octokit/rest";
 import {RequestParameters} from "@octokit/types";
 import {InjectContext} from "@tsed/di";
-import {PlatformContext, UseCache} from "@tsed/common";
+import {PlatformContext} from "@tsed/common";
+import {UseCache} from "@tsed/platform-cache";
 import {Constant, Injectable} from "@tsed/di";
 import {Unauthorized} from "@tsed/exceptions";
 import {BaseLogClient} from "../http/BaseLogClient";

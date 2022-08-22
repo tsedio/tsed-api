@@ -6,6 +6,7 @@ import "@tsed/formio";
 import {Logger} from "@tsed/logger";
 import "@tsed/mongoose";
 import "@tsed/platform-express"; // /!\ keep this import
+import "@tsed/platform-cache";
 import "@tsed/swagger";
 import bodyParser from "body-parser";
 import compression from "compression";
@@ -100,7 +101,7 @@ export class Server {
   settings: Configuration;
 
   $afterRoutesInit() {
-    this.app.get("/backoffice/*", (req: any, res: Res) => {
+    this.app.get("/backoffice/*", (req: any, res: any) => {
       res.sendFile(join(backofficeDir, "index.html"));
     });
   }

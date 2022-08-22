@@ -1,4 +1,5 @@
-import {PlatformContext, UseCache} from "@tsed/common";
+import {PlatformContext} from "@tsed/common";
+import {UseCache} from "@tsed/platform-cache";
 import {Injectable, InjectContext} from "@tsed/di";
 import {deserialize} from "@tsed/json-mapper";
 import {Method} from "axios";

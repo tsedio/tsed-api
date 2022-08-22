@@ -1,4 +1,4 @@
-import {UseCache} from "@tsed/common";
+import {UseCache} from "@tsed/platform-cache";
 import {Injectable} from "@tsed/di";
 import {HttpClient} from "../http/HttpClient";
 

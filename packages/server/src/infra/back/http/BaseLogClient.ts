@@ -1,6 +1,6 @@
-import {InjectContext} from "@tsed/async-hook-context";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import {Opts, PlatformContext} from "@tsed/common";
+import {InjectContext} from "@tsed/di";
 import {get} from "lodash";
 import querystring from "querystring";
 import {logToCurl} from "./logToCurl";

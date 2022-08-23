@@ -1,7 +1,8 @@
+import { Formio } from "@tsed/react-formio";
 import { IfSidebar, Loader, oneOfIsActive, useSidebar } from "@tsed/shared";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Route as DefaultRoute, Switch } from "react-router";
+import { Route as DefaultRoute, Switch, useHistory } from "react-router";
 import { useAuth } from "./auth/useAuth.hook";
 import { Config } from "./config";
 import { IfHeader } from "./header/header.component";
@@ -18,9 +19,14 @@ function App() {
   const { headerHeight } = Config;
   const { isAuth, isActive, auth, onLogout } = useAuth();
   const nav = useNav();
+  const history = useHistory();
 
   const { sidebarOpen, toggleSidebar } = useSidebar();
   const size = sidebarOpen ? "64" : "14";
+
+  useEffect(() => {
+    Formio.clearCache();
+  }, [history.location.pathname]);
 
   if (isActive) {
     return <Loader isActive={isActive} />;

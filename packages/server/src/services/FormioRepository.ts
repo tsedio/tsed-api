@@ -1,7 +1,6 @@
 import {Inject} from "@tsed/di";
 import {FormioDatabase, FormioSubmission} from "@tsed/formio";
 import {MongooseDocument} from "@tsed/mongoose";
-import {omit} from "lodash";
 
 export abstract class FormioRepository<SubmissionData = any> {
   @Inject()
@@ -24,18 +23,9 @@ export abstract class FormioRepository<SubmissionData = any> {
   }
 
   async saveSubmission(submission: Omit<Partial<FormioSubmission<SubmissionData>>, "form"> & {form?: any}) {
-    submission = {
-      ...omit(submission, ["__v"]),
-      form: submission.form || (await this.getFormId())
-    };
+    submission.form = submission.form || (await this.getFormId());
 
-    return this.formioDatabase.submissionModel.findOneAndUpdate(
-      {
-        _id: submission._id
-      },
-      submission,
-      {new: true, upsert: true}
-    );
+    return this.formioDatabase.saveSubmission(new this.formioDatabase.submissionModel(submission));
   }
 
   async getSubmissions(): Promise<MongooseDocument<FormioSubmission<SubmissionData>>[]> {

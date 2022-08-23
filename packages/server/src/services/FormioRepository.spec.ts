@@ -19,13 +19,11 @@ describe("FormioRepository", () => {
             _id: "id"
           })
         },
+        saveSubmission: jest.fn().mockImplementation((instance) => instance),
         submissionModel: class {
-          static findOneAndUpdate = jest.fn().mockImplementation(({_id}, instance) => {
-            return {
-              _id: _id || "newid",
-              ...instance
-            };
-          });
+          constructor(o: any) {
+            Object.assign(this, {...o, _id: o._id || "newid"});
+          }
         }
       };
 
@@ -49,11 +47,7 @@ describe("FormioRepository", () => {
         },
         form: "id"
       });
-      expect(database.submissionModel.findOneAndUpdate).toHaveBeenCalledWith(
-        {_id: undefined},
-        {data: {label: "label"}, form: "id"},
-        {upsert: true, new: true}
-      );
+      expect(database.saveSubmission).toHaveBeenCalledWith({_id: "newid", data: {label: "label"}, form: "id"});
     });
     it("should save submission", async () => {
       const database = {
@@ -62,13 +56,11 @@ describe("FormioRepository", () => {
             _id: "id"
           })
         },
+        saveSubmission: jest.fn().mockImplementation((instance) => instance),
         submissionModel: class {
-          static findOneAndUpdate = jest.fn().mockImplementation(({_id}, instance) => {
-            return {
-              _id: _id || "newid",
-              ...instance
-            };
-          });
+          constructor(o: any) {
+            Object.assign(this, {...o, _id: o._id || "newid"});
+          }
         }
       };
 
@@ -93,11 +85,7 @@ describe("FormioRepository", () => {
         },
         form: "id"
       });
-      expect(database.submissionModel.findOneAndUpdate).toHaveBeenCalledWith(
-        {_id: "id"},
-        {_id: "id", data: {label: "label"}, form: "id"},
-        {upsert: true, new: true}
-      );
+      expect(database.saveSubmission).toHaveBeenCalledWith({_id: "id", data: {label: "label"}, form: "id"});
     });
   });
   describe("getSubmissions()", () => {

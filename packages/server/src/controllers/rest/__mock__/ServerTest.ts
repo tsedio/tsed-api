@@ -1,7 +1,6 @@
 import "@tsed/ajv";
 import {PlatformApplication} from "@tsed/common";
 import {Configuration, Inject} from "@tsed/di";
-import "@tsed/async-hook-context";
 import "@tsed/mongoose";
 import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/swagger";

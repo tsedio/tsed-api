@@ -1,7 +1,7 @@
-import {ConverterService, Inject} from "@tsed/common";
 import {cleanObject, Type} from "@tsed/core";
 import {Injectable} from "@tsed/di";
 import {Exception} from "@tsed/exceptions";
+import {deserialize, serialize} from "@tsed/json-mapper";
 import axios, {AxiosRequestConfig, Method} from "axios";
 import {get, omit} from "lodash";
 import querystring from "querystring";
@@ -16,9 +16,6 @@ export interface HttpClientOptions extends AxiosRequestConfig, Record<string, un
 
 @Injectable()
 export class HttpClient extends BaseLogClient {
-  @Inject()
-  protected mapper: ConverterService;
-
   static getParamsSerializer(params: any) {
     return querystring.stringify(cleanObject(params));
   }
@@ -90,8 +87,8 @@ export class HttpClient extends BaseLogClient {
       method,
       url: endpoint,
       ...omit(options, ["type", "collectionType", "additionalProperties"]),
-      params: this.mapper.serialize(options.params),
-      data: this.mapper.serialize(options.data),
+      params: serialize(options.params),
+      data: serialize(options.data),
       headers: cleanObject({
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -105,7 +102,7 @@ export class HttpClient extends BaseLogClient {
 
     let data = !withHeaders ? result.data : result;
 
-    data = this.mapper.deserialize(data, {
+    data = deserialize(data, {
       collectionType,
       type,
       useAlias: true,

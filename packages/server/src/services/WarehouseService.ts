@@ -1,7 +1,7 @@
-import {Injectable, UseCache} from "@tsed/common";
 import {toMap} from "@tsed/core";
-import {Inject} from "@tsed/di";
+import {Inject, Injectable} from "@tsed/di";
 import {FormioSubmission} from "@tsed/formio";
+import {UseCache} from "@tsed/platform-cache";
 import {NpmPackage} from "../domain/npm/NpmPackage";
 import {GithubClient} from "../infra/back/github/GithubClient";
 import {NpmClient} from "../infra/back/npm/NpmClient";

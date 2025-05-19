@@ -139,8 +139,9 @@ export class NpmPackage {
   set category(type: NpmPackageCategory) {}
 
   getRepositoryOwner() {
-    if (this.repository?.startsWith("https://github.com/")) {
-      const [owner, repo] = this.repository.replace("https://github.com/", "").split("/");
+    if (this.repository?.match("github.com")) {
+      const url = new URL(this.repository);
+      const [, owner, repo] = url.pathname.replace(/.git$/, "").split("/");
       return {owner, repo};
     }
 

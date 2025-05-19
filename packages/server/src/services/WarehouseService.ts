@@ -89,15 +89,27 @@ export class WarehouseService extends FormioRepository {
     const meta = pkg.getRepositoryOwner();
 
     if (!meta) {
+      this.$ctx?.logger.warn({
+        event: "GITHUB_REPO_META_NOT_FOUND",
+        pkg: pkg.name,
+        repository: pkg.repository
+      });
       return 0;
     }
 
     try {
       const {stargazers_count} = await this.githubClient.getInfo(meta.owner, meta.repo);
 
+      this.$ctx?.logger.debug({
+        event: "GITHUB_REPO_STARS",
+        stargazers_count,
+        owner: meta.owner,
+        repo: meta.repo
+      });
+
       return stargazers_count;
     } catch (er) {
-      this.$ctx.logger.error({
+      this.$ctx?.logger.error({
         event: "GITHUB_REPO_INFO_ERROR",
         error: er,
         owner: meta.owner,

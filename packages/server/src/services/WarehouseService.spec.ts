@@ -95,26 +95,7 @@ describe("WarehouseService", () => {
 
       const result = await service.getPlugins("tsed");
 
-      expect(result).toEqual([
-        {
-          downloads: 0,
-          maintainers: [],
-          name: "@tsed/common",
-          stars: 0,
-          tags: []
-        },
-        {
-          description: "A prisma package",
-          downloads: 0,
-          homepage: "https://github.com/tsedio/tsed-prisma",
-          icon: "",
-          maintainers: [],
-          name: "@tsed/prisma",
-          repository: "https://github.com/tsedio/tsed-prisma",
-          stars: 1000,
-          version: "1.0.0"
-        }
-      ]);
+      expect(result).toMatchSnapshot();
       expect(service.saveSubmission).toHaveBeenCalledWith({
         data: {
           description: "A prisma package",

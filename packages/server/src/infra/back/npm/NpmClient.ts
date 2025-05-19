@@ -1,5 +1,5 @@
 import {InjectContext} from "@tsed/async-hook-context";
-import {PlatformContext, UseCache} from "@tsed/common";
+import {PlatformContext} from "@tsed/common";
 import {Injectable} from "@tsed/di";
 import {deserialize} from "@tsed/json-mapper";
 import {Method} from "axios";
@@ -76,26 +76,33 @@ export class NpmClient extends HttpClient {
    * @param text
    * @param options
    */
-  @UseCache({
-    ttl: 3600 * 24 * 10,
-    refreshThreshold: 900,
-    type: NpmPackage,
-    collectionType: Array,
-    key([type]: string[]): string {
-      return `npm:search:${type}`;
-    }
-  })
+  // @UseCache({
+  //   ttl: 3600 * 24 * 10,
+  //   refreshThreshold: 900,
+  //   type: NpmPackage,
+  //   collectionType: Array,
+  //   key([type]: string[]): string {
+  //     return `npm:search:${type}`;
+  //   }
+  // })
   async search(
     text: string,
-    options: {size?: number; from?: number; quality?: number; popularity?: number; maintenance?: number} = {}
+    options: {
+      size?: number;
+      from?: number;
+      quality?: number;
+      popularity?: number;
+      maintenance?: number;
+      searchexclude?: string;
+    } = {}
   ): Promise<NpmPackage[]> {
-    const {objects: result} = await this.get<NpmSearchResponse>(`-/v1/search`, {
+    const response = await this.get<NpmSearchResponse>(`-/v1/search`, {
       headers: {
         "Accept-Encoding": "gzip"
       },
       params: {
         text,
-        size: 100,
+        size: 250,
         from: 0,
         quality: 0.65,
         popularity: 0.98,
@@ -103,6 +110,8 @@ export class NpmClient extends HttpClient {
         ...options
       }
     });
+
+    const {objects: result} = response;
 
     const promises = result
       .filter(({package: obj}) => !obj.name.match(REGEX_EXCLUDED_KEYWORDS))
@@ -120,10 +129,27 @@ export class NpmClient extends HttpClient {
           },
           {type: NpmPackage}
         );
+      });
+
+    const packages = await Promise.all(promises);
+
+    const filtered = packages
+      .filter((pkg) => {
+        return pkg.name.match(/tsed/) || pkg.description?.match(/Ts\.ED/gi);
       })
       .filter(Boolean);
 
-    return await Promise.all(promises);
+    this.context?.logger.info({
+      event: "npm:search",
+      message: "Filtered packages from result",
+      list: packages
+        .filter((pkg) => {
+          return !(pkg.name.match(/tsed/) || pkg.description?.match(/Ts\.ED/gi));
+        })
+        .map((pkg) => pkg.name)
+    });
+
+    return filtered;
   }
 
   async downloads(pkg: string): Promise<number> {

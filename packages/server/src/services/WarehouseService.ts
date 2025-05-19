@@ -1,8 +1,9 @@
-import {Injectable, UseCache} from "@tsed/common";
+import {InjectContext} from "@tsed/async-hook-context";
+import {Injectable, PlatformContext, UseCache} from "@tsed/common";
 import {toMap} from "@tsed/core";
 import {Inject} from "@tsed/di";
 import {FormioSubmission} from "@tsed/formio";
-import {NpmPackage} from "../domain/npm/NpmPackage";
+import {NpmPackage, NpmPackageType} from "../domain/npm/NpmPackage";
 import {GithubClient} from "../infra/back/github/GithubClient";
 import {NpmClient} from "../infra/back/npm/NpmClient";
 import {FormioRepository} from "./FormioRepository";
@@ -10,14 +11,17 @@ import {FormioRepository} from "./FormioRepository";
 export type SubmissionPackage = FormioSubmission<NpmPackage & {disabled: boolean}>;
 
 const RANKS = {
-  premium: -1,
-  official: 0,
-  "3rd-party": 0
+  [NpmPackageType.PREMIUM]: 1,
+  [NpmPackageType.OFFICIAL]: 0,
+  [NpmPackageType.THIRD_PARTY]: 0
 };
 
 @Injectable()
 export class WarehouseService extends FormioRepository {
   protected formName = "packages";
+
+  @InjectContext()
+  protected $ctx: PlatformContext;
 
   @Inject()
   protected npmClient: NpmClient;
@@ -69,17 +73,16 @@ export class WarehouseService extends FormioRepository {
       });
     });
 
-    return [...otherPackages, ...(result.filter(Boolean) as NpmPackage[])].sort((p1, p2) => {
-      if (RANKS[p1.type] < RANKS[p2.type]) {
-        return -1;
-      }
+    const allPackages = [...otherPackages, ...(result.filter(Boolean) as NpmPackage[])].filter(Boolean);
 
-      if (p1.downloads > p2.downloads) {
-        return -1;
-      }
-
-      return 1;
-    });
+    return [
+      ...allPackages.filter((pkg) => pkg.type === NpmPackageType.PREMIUM).sort(),
+      ...allPackages
+        .filter((pkg) => pkg.type != NpmPackageType.PREMIUM)
+        .sort((p1, p2) => {
+          return p1.downloads < p2.downloads ? 1 : -1;
+        })
+    ];
   }
 
   async getStars(pkg: NpmPackage) {
@@ -89,9 +92,19 @@ export class WarehouseService extends FormioRepository {
       return 0;
     }
 
-    const {stargazers_count} = await this.githubClient.getInfo(meta.owner, meta.repo);
+    try {
+      const {stargazers_count} = await this.githubClient.getInfo(meta.owner, meta.repo);
 
-    return stargazers_count;
+      return stargazers_count;
+    } catch (er) {
+      this.$ctx.logger.error({
+        event: "GITHUB_REPO_INFO_ERROR",
+        error: er,
+        owner: meta.owner,
+        repo: meta.repo
+      });
+      return 0;
+    }
   }
 
   getPackagesSubmissions(): Promise<SubmissionPackage> {

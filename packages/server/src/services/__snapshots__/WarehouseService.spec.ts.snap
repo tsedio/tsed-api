@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WarehouseService getPlugins() should save the unknown package to database 1`] = `
+Array [
+  NpmPackage {
+    "description": "A prisma package",
+    "downloads": 0,
+    "homepage": "https://github.com/tsedio/tsed-prisma",
+    "icon": "",
+    "maintainers": Array [],
+    "name": "@tsed/prisma",
+    "repository": "https://github.com/tsedio/tsed-prisma",
+    "stars": 1000,
+    "tags": undefined,
+    "version": "1.0.0",
+  },
+  NpmPackage {
+    "downloads": 0,
+    "maintainers": Array [],
+    "name": "@tsed/common",
+    "stars": 0,
+    "tags": Array [],
+  },
+]
+`;

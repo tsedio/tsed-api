@@ -51,7 +51,7 @@ describe("NpmClient", () => {
       ]);
       expect(service.get).toHaveBeenCalledWith("-/v1/search", {
         headers: {"Accept-Encoding": "gzip"},
-        params: {from: 0, maintenance: 0.5, popularity: 0.98, quality: 0.65, size: 100, text: "tsed"}
+        params: {from: 0, maintenance: 0.5, popularity: 0.98, quality: 0.65, size: 250, text: "tsed"}
       });
     });
   });

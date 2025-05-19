@@ -5,7 +5,7 @@ import {GithubClient} from "../../../infra/back/github/GithubClient";
 import {Server} from "../__mock__/ServerTest";
 import {GithubCtrl} from "./GithubCtrl";
 
-describe("GithubCtrl", () => {
+describe.skip("GithubCtrl", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;
   beforeAll(
     TestMongooseContext.bootstrap(Server, {

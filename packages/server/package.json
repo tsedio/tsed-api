@@ -1,6 +1,6 @@
 {
   "name": "@tsed/server",
-  "version": "1.12.5",
+  "version": "1.12.6",
   "description": "Server based on Ts.ED framework",
   "author": "Romain Lenzotti",
   "private": true,
